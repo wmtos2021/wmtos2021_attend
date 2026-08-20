@@ -13,62 +13,49 @@ body {
     height: 100%;
     margin: 0;
     padding: 0;
-
     overflow: hidden;
 }
 
 body {
     position: fixed;
-
     left: 0;
     top: 0;
-
     width: 100%;
     height: 100dvh;
-
     background: #F0FAF9;
-
     font-family: Arial, sans-serif;
     color: #333333;
-
     overflow: hidden;
+    overscroll-behavior: none;
 }
-
 
 /* 로그인 영역 */
 .container {
     width: 100%;
     max-width: 380px;
-
     min-height: 100dvh;
-
     margin: 0 auto;
     padding: 20px;
-
     display: flex;
     flex-direction: column;
     justify-content: center;
-
     text-align: center;
     transform: translateY(-89px);
 }
 
-
 /* 제목 */
 .container h1 {
     margin-bottom: 10px;
-
     color: #0CA19B;
-
     font-size: 29px;
     font-weight: 700;
     letter-spacing: 2px;
 }
+
 .titleW {color: #087F7A;}
 .titleM {color: #E6B800;}
 .titleTos {color: #E67E22;}
 .titleAcademy {color: #087F7A;}
-
 
 /* 휴대전화 입력 */
 #phoneInput {
@@ -76,19 +63,13 @@ body {
     margin: 0 auto;
     width: 80%;
     height: 50px;
-
     padding: 0 15px;
-
     border: 1px solid #BFE5E2;
     border-radius: 8px;
-
     background: #FFFFFF;
-
     font-size: 18.4px;
     color: #333333;
-
     text-align: center;
-
     outline: none;
 }
 
@@ -101,26 +82,19 @@ body {
     border-color: #0CA19B;
 }
 
-
 /* 로그인 버튼 */
 #loginBtn {
     display: block;
-    margin: 0 auto;
+    margin: 12px auto 0;
     width: 80%;
     height: 50px;
-
-    margin-top: 12px;
-
     border: none;
     border-radius: 8px;
-
     background: #0CA19B;
     color: #FFFFFF;
-
     font-size: 20px;
     font-weight: 600;
     letter-spacing: 0.8px;
-
     cursor: pointer;
 }
 
@@ -128,22 +102,16 @@ body {
     background: #087E78;
 }
 
-
 /* 모달 공통 */
 .modal {
     position: fixed;
     inset: 0;
-
     display: flex;
     justify-content: center;
     align-items: center;
-
     padding: 20px;
-
     background: rgba(0, 0, 0, 0.35);
-
     z-index: 1000;
-
     overflow: hidden;
 }
 
@@ -152,46 +120,34 @@ body {
     display: none;
 }
 
-
 /* 연락처 오류 모달 */
 .errorBox {
     width: 100%;
     max-width: 320px;
-
     padding: 30px 25px;
-
     background: #FFFFFF;
-
     border: 1px solid #BFE5E2;
     border-radius: 12px;
-
     text-align: center;
 }
 
 #phoneErrorMessage {
     margin-bottom: 20px;
-
     font-size: 14px;
     line-height: 1.5;
-
     color: #444444;
-
     white-space: pre-line;
 }
 
 #phoneErrorOk {
     width: 100%;
     height: 45px;
-
     border: none;
     border-radius: 8px;
-
     background: #0CA19B;
     color: #FFFFFF;
-
     font-size: 15px;
     font-weight: 600;
-
     cursor: pointer;
 }
 
@@ -199,45 +155,25 @@ body {
     background: #087E78;
 }
 
-
 /* 비밀번호 박스 */
 .pwBox {
     width: 100%;
     max-width: 350px;
-
     padding: 30px 25px;
-
     background: #FFFFFF;
-
     border: 1px solid #BFE5E2;
     border-radius: 12px;
-
     text-align: center;
-
     transition: transform 0.2s ease;
-}
-
-/* 키보드가 올라왔을 때 비밀번호 팝업 */
-#joinModal.keyboardOpen,
-#loginModal.keyboardOpen {
-    align-items: flex-start;
-}
-
-#joinModal.keyboardOpen .pwBox,
-#loginModal.keyboardOpen .pwBox {
-    margin-top: 20px;
 }
 
 /* 비밀번호 제목 */
 .pwBox h2 {
     margin-bottom: 25px;
-
     color: #0CA19B;
-
     font-size: 22px;
     font-weight: 700;
 }
-
 
 /* 비밀번호 입력 */
 #newPw,
@@ -245,20 +181,14 @@ body {
 #passwordInput {
     width: 100%;
     height: 48px;
-
     margin-bottom: 10px;
     padding: 0 14px;
-
     border: 1px solid #BFE5E2;
     border-radius: 8px;
-
     background: #F7FCFC;
-
     font-size: 16px;
     color: #333333;
-
     text-align: center;
-
     outline: none;
 }
 
@@ -275,16 +205,13 @@ body {
     color: #999999;
 }
 
-
 /* 비밀번호 오류 메시지 */
 .pwError {
     margin-top: 3px;
     margin-bottom: 12px;
-
     font-size: 14px;
     color: #E04B4B;
 }
-
 
 /* 모달 버튼 */
 .modalButton {
@@ -294,18 +221,13 @@ body {
 
 .modalButton button {
     flex: 1;
-
     height: 45px;
-
     border: none;
     border-radius: 8px;
-
     font-size: 15px;
     font-weight: 600;
-
     cursor: pointer;
 }
-
 
 /* 확인 */
 #pwOk,
@@ -319,7 +241,6 @@ body {
     background: #087E78;
 }
 
-
 /* 취소 */
 #pwCancel,
 #passwordCancel {
@@ -332,70 +253,56 @@ body {
     background: #D4EFEC;
 }
 
-
 /* 자동 로그인 */
 .autoLoginMessage {
     position: fixed;
     inset: 0;
-
     width: 100%;
     height: 100dvh;
-
     display: flex;
     align-items: center;
     justify-content: center;
-
     background: #F0FAF9;
     color: #0CA19B;
-
     font-size: 20px;
     font-weight: 600;
-
     z-index: 10000;
 }
-
 
 /* 하단 구분선 */
 .footerLine {
     position: fixed;
-
-    left: 0px;
-    right: 0px;
+    left: 0;
+    right: 0;
     bottom: 52px;
     height: 1.4px;
-
     background: #b4b4b4;
-
     pointer-events: none;
 }
-
 
 /* 하단 왼쪽 정보 */
 .footerLeft {
     position: fixed;
-
     left: 12px;
     bottom: 10px;
-
     text-align: left;
-
     pointer-events: none;
 }
 
 .footerLine1 {
-    margin-bottom: 0px;
-
+    margin-bottom: 0;
     font-size: 18px;
     font-weight: 550;
     letter-spacing: 0.2px;
 }
+
 .footerW {color: #087F7A;}
 .footerM {color: #E6B800;}
 .footerTos {color: #E67E22;}
 .footerAcademy {color: #087F7A;}
 
 .footerLine2 {
-    margin-bottom: 0px;
+    margin-bottom: 0;
     font-size: 12px;
     color: #555;
     letter-spacing: -0.5px;
@@ -404,21 +311,16 @@ body {
 /* 하단 오른쪽 정보 */
 .footerRight {
     position: fixed;
-
     right: 12px;
     bottom: 10px;
-
     font-size: 13px;
     color: #555;
     text-align: right;
-
     pointer-events: none;
 }
 
-
 /* 작은 화면 */
 @media (max-height: 650px) {
-
     .container {
         padding-top: 15px;
         padding-bottom: 15px;

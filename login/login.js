@@ -1,12 +1,10 @@
 // login.js
 
-
 import {
     getStudent,
-    createStudentAccount,
+    completeStudentLogin,
     loginStudent
 } from "./loginFirebase.js";
-
 
 // HTML 요소
 const phoneInput = document.getElementById("phoneInput");
@@ -32,7 +30,6 @@ const passwordError = document.getElementById("passwordError");
 const passwordOk = document.getElementById("passwordOk");
 const passwordCancel = document.getElementById("passwordCancel");
 
-
 // 현재 전화번호
 let currentPhone = "";
 
@@ -41,46 +38,40 @@ function updateKeyboardPosition() {
     if (!window.visualViewport) {
         return;
     }
+
     const viewportHeight = window.visualViewport.height;
-    const keyboardHeight =
-        window.innerHeight
-        - viewportHeight;
+    const keyboardHeight = window.innerHeight - viewportHeight;
 
     if (keyboardHeight > 100) {
+        const modal = joinModal.classList.contains("hidden")
+            ? loginModal
+            : joinModal;
 
-        joinModal.classList.add("keyboardOpen");
-        loginModal.classList.add("keyboardOpen");
-        const modal =
-            joinModal.classList.contains("hidden")
-                ? loginModal
-                : joinModal;
         const pwBox = modal.querySelector(".pwBox");
+
+        if (!pwBox) {
+            return;
+        }
+
         const boxHeight = pwBox.getBoundingClientRect().height;
-        const top =
-            Math.max(
-                20,
-                (viewportHeight - boxHeight) / 2
-            );
-        pwBox.style.marginTop =
-            `${top}px`;
+        const top = Math.max(20, (viewportHeight - boxHeight) / 2);
+
+        pwBox.style.marginTop = `${top}px`;
     } else {
-        joinModal.classList.remove("keyboardOpen");
-        loginModal.classList.remove("keyboardOpen");
         joinModal.querySelector(".pwBox").style.marginTop = "";
         loginModal.querySelector(".pwBox").style.marginTop = "";
     }
 }
 
-
 // 키보드 상태 감지
 if (window.visualViewport) {
     window.visualViewport.addEventListener(
         "resize",
-        updateKeyboardPosition
-    );
-    window.visualViewport.addEventListener(
-        "scroll",
-        updateKeyboardPosition
+        () => {
+            requestAnimationFrame(() => {
+                updateKeyboardPosition();
+            });
+        }
     );
 }
 
@@ -88,10 +79,9 @@ if (window.visualViewport) {
 phoneInput.addEventListener(
     "input",
     () => {
-
         let phone = phoneInput.value.replace(/[^0-9]/g, "");
-
         phone = phone.slice(0, 11);
+
         if (phone.length <= 3) {
             phoneInput.value = phone;
         } else if (phone.length <= 7) {
@@ -110,13 +100,11 @@ phoneInput.addEventListener(
     }
 );
 
-
 // 연락처 오류 표시
 function showPhoneError(message) {
     phoneErrorMessage.textContent = message;
     phoneErrorModal.classList.remove("hidden");
 }
-
 
 // 연락처 오류 닫기
 phoneErrorOk.addEventListener(
@@ -136,29 +124,56 @@ function showPasswordError(message) {passwordError.textContent = message;}
 // 기존 비밀번호 오류 초기화
 function clearPasswordError() {passwordError.textContent = "";}
 
+// 팝업 위치 초기화
+function resetPopupPosition(modal) {
+    if (!modal) {
+        return;
+    }
+
+    const pwBox = modal.querySelector(".pwBox");
+
+    if (!pwBox) {
+        return;
+    }
+
+    pwBox.style.marginTop = "";
+}
 
 // 비밀번호 설정 모달
 function showJoinModal() {
     clearPwError();
     newPw.value = "";
     newPwCheck.value = "";
+    resetPopupPosition(joinModal);
     joinModal.classList.remove("hidden");
     newPw.focus();
+
+    requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+            updateKeyboardPosition();
+        });
+    });
 }
 
 // 비밀번호 확인 모달
 function showLoginModal() {
     clearPasswordError();
     passwordInput.value = "";
+    resetPopupPosition(loginModal);
     loginModal.classList.remove("hidden");
     passwordInput.focus();
+
+    requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+            updateKeyboardPosition();
+        });
+    });
 }
 
 // 로그인 버튼
 loginBtn.addEventListener(
     "click",
     async () => {
-
         let phone = phoneInput.value.replace(/[^0-9]/g, "");
 
         // 전화번호 확인
@@ -179,10 +194,8 @@ loginBtn.addEventListener(
             + phone.slice(7);
 
         try {
-
             // 학생 정보 확인
-            const student =
-                await getStudent(phone);
+            const student = await getStudent(phone);
 
             // 등록된 학생이 아닌 경우
             if (!student) {
@@ -201,12 +214,12 @@ loginBtn.addEventListener(
 
             // uid가 있는 경우
             showLoginModal();
+
         } catch (error) {
             showPhoneError("로그인 중 오류가 발생했습니다.");
         }
     }
 );
-
 
 // 비밀번호 설정
 pwOk.addEventListener(
@@ -237,11 +250,12 @@ pwOk.addEventListener(
 
         try {
             pwOk.disabled = true;
-            const success =
-                await createStudentAccount(
-                    currentPhone,
-                    password
-                );
+
+            const success = await completeStudentLogin(
+                currentPhone,
+                password,
+                true
+            );
 
             if (!success) {
                 showPwError("비밀번호 설정에 실패했습니다.");
@@ -249,32 +263,34 @@ pwOk.addEventListener(
             }
 
             joinModal.classList.add("hidden");
+            resetPopupPosition(joinModal);
             location.href = "../attend/attend.html";
 
         } catch (error) {
             showPwError("비밀번호 설정 중 오류가 발생했습니다.");
+
         } finally {
             pwOk.disabled = false;
         }
     }
 );
 
-
 // 비밀번호 설정 취소
 pwCancel.addEventListener(
     "click",
-    () => {joinModal.classList.add("hidden");}
+    () => {
+        joinModal.classList.add("hidden");
+        resetPopupPosition(joinModal);
+    }
 );
-
 
 // 기존회원 비밀번호 확인
 passwordOk.addEventListener(
     "click",
     async () => {
-
         clearPasswordError();
-        const password = passwordInput.value;
 
+        const password = passwordInput.value;
 
         // 비밀번호 입력 확인
         if (!password) {
@@ -284,11 +300,11 @@ passwordOk.addEventListener(
 
         try {
             passwordOk.disabled = true;
-            const success =
-                await loginStudent(
-                    currentPhone,
-                    password
-                );
+
+            const success = await loginStudent(
+                currentPhone,
+                password
+            );
 
             if (!success) {
                 showPasswordError("비밀번호가 일치하지 않습니다.");
@@ -296,19 +312,23 @@ passwordOk.addEventListener(
             }
 
             loginModal.classList.add("hidden");
-            location.href ="../attend/attend.html";
+            resetPopupPosition(loginModal);
+            location.href = "../attend/attend.html";
 
         } catch (error) {
             showPasswordError("비밀번호 확인 중 오류가 발생했습니다.");
+
         } finally {
             passwordOk.disabled = false;
         }
     }
 );
 
-
 // 기존회원 비밀번호 취소
 passwordCancel.addEventListener(
     "click",
-    () => {loginModal.classList.add("hidden");}
+    () => {
+        loginModal.classList.add("hidden");
+        resetPopupPosition(loginModal);
+    }
 );
