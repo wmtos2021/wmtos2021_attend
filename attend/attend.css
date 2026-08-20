@@ -1,0 +1,433 @@
+/* attend.css */
+
+
+/* 기본 설정 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    width: 100%;
+    min-height: 100%;
+}
+
+body {
+    position: fixed;
+
+    width: 100%;
+    height: 100dvh;
+    background: #F0FAF9;
+
+    font-family: Arial, sans-serif;
+    color: #333333;
+
+    overflow: hidden;
+}
+
+
+/* 전체 영역 */
+.container {
+    width: 100%;
+    min-height: 100dvh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    transform: translateY(-50px);
+}
+
+
+/* 출석 버튼 */
+.attendButton {
+    position: relative;
+
+    width: 200px;
+    height: 212px;
+
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+
+    padding: 0;
+
+    border: none;
+    outline: none;
+    background: transparent;
+
+    cursor: pointer;
+
+    appearance: none;
+    -webkit-appearance: none;
+
+    -webkit-user-select: none;
+    -webkit-user-drag: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+
+/* 출석 버튼 몸체 */
+.attendButton::before {
+    content: "";
+
+    position: absolute;
+
+    left: 50%;
+    top: 7px;
+
+    width: 200px;
+    height: 200px;
+
+    transform: translateX(-50%);
+
+    border-radius: 50%;
+
+    background: #08736F;
+
+    z-index: 0;
+
+    box-shadow:
+        0 7px 0 #075F5C,
+        0 9px 10px rgba(12, 161, 155, 0.20);
+
+    transition:
+        box-shadow 0.20s ease;
+}
+
+
+/* 출석 이미지 */
+#attendImage {
+    position: relative;
+
+    width: 200px;
+    height: 200px;
+
+    object-fit: contain;
+
+    display: block;
+
+    z-index: 1;
+
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-user-drag: none;
+    -webkit-tap-highlight-color: transparent;
+
+    border: none;
+    outline: none;
+
+    transition:
+        transform 0.20s ease;
+}
+
+
+/* 포커스 제거 */
+.attendButton:focus,
+.attendButton:active {
+    outline: none;
+    border: none;
+}
+
+
+/* 출석 버튼 누르는 순간 */
+.attendButton:active #attendImage {
+    transform: translateY(7px);
+}
+
+.attendButton:active::before {
+    box-shadow:
+        0 2px 0 #075F5C,
+        0 3px 5px rgba(12, 161, 155, 0.16);
+}
+
+
+/* 출석 결과 팝업 */
+.attendModal {
+    position: fixed;
+    inset: 0;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 20px;
+
+    background: rgba(0, 0, 0, 0.35);
+
+    z-index: 1000;
+
+    overflow: hidden;
+}
+
+
+/* 팝업 숨김 */
+.attendModal.hidden {
+    display: none;
+}
+
+
+/* 출석 팝업 박스 */
+.attendModalBox {
+    width: 100%;
+    max-width: 320px;
+
+    padding: 30px 25px;
+
+    background: #FFFFFF;
+
+    border: 1px solid #BFE5E2;
+    border-radius: 12px;
+
+    text-align: center;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+/* 출석 결과 이미지 */
+#resultAttendImage {
+    width: 150px;
+    height: 150px;
+
+    object-fit: contain;
+
+    user-select: none;
+    -webkit-user-drag: none;
+}
+
+
+/* 오늘의 명언 제목 */
+.wisdomTitle {
+    width: 100%;
+    margin-top: 14px;
+
+    text-align: center;
+
+    font-size: 14px;
+    font-weight: 700;
+    color: #666666;
+}
+
+
+/* 오늘의 명언 내용 */
+.wisdomMessage {
+    width: 100%;
+    margin-top: 8px;
+    padding: 0 10px;
+
+    text-align: center;
+
+    font-size: 13.8px;
+    line-height: 1.5;
+    color: #333333;
+
+    white-space: pre-line;
+}
+
+
+/* 출석 포인트 */
+.pointArea {
+    width: 100%;
+    margin-top: 0;
+    padding: 14px;
+
+    text-align: center;
+}
+
+.attendPoint {
+    margin-top: 5px;
+
+    font-size: 24px;
+    font-weight: 700;
+    color: #555555;
+}
+
+
+/* 확인 버튼 */
+#attendConfirmBtn {
+    width: 100%;
+    height: 45px;
+
+    margin-top: 20px;
+
+    border: none;
+    border-radius: 8px;
+
+    background: #0CA19B;
+    color: #FFFFFF;
+
+    font-size: 15px;
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+#attendConfirmBtn:active {
+    background: #087E78;
+}
+
+
+/* 알림 팝업 */
+.alertModal {
+    position: fixed;
+    inset: 0;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 20px;
+
+    background: rgba(0, 0, 0, 0.35);
+
+    z-index: 1000;
+
+    overflow: hidden;
+}
+
+.alertModal.hidden {
+    display: none;
+}
+
+
+/* 알림 팝업 박스 */
+.alertModalBox {
+    width: 100%;
+    max-width: 320px;
+
+    padding: 30px 25px;
+
+    background: #FFFFFF;
+
+    border: 1px solid #BFE5E2;
+    border-radius: 12px;
+
+    text-align: center;
+}
+
+
+/* 알림 내용 */
+.alertMessage {
+    margin-bottom: 20px;
+
+    font-size: 14px;
+    line-height: 1.5;
+
+    color: #444444;
+
+    white-space: pre-line;
+}
+
+
+/* 알림 확인 버튼 */
+#alertConfirmBtn {
+    width: 100%;
+    height: 45px;
+
+    border: none;
+    border-radius: 8px;
+
+    background: #0CA19B;
+    color: #FFFFFF;
+
+    font-size: 15px;
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+#alertConfirmBtn:active {
+    background: #087E78;
+}
+
+
+/* 하단 구분선 */
+.footerLine {
+    position: fixed;
+
+    left: 0px;
+    right: 0px;
+    bottom: 62px;
+    height: 1.4px;
+
+    background: #b4b4b4;
+
+    pointer-events: none;
+}
+
+
+/* 하단 왼쪽 정보 */
+.footerLeft {
+    position: fixed;
+
+    left: 12px;
+    bottom: 10px;
+
+    text-align: left;
+
+    pointer-events: none;
+}
+
+.footerLine1 {
+    margin-bottom: 0px;
+
+    font-size: 18px;
+    font-weight: 550;
+    letter-spacing: 0.2px;
+}
+.footerW {color: #087F7A;}
+.footerM {color: #E6B800;}
+.footerTos {color: #E67E22;}
+.footerAcademy {color: #087F7A;}
+
+.footerLine2 {
+    margin-bottom: 0px;
+    font-size: 12px;
+    color: #555;
+    letter-spacing: -0.5px;
+}
+
+/* 하단 오른쪽 정보 */
+.footerRight {
+    position: fixed;
+
+    right: 12px;
+    bottom: 10px;
+
+    font-size: 13px;
+    color: #555;
+    text-align: right;
+
+    pointer-events: none;
+}
+
+
+/* 작은 화면 */
+@media (max-height: 650px) {
+    .container {
+        padding-top: 15px;
+        padding-bottom: 15px;
+    }
+    .attendModalBox {
+        padding-top: 25px;
+        padding-bottom: 25px;
+    }
+    #resultAttendImage {
+        width: 130px;
+        height: 130px;
+    }
+    .wisdomTitle {
+        margin-top: 8px;
+    }
+    .wisdomMessage {
+        margin-top: 5px;
+    }
+    #attendConfirmBtn {
+        margin-top: 12px;
+    }
+}

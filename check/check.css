@@ -1,0 +1,68 @@
+/* check.css */
+
+
+/* 기본 설정 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+html,
+body {
+    width: 100%;
+    min-height: 100%;
+}
+
+
+body {
+    position: fixed;
+
+    width: 100%;
+    height: 100dvh;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #F0FAF9;
+
+    font-family: Arial, sans-serif;
+    color: #333333;
+
+    overflow: hidden;
+}
+
+
+/* 자동 로그인 */
+#checkMessage {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: #0CA19B;
+
+    font-size: 25px;
+    font-weight: 600;
+
+    letter-spacing: 1px;
+}
+.checkText {
+    display: inline-block;
+    white-space: nowrap;
+}
+#checkDots {
+    display: inline-block;
+    width: 18px;
+
+    font-size: 28px;
+    font-weight: 800;
+    text-align: left;
+}
+
+.dot {display: none;}
+.dot.show {display: inline;}
+.dot1 {color: #E67E22;}
+.dot2 {color: #E6B800;}
+.dot3 {color: #0CA19B;}

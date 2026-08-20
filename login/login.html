@@ -1,0 +1,137 @@
+<!-- login.html -->
+
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>출석체크</title>
+
+    <link rel="stylesheet" href="login.css">
+
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>
+        <span class="titleW">위드</span><span class="titleM">엠</span><span class="titleTos">투에스</span><span class="titleAcademy">학원</span>
+        </h1>
+
+        <input
+            type="tel"
+            id="phoneInput"
+            placeholder="휴대전화 번호를 숫자만 입력하세요."
+            maxlength="13">
+
+        <button id="loginBtn">
+            로그인
+        </button>
+
+    </div>
+
+
+    <!-- 연락처 오류 -->
+    <div id="phoneErrorModal" class="modal hidden">
+
+        <div class="errorBox">
+
+            <p id="phoneErrorMessage"></p>
+
+            <button id="phoneErrorOk">
+                확인
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- 비밀번호 설정 -->
+    <div id="joinModal" class="modal hidden">
+
+        <div class="pwBox">
+
+            <h2>비밀번호 설정</h2>
+
+            <input
+                type="password"
+                id="newPw"
+                placeholder="새 비밀번호 입력">
+
+            <input
+                type="password"
+                id="newPwCheck"
+                placeholder="새 비밀번호 확인">
+
+            <div id="pwError" class="pwError"></div>
+
+            <div class="modalButton">
+                <button id="pwOk">
+                    확인
+                </button>
+
+                <button id="pwCancel">
+                    취소
+                </button>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- 비밀번호 확인 -->
+    <div id="loginModal" class="modal hidden">
+
+        <div class="pwBox">
+
+            <h2>비밀번호 확인</h2>
+
+            <input
+                type="password"
+                id="passwordInput"
+                placeholder="비밀번호를 입력하세요.">
+
+            <div id="passwordError" class="pwError"></div>
+
+            <div class="modalButton">
+
+                <button id="passwordOk">
+                    확인
+                </button>
+
+                <button id="passwordCancel">
+                    취소
+                </button>
+            </div>
+        </div>
+    </div>    
+
+
+    <div class="footerLine"></div>    
+    
+    <div class="footerLeft">
+        <div class="footerLine1">
+            <span class="footerW">위드</span><span class="footerM">엠</span><span class="footerTos">투에스</span><span class="footerAcademy">학원</span>
+        </div>
+
+        <div class="footerLine2">
+            경남 김해시 활천로 168, 2층
+        </div>
+
+    </div>    
+
+    <div class="footerRight">
+        Ver 1.0.0
+    </div>
+
+
+    <script type="module" src="login.js"></script>
+
+</body>
+
+</html>
