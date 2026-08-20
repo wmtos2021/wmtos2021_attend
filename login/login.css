@@ -159,7 +159,7 @@ body {
 .pwBox {
     width: 100%;
     max-width: 350px;
-    padding: 30px 25px;
+    padding: 25px 25px;
     background: #FFFFFF;
     border: 1px solid #BFE5E2;
     border-radius: 12px;
@@ -169,9 +169,9 @@ body {
 
 /* 비밀번호 제목 */
 .pwBox h2 {
-    margin-bottom: 25px;
+    margin-bottom: 14px;
     color: #0CA19B;
-    font-size: 22px;
+    font-size: 24px;
     font-weight: 700;
 }
 
