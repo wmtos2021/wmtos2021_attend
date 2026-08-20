@@ -107,6 +107,31 @@ function showLoginModal() {
     passwordInput.focus();
 }
 
+// 키보드 대응
+newPw.addEventListener(
+    "focus",
+    () => {joinModal.classList.add("keyboardOpen");}
+);
+newPwCheck.addEventListener(
+    "focus",
+    () => {joinModal.classList.add("keyboardOpen");}
+);
+passwordInput.addEventListener(
+    "focus",
+    () => {loginModal.classList.add("keyboardOpen");}
+);
+newPw.addEventListener(
+    "blur",
+    () => {joinModal.classList.remove("keyboardOpen");}
+);
+newPwCheck.addEventListener(
+    "blur",
+    () => {joinModal.classList.remove("keyboardOpen");}
+);
+passwordInput.addEventListener(
+    "blur",
+    () => {loginModal.classList.remove("keyboardOpen");}
+);
 
 // 로그인 버튼
 loginBtn.addEventListener(

@@ -209,6 +209,11 @@ body {
     transition: transform 0.2s ease;
 }
 
+/* 키보드가 올라온 비밀번호 창 */
+.modal.keyboardOpen .pwBox {
+    transform: translateY(-80px);
+}
+
 /* 비밀번호 제목 */
 .pwBox h2 {
     margin-bottom: 25px;
