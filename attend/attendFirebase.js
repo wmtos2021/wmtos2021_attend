@@ -78,6 +78,23 @@ export async function updateLastAttend(
 }
 
 
+// Wisdom 번호 저장
+export async function saveWisdom(
+    deviceId,
+    wisdom
+) {
+    await update(
+        ref(
+            db,
+            `deviceId/${deviceId}`
+        ),
+        {
+            wisdom: wisdom
+        }
+    );
+}
+
+
 // 다음 Wisdom 번호 저장
 export async function updateWisdom(
     deviceId,

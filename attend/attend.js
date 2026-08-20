@@ -11,6 +11,7 @@ import {
     getDeviceInfo,
     getClassTime,
     updateLastAttend,
+    saveWisdom,
     updateWisdom,
     saveAttendHistory,
     updateTotalP
@@ -67,16 +68,22 @@ async function loadTodayInfo() {
     );
 
     todayWisdom = deviceInfo.wisdom;
+
+    if (!todayWisdom) {
+        todayWisdom =
+            Math.floor(
+                Math.random() * 24
+            ) + 1;
+
+        await saveWisdom(
+            deviceId,
+            todayWisdom
+        );
+    }
+
     todayMobile = deviceInfo.mobile;
     todayLastAttend = deviceInfo.lastAttend || "";
     attendTimestamp = deviceInfo.attendTimestamp || null;
-
-        showAttendMessage(
-            `attendTimestamp: ${attendTimestamp}\n\n` +
-            `현재시간: ${Date.now()}\n\n` +
-            `차이: ${Date.now() - attendTimestamp}ms`
-        );
-
     todayLatitude = deviceInfo.latitude;
     todayLongitude = deviceInfo.longitude;
 
