@@ -1,6 +1,5 @@
 // attend.js
 
-
 import {
     getDeviceId,
     getSeoulDay,
@@ -27,12 +26,10 @@ import {
     showAttendMessage
 } from "./attendPop.js";
 
-import {getWisdom} from "./wisdom.js";
-
+import { getWisdom } from "./wisdom.js";
 
 // HTML 요소
 const attendButton = document.querySelector(".attendButton");
-
 
 // 오늘 정보
 const deviceId = getDeviceId();
@@ -46,36 +43,13 @@ let todayLatitude = null;
 let todayLongitude = null;
 let attendPointValue = 0;
 
-
 // 정보 가져오기
 async function loadTodayInfo() {
 
-    let deviceInfo;
-
-    try {
-        deviceInfo = await getDeviceInfo(deviceId);
-
-    } catch (error) {
-
-        showAttendMessage(
-            "Firebase 조회 오류\n\n" +
-            "Device ID:\n" +
-            deviceId + "\n\n" +
-            "오류:\n" +
-            (error.code || error.message || "알 수 없는 오류")
-        );
-
-        return false;
-    }
+    const deviceInfo = await getDeviceInfo(deviceId);
 
     if (!deviceInfo) {
-
-        showAttendMessage(
-            "등록된 학원생 정보가 없습니다.\n\n" +
-            "Device ID:\n" +
-            deviceId
-        );
-
+        showAttendMessage("등록된 학원생 정보가 없습니다.");
         return false;
     }
 
@@ -87,7 +61,6 @@ async function loadTodayInfo() {
     todayWisdom = deviceInfo.wisdom;
 
     if (!todayWisdom) {
-
         todayWisdom =
             Math.floor(
                 Math.random() * 24
@@ -108,7 +81,6 @@ async function loadTodayInfo() {
     return true;
 }
 
-
 // 오늘 정보 확인
 const todayInfoPromise =
     loadTodayInfo()
@@ -116,7 +88,6 @@ const todayInfoPromise =
             showAttendMessage("학원생이 아닙니다.\n선생님께 문의하세요.");
             return false;
         });
-
 
 // 출석 버튼
 attendButton.addEventListener(
@@ -133,15 +104,15 @@ attendButton.addEventListener(
 
             // QR 유효시간 확인
             if (
-                !attendTimestamp
-                || Date.now() - attendTimestamp > 5 * 60 * 1000
+                !attendTimestamp ||
+                Date.now() - attendTimestamp > 5 * 60 * 1000
             ) {
                 showAttendMessage("출석체크 QR을 새로 인식해주세요.");
                 return;
             }
 
             // 학원과의 거리 확인
-            const distance = 
+            const distance =
                 checkAcademyDistance(
                     todayLatitude,
                     todayLongitude
@@ -154,11 +125,10 @@ attendButton.addEventListener(
 
             // 오늘 이미 출석한 경우
             const today =
-                new Date()
-                    .toLocaleDateString(
-                        "sv-SE",
-                        {timeZone: "Asia/Seoul"}
-                    );
+                new Date().toLocaleDateString(
+                    "sv-SE",
+                    { timeZone: "Asia/Seoul" }
+                );
 
             if (todayLastAttend === today) {
                 showAttendMessage("이미 출석을 완료했어요!");
@@ -173,15 +143,20 @@ attendButton.addEventListener(
 
             // 수업시간 확인
             const currentTime = getSeoulTime();
-            const classParts = todayClassTime.split(":");
-            const classMinutes =
-                Number(classParts[0]) * 60
-                + Number(classParts[1]);
 
-            const currentParts = currentTime.split(":");
+            const classParts =
+                todayClassTime.split(":");
+
+            const classMinutes =
+                Number(classParts[0]) * 60 +
+                Number(classParts[1]);
+
+            const currentParts =
+                currentTime.split(":");
+
             const currentMinutes =
-                Number(currentParts[0]) * 60
-                + Number(currentParts[1]);
+                Number(currentParts[0]) * 60 +
+                Number(currentParts[1]);
 
             // 출석 포인트
             let image = "";
@@ -206,7 +181,8 @@ attendButton.addEventListener(
             }
 
             // 오늘의 명언
-            const wisdom = getWisdom(todayWisdom);
+            const wisdom =
+                getWisdom(todayWisdom);
 
             // 출석 팝업
             showAttendPopup(
@@ -217,14 +193,13 @@ attendButton.addEventListener(
                 async () => {
 
                     const time =
-                        new Date()
-                            .toLocaleTimeString(
-                                "en-GB",
-                                {
-                                    timeZone: "Asia/Seoul",
-                                    hour12: false
-                                }
-                            );
+                        new Date().toLocaleTimeString(
+                            "en-GB",
+                            {
+                                timeZone: "Asia/Seoul",
+                                hour12: false
+                            }
+                        );
 
                     // 출석일 저장
                     await updateLastAttend(
@@ -262,7 +237,6 @@ attendButton.addEventListener(
             );
 
         } catch (error) {
-
             showAttendMessage("출석 처리 중 오류가 발생했습니다.");
         }
     }
