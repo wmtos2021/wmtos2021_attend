@@ -49,6 +49,7 @@ export async function createStudentAccount(
     password
 ) {
     try {
+        // 학생 정보 확인
         const student =
             await getStudent(phone);
 
@@ -56,8 +57,18 @@ export async function createStudentAccount(
             return false;
         }
 
+        // 현재 Device ID 가져오기
+        // ※ 여기서는 절대 새로 생성하지 않음
+        const deviceId =
+            localStorage.getItem("deviceId");
+
+        if (!deviceId) {
+            return false;
+        }
+
         // Firebase Auth 계정 생성
         const email = getAuthEmail(phone);
+
         const userCredential =
             await createUserWithEmailAndPassword(
                 auth,
@@ -75,18 +86,6 @@ export async function createStudentAccount(
                     student.name || ""
             }
         );
-
-        // 현재 Device ID
-        let deviceId = localStorage.getItem("deviceId");
-
-        if (!deviceId) {
-            deviceId = crypto.randomUUID();
-
-            localStorage.setItem(
-                "deviceId",
-                deviceId
-            );
-        }
 
         // 학생 정보 저장
         await update(
@@ -129,7 +128,11 @@ export async function createStudentAccount(
         return true;
 
     } catch (error) {
-        console.error("createStudentAccount 오류:", error);
+        console.error(
+            "createStudentAccount 오류:",
+            error
+        );
+
         return false;
     }
 }
@@ -141,6 +144,7 @@ export async function loginStudent(
     password
 ) {
     try {
+        // 학생 정보 확인
         const student =
             await getStudent(phone);
 
@@ -150,6 +154,15 @@ export async function loginStudent(
 
         // 기존 UID 확인
         if (!student.uid) {
+            return false;
+        }
+
+        // 현재 Device ID 가져오기
+        // ※ 여기서도 절대 새로 생성하지 않음
+        const deviceId =
+            localStorage.getItem("deviceId");
+
+        if (!deviceId) {
             return false;
         }
 
@@ -173,24 +186,14 @@ export async function loginStudent(
         }
 
         // 기존 Device ID
-        const oldDeviceId = student.deviceId;
+        const oldDeviceId =
+            student.deviceId;
 
-        // 현재 Device ID
-        let deviceId = localStorage.getItem("deviceId");
-
-        if (!deviceId) {
-            deviceId = crypto.randomUUID();
-
-            localStorage.setItem(
-                "deviceId",
-                deviceId
-            );
-        }
-
-        // Device ID가 변경된 경우 기존 ID 삭제
+        // 기존 Device ID와 현재 Device ID가
+        // 다른 경우 기존 Device ID 삭제
         if (
-            oldDeviceId
-            && oldDeviceId !== deviceId
+            oldDeviceId &&
+            oldDeviceId !== deviceId
         ) {
             await remove(
                 ref(
@@ -200,7 +203,7 @@ export async function loginStudent(
             );
         }
 
-        // 학생 정보에 Device ID 저장
+        // 학생 정보에 현재 Device ID 저장
         await update(
             ref(
                 db,
@@ -211,7 +214,7 @@ export async function loginStudent(
             }
         );
 
-        // Device ID에 회원정보 연결
+        // 현재 Device ID에 회원정보 연결
         await update(
             ref(
                 db,
