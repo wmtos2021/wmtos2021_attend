@@ -1,6 +1,5 @@
 // loginFirebase.js
 
-
 import {
     ref,
     get,
@@ -41,7 +40,6 @@ export async function getStudent(phone) {
     }
 
     return snapshot.val();
-
 }
 
 
@@ -79,10 +77,15 @@ export async function createStudentAccount(
         );
 
         // 현재 Device ID
-        const deviceId = localStorage.getItem("deviceId");
+        let deviceId = localStorage.getItem("deviceId");
 
         if (!deviceId) {
-            return false;
+            deviceId = crypto.randomUUID();
+
+            localStorage.setItem(
+                "deviceId",
+                deviceId
+            );
         }
 
         // 학생 정보 저장
@@ -126,10 +129,9 @@ export async function createStudentAccount(
         return true;
 
     } catch (error) {
-
+        console.error("createStudentAccount 오류:", error);
         return false;
     }
-
 }
 
 
@@ -174,10 +176,15 @@ export async function loginStudent(
         const oldDeviceId = student.deviceId;
 
         // 현재 Device ID
-        const deviceId = localStorage.getItem("deviceId");
+        let deviceId = localStorage.getItem("deviceId");
 
         if (!deviceId) {
-            return false;
+            deviceId = crypto.randomUUID();
+
+            localStorage.setItem(
+                "deviceId",
+                deviceId
+            );
         }
 
         // Device ID가 변경된 경우 기존 ID 삭제
@@ -233,7 +240,6 @@ export async function loginStudent(
         return true;
 
     } catch (error) {
-
         return false;
     }
 }
