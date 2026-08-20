@@ -70,6 +70,13 @@ async function loadTodayInfo() {
     todayMobile = deviceInfo.mobile;
     todayLastAttend = deviceInfo.lastAttend || "";
     attendTimestamp = deviceInfo.attendTimestamp || null;
+
+        showAttendMessage(
+            `attendTimestamp: ${attendTimestamp}\n\n` +
+            `현재시간: ${Date.now()}\n\n` +
+            `차이: ${Date.now() - attendTimestamp}ms`
+        );
+
     todayLatitude = deviceInfo.latitude;
     todayLongitude = deviceInfo.longitude;
 

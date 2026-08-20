@@ -71,7 +71,6 @@ attendConfirmBtn.addEventListener(
 // 안내 팝업
 export function showAttendMessage(message) {
     setTimeout(() => {
-
         resultAttendImage.style.display = "none";
         attendPoint.parentElement.style.display = "none";
         attendConfirmBtn.style.display = "none";
@@ -84,7 +83,6 @@ export function showAttendMessage(message) {
         attendModal.classList.remove("hidden");
 
         setTimeout(() => {
-
             attendModal.classList.add("hidden");
             resultAttendImage.style.display = "block";
             attendPoint.parentElement.style.display = "block";
