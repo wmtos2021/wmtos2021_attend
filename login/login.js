@@ -2,7 +2,7 @@
 
 import {
     getStudent,
-    completeStudentLogin,
+    createStudentAccount,
     loginStudent
 } from "./loginFirebase.js";
 
@@ -251,10 +251,9 @@ pwOk.addEventListener(
         try {
             pwOk.disabled = true;
 
-            const success = await completeStudentLogin(
+            const success = await createStudentAccount(
                 currentPhone,
-                password,
-                true
+                password
             );
 
             if (!success) {

@@ -40,10 +40,11 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+    margin-left: 80px;
 
     color: #0CA19B;
 
-    font-size: 28px;
+    font-size: 29px;
     font-weight: 600;
 
     letter-spacing: 1px;
@@ -53,16 +54,33 @@ body {
     white-space: nowrap;
 }
 #checkDots {
-    display: inline-block;
-    width: 18px;
+    display: inline-flex;
+    align-items: flex-end;
 
-    font-size: 34px;
-    font-weight: 800;
-    text-align: left;
+    width: 80px;
+    height: 19px;
+
+    transform: translateY(4.5px);
 }
+.dot {
+    display: none;
 
-.dot {display: none;}
-.dot.show {display: inline;}
-.dot1 {color: #E67E22;}
-.dot2 {color: #E6B800;}
-.dot3 {color: #0CA19B;}
+    width: 7px;
+    height: 7px;
+    border-radius: 1.5px;
+}
+.dot.show {
+    display: block;
+}
+.dot1 {
+    background: #E67E22;
+    margin-left: 8px;
+}
+.dot2 {
+    background: #E6B800;
+    margin-left: 8px;
+}
+.dot3 {
+    background: #0CA19B;
+    margin-left: 8px;
+}
