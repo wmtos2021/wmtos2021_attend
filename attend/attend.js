@@ -31,7 +31,7 @@ import {getWisdom} from "./wisdom.js";
 
 
 // HTML 요소
-const attendImage = document.getElementById("attendImage");
+const attendButton = document.querySelector(".attendButton");
 
 
 // 오늘 정보
@@ -45,10 +45,6 @@ let attendTimestamp = null;
 let todayLatitude = null;
 let todayLongitude = null;
 let attendPointValue = 0;
-
-
-// 출석 버튼
-attendImage.style.pointerEvents = "none";
 
 
 // 정보 가져오기
@@ -87,24 +83,31 @@ async function loadTodayInfo() {
     todayLatitude = deviceInfo.latitude;
     todayLongitude = deviceInfo.longitude;
 
-    attendImage.style.pointerEvents = "auto";
-
     return true;
 }
 
 
 // 오늘 정보 확인
-loadTodayInfo()
-    .catch(() => {
-        showAttendMessage("학원생이 아닙니다.\n선생님께 문의하세요.");
-    });
+const todayInfoPromise =
+    loadTodayInfo()
+        .catch(() => {
+            showAttendMessage("학원생이 아닙니다.\n선생님께 문의하세요.");
+            return false;
+        });
 
 
 // 출석 버튼
-attendImage.addEventListener(
+attendButton.addEventListener(
     "click",
     async () => {
         try {
+
+            const loaded =
+                await todayInfoPromise;
+
+            if (!loaded) {
+                return;
+            }
 
             // QR 유효시간 확인
             if (
