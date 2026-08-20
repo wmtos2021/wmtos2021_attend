@@ -128,10 +128,6 @@ export async function createStudentAccount(
         return true;
 
     } catch (error) {
-        console.error(
-            "createStudentAccount 오류:",
-            error
-        );
 
         return false;
     }

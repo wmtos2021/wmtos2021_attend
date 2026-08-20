@@ -50,11 +50,32 @@ let attendPointValue = 0;
 // 정보 가져오기
 async function loadTodayInfo() {
 
-    const deviceInfo = 
-        await getDeviceInfo(deviceId);
+    let deviceInfo;
+
+    try {
+        deviceInfo = await getDeviceInfo(deviceId);
+
+    } catch (error) {
+
+        showAttendMessage(
+            "Firebase 조회 오류\n\n" +
+            "Device ID:\n" +
+            deviceId + "\n\n" +
+            "오류:\n" +
+            (error.code || error.message || "알 수 없는 오류")
+        );
+
+        return false;
+    }
 
     if (!deviceInfo) {
-        showAttendMessage("학원생이 아닙니다.\n선생님께 문의하세요.");
+
+        showAttendMessage(
+            "등록된 학원생 정보가 없습니다.\n\n" +
+            "Device ID:\n" +
+            deviceId
+        );
+
         return false;
     }
 
@@ -66,6 +87,7 @@ async function loadTodayInfo() {
     todayWisdom = deviceInfo.wisdom;
 
     if (!todayWisdom) {
+
         todayWisdom =
             Math.floor(
                 Math.random() * 24
