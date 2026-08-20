@@ -40,7 +40,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-left: 80px;
+    margin-left: 40px;
 
     color: #0CA19B;
 
@@ -58,15 +58,15 @@ body {
     align-items: flex-end;
 
     width: 80px;
-    height: 19px;
+    height: 20px;
 
-    transform: translateY(4.5px);
+    transform: translateY(4px);
 }
 .dot {
     display: none;
 
-    width: 7px;
-    height: 7px;
+    width: 6px;
+    height: 6px;
     border-radius: 1.5px;
 }
 .dot.show {
@@ -74,13 +74,13 @@ body {
 }
 .dot1 {
     background: #E67E22;
-    margin-left: 8px;
+    margin-left: 5px;
 }
 .dot2 {
     background: #E6B800;
-    margin-left: 8px;
+    margin-left: 5px;
 }
 .dot3 {
     background: #0CA19B;
-    margin-left: 8px;
+    margin-left: 5px;
 }
