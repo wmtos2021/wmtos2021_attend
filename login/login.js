@@ -36,6 +36,53 @@ const passwordCancel = document.getElementById("passwordCancel");
 // 현재 전화번호
 let currentPhone = "";
 
+// 키보드 위치 조정
+function updateKeyboardPosition() {
+    if (!window.visualViewport) {
+        return;
+    }
+    const viewportHeight = window.visualViewport.height;
+    const keyboardHeight =
+        window.innerHeight
+        - viewportHeight;
+
+    if (keyboardHeight > 100) {
+
+        joinModal.classList.add("keyboardOpen");
+        loginModal.classList.add("keyboardOpen");
+        const modal =
+            joinModal.classList.contains("hidden")
+                ? loginModal
+                : joinModal;
+        const pwBox = modal.querySelector(".pwBox");
+        const boxHeight = pwBox.getBoundingClientRect().height;
+        const top =
+            Math.max(
+                20,
+                (viewportHeight - boxHeight) / 2
+            );
+        pwBox.style.marginTop =
+            `${top}px`;
+    } else {
+        joinModal.classList.remove("keyboardOpen");
+        loginModal.classList.remove("keyboardOpen");
+        joinModal.querySelector(".pwBox").style.marginTop = "";
+        loginModal.querySelector(".pwBox").style.marginTop = "";
+    }
+}
+
+
+// 키보드 상태 감지
+if (window.visualViewport) {
+    window.visualViewport.addEventListener(
+        "resize",
+        updateKeyboardPosition
+    );
+    window.visualViewport.addEventListener(
+        "scroll",
+        updateKeyboardPosition
+    );
+}
 
 // 전화번호 표시
 phoneInput.addEventListener(
@@ -106,32 +153,6 @@ function showLoginModal() {
     loginModal.classList.remove("hidden");
     passwordInput.focus();
 }
-
-// 키보드 대응
-newPw.addEventListener(
-    "focus",
-    () => {joinModal.classList.add("keyboardOpen");}
-);
-newPwCheck.addEventListener(
-    "focus",
-    () => {joinModal.classList.add("keyboardOpen");}
-);
-passwordInput.addEventListener(
-    "focus",
-    () => {loginModal.classList.add("keyboardOpen");}
-);
-newPw.addEventListener(
-    "blur",
-    () => {joinModal.classList.remove("keyboardOpen");}
-);
-newPwCheck.addEventListener(
-    "blur",
-    () => {joinModal.classList.remove("keyboardOpen");}
-);
-passwordInput.addEventListener(
-    "blur",
-    () => {loginModal.classList.remove("keyboardOpen");}
-);
 
 // 로그인 버튼
 loginBtn.addEventListener(
