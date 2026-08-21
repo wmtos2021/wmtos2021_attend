@@ -55,12 +55,12 @@ body {
 }
 #checkDots {
     position: absolute;
-    left: calc(47% + 110px);
+    left: calc(50% + 80px);
 
     display: inline-flex;
     align-items: flex-end;
 
-    width: 80px;
+    width: auto;
     height: 20px;
 }
 .dot {
@@ -68,7 +68,7 @@ body {
 
     width: 6px;
     height: 6px;
-    border-radius: 1.5px;
+    border-radius: 1px;
 }
 .dot.show {
     display: block;
