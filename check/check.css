@@ -37,13 +37,14 @@ body {
 
 /* 자동 로그인 */
 #checkMessage {
+    position: relative;
+
+    width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-left: 84px;
 
     color: #0CA19B;
-
     font-size: 29px;
     font-weight: 600;
     letter-spacing: 1px;
@@ -53,6 +54,9 @@ body {
     white-space: nowrap;
 }
 #checkDots {
+    position: absolute;
+    left: calc(47% + 110px);
+
     display: inline-flex;
     align-items: flex-end;
 
@@ -71,13 +75,13 @@ body {
 }
 .dot1 {
     background: #E67E22;
-    margin-left: 6px;
+    margin-left: 0px;
 }
 .dot2 {
     background: #E6B800;
-    margin-left: 6px;
+    margin-left: 7.4px;
 }
 .dot3 {
     background: #0CA19B;
-    margin-left: 6px;
+    margin-left: 7.4px;
 }
