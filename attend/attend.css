@@ -130,7 +130,7 @@ body {
 .attendModalBox {
     width: 100%;
     max-width: 320px;
-    padding: 30px 25px;
+    padding: 30px 20px;
     background: #FFFFFF;
     border: 1px solid #BFE5E2;
     border-radius: 12px;
@@ -154,7 +154,7 @@ body {
     width: 100%;
     margin-top: 14px;
     text-align: center;
-    font-size: 14px;
+    font-size: 18px;
     font-weight: 700;
     color: #666666;
 }
@@ -165,7 +165,7 @@ body {
     margin-top: 8px;
     padding: 0 10px;
     text-align: center;
-    font-size: 13.8px;
+    font-size: 15px;
     line-height: 1.5;
     color: #333333;
     white-space: pre-line;
@@ -188,7 +188,7 @@ body {
 
 /* 확인 버튼 */
 #attendConfirmBtn {
-    width: 100%;
+    width: 90%;
     height: 45px;
     margin-top: 20px;
     border: none;

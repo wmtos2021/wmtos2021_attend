@@ -11,7 +11,7 @@ const wisdomList = [
 
     {
         title: "우공이산(愚公移山)",
-        message: "꾸준히 노력하면 큰일도 이룰 수 있다."
+        message: "끈기를 가지고 노력하면\n결국에는 뜻을 이룰 수 있다."
     },
 
     {
@@ -21,7 +21,7 @@ const wisdomList = [
 
     {
         title: "공자",
-        message: "아는 사람은 좋아하는 사람만 못하고\n좋아하는 사람은 즐기는 사람만 못하다."
+        message: "아는 사람은\n좋아하는 사람만 못하고\n좋아하는 사람은\n즐기는 사람만 못하다."
     },
 
     {
@@ -41,7 +41,7 @@ const wisdomList = [
 
     {
         title: "천 리 길도 한 걸음부터",
-        message: "아무리 큰 일도 작은 시작에서 비롯된다."
+        message: "아무리 큰 일도\n작은 시작에서 비롯된다."
     },
 
     {
@@ -56,7 +56,7 @@ const wisdomList = [
 
     {
         title: "윈스턴 처칠",
-        message: "성공은 끝이 아니며 실패는 치명적이지 않다."
+        message: "성공은 끝이 아니며\n실패는 치명적이지 않다."
     },
 
     {
@@ -66,12 +66,12 @@ const wisdomList = [
 
     {
         title: "고생 끝에 낙이 온다",
-        message: "힘든 시간을 견디면 좋은 날이 찾아온다."
+        message: "힘든 시간을 견디면\n좋은 날이 찾아온다."
     },
 
     {
         title: "아리스토텔레스",
-        message: "우리가 반복해서 하는 일이 우리를 만든다."
+        message: "반복을 통해 우리는 성장한다."
     },    
 
     {
@@ -96,7 +96,7 @@ const wisdomList = [
     
     {
         title: "나폴레옹 보나파르트",
-        message: "승리는 가장 끈기 있는 사람에게 돌아간다."
+        message: "승리는 가장 끈기 있는 자가 쟁취한다."
     },
 
     {
@@ -121,7 +121,7 @@ const wisdomList = [
 
     {
         title: "낙숫물이 돌 뚫는다",
-        message: "작은 노력도 꾸준히 이어가면\n큰 결과를 만든다."
+        message: "꾸준히 노력하면\n큰일도 이룰 수 있다."
     },
 
 ];
