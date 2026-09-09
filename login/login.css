@@ -11,22 +11,34 @@ html,
 body {
     width: 100%;
     height: 100%;
-    margin: 0;
-    padding: 0;
     overflow: hidden;
 }
 
 body {
     position: fixed;
-    left: 0;
-    top: 0;
+    inset: 0;
     width: 100%;
     height: 100dvh;
-    background: #F0FAF9;
+    background: #F8F5EF;
     font-family: Arial, sans-serif;
     color: #333333;
     overflow: hidden;
     overscroll-behavior: none;
+}
+
+/* 학원명 */
+.academyBrand {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: -24px;
+}
+
+.academyName {
+    width: 298px;
+    max-width: 85vw;
+    height: auto;
+    display: block;
 }
 
 /* 로그인 영역 */
@@ -35,7 +47,6 @@ body {
     max-width: 380px;
     min-height: 100dvh;
     margin: 0 auto;
-    padding: 20px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -43,63 +54,52 @@ body {
     transform: translateY(-89px);
 }
 
-/* 제목 */
-.container h1 {
-    margin-bottom: 10px;
-    color: #0CA19B;
-    font-size: 29px;
-    font-weight: 700;
-    letter-spacing: 2px;
-}
-
-.titleW {color: #087F7A;}
-.titleM {color: #E6B800;}
-.titleTos {color: #E67E22;}
-.titleAcademy {color: #087F7A;}
-
 /* 휴대전화 입력 */
 #phoneInput {
     display: block;
-    margin: 0 auto;
-    width: 80%;
-    height: 50px;
-    padding: 0 15px;
+    margin: 0 auto 4px;
+    width: 74%;
+    height: 52px;
     border: 1px solid #BFE5E2;
-    border-radius: 8px;
-    background: #FFFFFF;
-    font-size: 18.4px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.42);
+    font-size: 19px;
     color: #333333;
     text-align: center;
     outline: none;
+    box-shadow: 0 4px 12px rgba(0, 100, 100, 0.06);
 }
 
 #phoneInput::placeholder {
-    font-size: 15.5px;
+    font-size: 16px;
     color: #999999;
 }
 
 #phoneInput:focus {
     border-color: #0CA19B;
+    background: #FFFFFF;
 }
 
 /* 로그인 버튼 */
 #loginBtn {
     display: block;
     margin: 12px auto 0;
-    width: 80%;
-    height: 50px;
+    width: 74%;
+    height: 52px;
     border: none;
-    border-radius: 8px;
+    border-radius: 10px;
     background: #0CA19B;
     color: #FFFFFF;
     font-size: 20px;
     font-weight: 600;
     letter-spacing: 0.8px;
     cursor: pointer;
+    box-shadow: 0 5px 12px rgba(0, 100, 100, 0.15);
 }
 
 #loginBtn:active {
     background: #087E78;
+    transform: scale(0.98);
 }
 
 /* 모달 공통 */
@@ -159,7 +159,7 @@ body {
 .pwBox {
     width: 100%;
     max-width: 350px;
-    padding: 25px 25px;
+    padding: 25px;
     background: #FFFFFF;
     border: 1px solid #BFE5E2;
     border-radius: 12px;
@@ -178,7 +178,7 @@ body {
 /* 비밀번호 입력 */
 #newPw,
 #newPwCheck,
-#passwordInput {
+#loginPwInput {
     width: 100%;
     height: 48px;
     margin-bottom: 8px;
@@ -186,7 +186,7 @@ body {
     border: 1px solid #BFE5E2;
     border-radius: 8px;
     background: #F7FCFC;
-    font-size:22px;
+    font-size: 22px;
     color: #333333;
     text-align: center;
     outline: none;
@@ -194,22 +194,17 @@ body {
 
 #newPw::placeholder,
 #newPwCheck::placeholder,
-#passwordInput::placeholder {
+#loginPwInput::placeholder {
     font-size: 16px;
     text-align: center;
+    color: #999999;
 }
 
 #newPw:focus,
 #newPwCheck:focus,
-#passwordInput:focus {
+#loginPwInput:focus {
     border-color: #0CA19B;
     background: #FFFFFF;
-}
-
-#newPw::placeholder,
-#newPwCheck::placeholder,
-#passwordInput::placeholder {
-    color: #999999;
 }
 
 /* 비밀번호 오류 메시지 */
@@ -237,54 +232,27 @@ body {
 }
 
 /* 확인 */
-#pwOk,
-#passwordOk {
+#joinPwOk,
+#loginPwOk {
     background: #0CA19B;
     color: #FFFFFF;
 }
 
-#pwOk:active,
-#passwordOk:active {
+#joinPwOk:active,
+#loginPwOk:active {
     background: #087E78;
 }
 
 /* 취소 */
-#pwCancel,
-#passwordCancel {
+#joinPwCancel,
+#loginPwCancel {
     background: #E5F5F3;
     color: #0CA19B;
 }
 
-#pwCancel:active,
-#passwordCancel:active {
+#joinPwCancel:active,
+#loginPwCancel:active {
     background: #D4EFEC;
-}
-
-/* 자동 로그인 */
-.autoLoginMessage {
-    position: fixed;
-    inset: 0;
-    width: 100%;
-    height: 100dvh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: #F0FAF9;
-    color: #0CA19B;
-    font-size: 20px;
-    font-weight: 600;
-    z-index: 10000;
-}
-
-/* 하단 구분선 */
-.footerLine {
-    position: fixed;
-    left: 0;
-    right: 0;
-    bottom: 52px;
-    height: 1.4px;
-    background: #b4b4b4;
-    pointer-events: none;
 }
 
 /* 하단 왼쪽 정보 */
@@ -294,25 +262,23 @@ body {
     bottom: 10px;
     text-align: left;
     pointer-events: none;
+    z-index: 2;
 }
 
 .footerLine1 {
     margin-bottom: 0;
     font-size: 18px;
-    font-weight: 550;
-    letter-spacing: 0.2px;
+    font-weight: 300;
+    letter-spacing: 0.5px;
+    color: #FFFFFF;
 }
-
-.footerW {color: #087F7A;}
-.footerM {color: #E6B800;}
-.footerTos {color: #E67E22;}
-.footerAcademy {color: #087F7A;}
 
 .footerLine2 {
     margin-bottom: 0;
     font-size: 12px;
-    color: #555;
-    letter-spacing: -0.5px;
+    font-weight: 300;
+    color: #FFFFFF;
+    letter-spacing: -0.3px;
 }
 
 /* 하단 오른쪽 정보 */
@@ -321,24 +287,21 @@ body {
     right: 12px;
     bottom: 10px;
     font-size: 13px;
-    color: #555;
+    font-weight: 300;
+    color: #FFFFFF;
     text-align: right;
     pointer-events: none;
+    z-index: 2;
 }
 
-/* 작은 화면 */
+/* 작은 화면 높이 대응 */
 @media (max-height: 650px) {
-    .container {
-        padding-top: 15px;
-        padding-bottom: 15px;
-    }
-
-    .container h1 {
-        margin-bottom: 15px;
-    }
-
     .pwBox {
         padding-top: 25px;
         padding-bottom: 25px;
+    }
+
+    .academyName {
+        width: 220px;
     }
 }

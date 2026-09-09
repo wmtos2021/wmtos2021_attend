@@ -1,55 +1,95 @@
 // login.js
 
 import {
-    getStudent,
-    createStudentAccount,
-    loginStudent
+    getTeacher,
+    createTeacherAccount,
+    loginTeacher
 } from "./loginFirebase.js";
+
+import {
+    VERSION,
+    ACADEMY_NAME,
+    ACADEMY_ADDRESS
+} from "../utils.js";
 
 // HTML 요소
 const phoneInput = document.getElementById("phoneInput");
 const loginBtn = document.getElementById("loginBtn");
+const academyName = document.querySelector(".footerLine1");
+const academyAddress = document.querySelector(".footerLine2");
+const version = document.getElementById("version");
+
+academyName.textContent = ACADEMY_NAME;
+academyAddress.textContent = ACADEMY_ADDRESS;
+version.textContent = `Ver ${VERSION}`;
 
 // 연락처 오류
 const phoneErrorModal = document.getElementById("phoneErrorModal");
 const phoneErrorMessage = document.getElementById("phoneErrorMessage");
 const phoneErrorOk = document.getElementById("phoneErrorOk");
 
-// 비밀번호 설정
+// 신규회원 비밀번호
 const joinModal = document.getElementById("joinModal");
 const newPw = document.getElementById("newPw");
 const newPwCheck = document.getElementById("newPwCheck");
-const pwError = document.getElementById("pwError");
-const pwOk = document.getElementById("pwOk");
-const pwCancel = document.getElementById("pwCancel");
+const joinPwMessage = document.getElementById("joinPwMessage");
+const joinPwOk = document.getElementById("joinPwOk");
+const joinPwCancel = document.getElementById("joinPwCancel");
 
-// 비밀번호 확인
+// 기존회원 비밀번호
 const loginModal = document.getElementById("loginModal");
-const passwordInput = document.getElementById("passwordInput");
-const passwordError = document.getElementById("passwordError");
-const passwordOk = document.getElementById("passwordOk");
-const passwordCancel = document.getElementById("passwordCancel");
+const loginPwInput = document.getElementById("loginPwInput");
+const loginPwMessage = document.getElementById("loginPwMessage");
+const loginPwOk = document.getElementById("loginPwOk");
+const loginPwCancel = document.getElementById("loginPwCancel");
 
 // 현재 전화번호
 let currentPhone = "";
+
+// 전화번호 숫자만 추출
+function getPhoneNumber() {
+    return phoneInput.value.replace(/[^0-9]/g, "").slice(0, 11);
+}
+
+// 전화번호 표시
+phoneInput.addEventListener("input", () => {
+    const phone = getPhoneNumber();
+
+    if (phone.length <= 3) {
+        phoneInput.value = phone;
+    } else if (phone.length <= 7) {
+        phoneInput.value =
+            `${phone.slice(0, 3)}-${phone.slice(3)}`;
+    } else {
+        phoneInput.value =
+            `${phone.slice(0, 3)}-${phone.slice(3, 7)}-${phone.slice(7)}`;
+    }
+});
 
 // 키보드 위치 조정
 function updateKeyboardPosition() {
     if (!window.visualViewport) return;
 
-    const modal = joinModal.classList.contains("hidden") ? loginModal : joinModal;
+    const modal = joinModal.classList.contains("hidden")
+        ? loginModal
+        : joinModal;
+
     if (modal.classList.contains("hidden")) return;
 
     const pwBox = modal.querySelector(".pwBox");
+
     if (!pwBox) return;
 
     const viewport = window.visualViewport;
     const rect = pwBox.getBoundingClientRect();
-    const visibleBottom = viewport.offsetTop + viewport.height;
-    const overlap = rect.bottom - visibleBottom;
+    const visibleBottom =
+        viewport.offsetTop + viewport.height;
+    const overlap =
+        rect.bottom - visibleBottom;
 
     if (overlap > 0) {
-        pwBox.style.transform = `translateY(-${overlap + 20}px)`;
+        pwBox.style.transform =
+            `translateY(-${overlap + 20}px)`;
     } else {
         pwBox.style.transform = "";
     }
@@ -57,27 +97,24 @@ function updateKeyboardPosition() {
 
 // 키보드 상태 감지
 if (window.visualViewport) {
-    window.visualViewport.addEventListener("resize", () => {
-        requestAnimationFrame(() => {updateKeyboardPosition();});
-    });
+    window.visualViewport.addEventListener(
+        "resize",
+        () => {
+            requestAnimationFrame(() => {
+                updateKeyboardPosition();
+            });
+        }
+    );
 }
 
-// 전화번호 표시
-phoneInput.addEventListener(
-    "input",
-    () => {
-        let phone = phoneInput.value.replace(/[^0-9]/g, "");
-        phone = phone.slice(0, 11);
+// 팝업 위치 초기화
+function resetPopupPosition(modal) {
+    const pwBox = modal.querySelector(".pwBox");
 
-        if (phone.length <= 3) {
-            phoneInput.value = phone;
-        } else if (phone.length <= 7) {
-            phoneInput.value = phone.slice(0, 3) + "-" + phone.slice(3);
-        } else {
-            phoneInput.value = phone.slice(0, 3) + "-" + phone.slice(3, 7) + "-" + phone.slice(7);
-        }
+    if (pwBox) {
+        pwBox.style.transform = "";
     }
-);
+}
 
 // 연락처 오류 표시
 function showPhoneError(message) {
@@ -86,195 +123,208 @@ function showPhoneError(message) {
 }
 
 // 연락처 오류 닫기
-phoneErrorOk.addEventListener("click", () => {phoneErrorModal.classList.add("hidden");});
+phoneErrorOk.addEventListener("click", () => {
+    phoneErrorModal.classList.add("hidden");
+});
 
-// 비밀번호 오류
-function showPwError(message) {pwError.textContent = message;}
+// 신규회원 비밀번호 메시지
+function showJoinPwMessage(message) {
+    joinPwMessage.textContent = message;
+}
 
-// 비밀번호 오류 초기화
-function clearPwError() {pwError.textContent = "";}
+function clearJoinPwMessage() {
+    joinPwMessage.textContent = "";
+}
 
-// 기존 비밀번호 오류
-function showPasswordError(message) {passwordError.textContent = message;}
+// 기존회원 비밀번호 메시지
+function showLoginPwMessage(message) {
+    loginPwMessage.textContent = message;
+}
 
-// 기존 비밀번호 오류 초기화
-function clearPasswordError() {passwordError.textContent = "";}
-
-// 팝업 위치 초기화
-function resetPopupPosition(modal) {
-    if (!modal) return;
-
-    const pwBox = modal.querySelector(".pwBox");
-    if (!pwBox) return;
-
-    pwBox.style.transform = "";
+function clearLoginPwMessage() {
+    loginPwMessage.textContent = "";
 }
 
 // 비밀번호 설정 모달
 function showJoinModal() {
-    clearPwError();
+    clearJoinPwMessage();
+
     newPw.value = "";
     newPwCheck.value = "";
+
     resetPopupPosition(joinModal);
     joinModal.classList.remove("hidden");
     newPw.focus();
 
     requestAnimationFrame(() => {
-        requestAnimationFrame(() => {updateKeyboardPosition();});
+        requestAnimationFrame(() => {
+            updateKeyboardPosition();
+        });
     });
 }
 
 // 비밀번호 확인 모달
 function showLoginModal() {
-    clearPasswordError();
-    passwordInput.value = "";
+    clearLoginPwMessage();
+
+    loginPwInput.value = "";
+
     resetPopupPosition(loginModal);
     loginModal.classList.remove("hidden");
-    passwordInput.focus();
+    loginPwInput.focus();
 
     requestAnimationFrame(() => {
-        requestAnimationFrame(() => {updateKeyboardPosition();});
+        requestAnimationFrame(() => {
+            updateKeyboardPosition();
+        });
     });
 }
 
 // 로그인 버튼
-loginBtn.addEventListener(
-    "click",
-    async () => {
-        let phone = phoneInput.value.replace(/[^0-9]/g, "");
+loginBtn.addEventListener("click", async () => {
+    const phone = getPhoneNumber();
 
-        // 전화번호 확인
-        if (phone.length !== 11 || !phone.startsWith("010")) {
-            showPhoneError("휴대전화 번호를 확인해주세요.");
-            return;
-        }
-
-        // Firebase 저장 형식
-        phone = phone.slice(0, 3) + "-" + phone.slice(3, 7) + "-" + phone.slice(7);
-
-        try {
-            // 학생 정보 확인
-            const student = await getStudent(phone);
-
-            // 등록된 학생이 아닌 경우
-            if (!student) {
-                showPhoneError("정보를 찾을 수 없습니다.");
-                return;
-            }
-
-            // 현재 전화번호 저장
-            currentPhone = phone;
-
-            // uid가 없는 경우
-            if (!student.uid) {
-                showJoinModal();
-                return;
-            }
-
-            // uid가 있는 경우
-            showLoginModal();
-
-        } catch (error) {
-            showPhoneError("로그인 중 오류가 발생했습니다.");
-        }
+    if (
+        phone.length !== 11 ||
+        !phone.startsWith("010")
+    ) {
+        showPhoneError("휴대전화 번호를 확인해주세요.");
+        return;
     }
-);
 
-// 비밀번호 설정
-pwOk.addEventListener(
-    "click",
-    async () => {
-        clearPwError();
+    const formattedPhone =
+        `${phone.slice(0, 3)}-${phone.slice(3, 7)}-${phone.slice(7)}`;
 
-        const password = newPw.value;
-        const passwordCheck = newPwCheck.value;
+    try {
+        const teacher =
+            await getTeacher(formattedPhone);
 
-        // 비밀번호 입력 확인
-        if (!password) {
-            showPwError("비밀번호를 입력해주세요.");
+        if (!teacher) {
+            showPhoneError("정보를 찾을 수 없습니다.");
             return;
         }
 
-        // 비밀번호 길이 확인
-        if (password.length < 6) {
-            showPwError("비밀번호는 6자 이상 입력해주세요.");
+        currentPhone = formattedPhone;
+
+        // 신규회원
+        if (
+            !teacher.uid &&
+            !teacher.deviceId
+        ) {
+            showJoinModal();
             return;
         }
 
-        // 비밀번호 확인
-        if (password !== passwordCheck) {
-            showPwError("비밀번호가 일치하지 않습니다.");
-            return;
-        }
-
-        try {
-            pwOk.disabled = true;
-
-            const success = await createStudentAccount(currentPhone, password);
-
-            if (!success) {
-                showPwError("비밀번호 설정에 실패했습니다.");
-                return;
-            }
-
-            joinModal.classList.add("hidden");
-            resetPopupPosition(joinModal);
-            location.href = "../attend/attend.html";
-
-        } catch (error) {
-            showPwError("비밀번호 설정 중 오류가 발생했습니다.");
-
-        } finally {
-            pwOk.disabled = false;
-        }
+        // 기존회원
+        // uid가 없어도 deviceId가 있으면
+        // 기존회원 연결 복구로 처리
+        showLoginModal();
+    } catch (error) {
+        console.error("getTeacher 오류:", error);
+        showPhoneError("로그인 중 오류가 발생했습니다.");
     }
-);
+});
 
-// 비밀번호 설정 취소
-pwCancel.addEventListener("click", () => {
+// 신규회원 비밀번호 설정
+joinPwOk.addEventListener("click", async () => {
+    clearJoinPwMessage();
+
+    const password = newPw.value;
+    const passwordCheck = newPwCheck.value;
+
+    if (!password) {
+        showJoinPwMessage("비밀번호를 입력해주세요.");
+        return;
+    }
+
+    if (password.length < 6) {
+        showJoinPwMessage("비밀번호는 6자 이상 입력해주세요.");
+        return;
+    }
+
+    if (password !== passwordCheck) {
+        showJoinPwMessage("비밀번호가 일치하지 않습니다.");
+        return;
+    }
+
+    try {
+        joinPwOk.disabled = true;
+
+        const result =
+            await createTeacherAccount(
+                currentPhone,
+                password
+            );
+
+        if (!result.success) {
+            showJoinPwMessage(
+                "비밀번호 설정에 실패했습니다."
+            );
+            return;
+        }
+
+        joinModal.classList.add("hidden");
+        resetPopupPosition(joinModal);
+
+        location.href =
+            "../loading/loading.html";
+    } finally {
+        joinPwOk.disabled = false;
+    }
+});
+
+// 신규회원 비밀번호 취소
+joinPwCancel.addEventListener("click", () => {
     joinModal.classList.add("hidden");
     resetPopupPosition(joinModal);
 });
 
 // 기존회원 비밀번호 확인
-passwordOk.addEventListener(
-    "click",
-    async () => {
-        clearPasswordError();
+loginPwOk.addEventListener("click", async () => {
+    clearLoginPwMessage();
 
-        const password = passwordInput.value;
+    const password = loginPwInput.value;
 
-        // 비밀번호 입력 확인
-        if (!password) {
-            showPasswordError("비밀번호를 입력해주세요.");
+    if (!password) {
+        showLoginPwMessage("비밀번호를 입력해주세요.");
+        return;
+    }
+
+    try {
+        loginPwOk.disabled = true;
+
+        const result =
+            await loginTeacher(
+                currentPhone,
+                password
+            );
+
+        if (!result.success) {
+            if (result.reason === "password") {
+                showLoginPwMessage(
+                    "비밀번호가 일치하지 않습니다."
+                );
+            } else {
+                showLoginPwMessage(
+                    "로그인 처리 중 오류가 발생했습니다."
+                );
+            }
+
             return;
         }
 
-        try {
-            passwordOk.disabled = true;
+        loginModal.classList.add("hidden");
+        resetPopupPosition(loginModal);
 
-            const success = await loginStudent(currentPhone, password);
-
-            if (!success) {
-                showPasswordError("비밀번호가 일치하지 않습니다.");
-                return;
-            }
-
-            loginModal.classList.add("hidden");
-            resetPopupPosition(loginModal);
-            location.href = "../attend/attend.html";
-
-        } catch (error) {
-            showPasswordError("비밀번호 확인 중 오류가 발생했습니다.");
-
-        } finally {
-            passwordOk.disabled = false;
-        }
+        location.href =
+            "../loading/loading.html";
+    } finally {
+        loginPwOk.disabled = false;
     }
-);
+});
 
 // 기존회원 비밀번호 취소
-passwordCancel.addEventListener("click", () => {
+loginPwCancel.addEventListener("click", () => {
     loginModal.classList.add("hidden");
     resetPopupPosition(loginModal);
 });

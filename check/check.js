@@ -1,159 +1,92 @@
 // check.js
 
-
 import {
-    getDeviceInfo,
-    updateAttendTimestamp,
+    getTeacherDeviceInfo,
     getAuthUser
 } from "./checkFirebase.js";
 
-const checkMessage = document.getElementById("checkMessage");
+import {
+    VERSION,
+    ACADEMY_NAME,
+    ACADEMY_ADDRESS,
+    getDeviceId
+} from "../utils.js";
+
+// HTML 요소
+const dots = document.querySelectorAll("#checkDots i");
+
+const PAGE_DELAY = 2000;
+const deviceId = getDeviceId();
+
+const academyName = document.querySelector(".footerLine1");
+const academyAddress = document.querySelector(".footerLine2");
+const version = document.getElementById("version");
+
+academyName.textContent = ACADEMY_NAME;
+academyAddress.textContent = ACADEMY_ADDRESS;
+version.textContent = `Ver ${VERSION}`;
 
 // 애니메이션
 function dotAnimation() {
-    const dot1 = document.querySelector(".dot1");
-    const dot2 = document.querySelector(".dot2");
-    const dot3 = document.querySelector(".dot3");
+    if (dots.length !== 3) {
+        return;
+    }
 
-    dot1.classList.remove("show");
-    dot2.classList.remove("show");
-    dot3.classList.remove("show");
+    dots.forEach(dot => {
+        dot.classList.remove("show");
+    });
 
     setTimeout(() => {
-        dot1.classList.add("show");
+        dots[0].classList.add("show");
 
         setTimeout(() => {
-            dot2.classList.add("show");
+            dots[1].classList.add("show");
 
             setTimeout(() => {
-                dot3.classList.add("show");
+                dots[2].classList.add("show");
 
-                // 다시 처음
-                setTimeout(() => {
-                    dotAnimation();
-                }, 700);
-            }, 700);
-        }, 700);
+                setTimeout(dotAnimation, 700);
+            }, 500);
+        }, 500);
     }, 500);
 }
 
-dotAnimation();
-
-
-// Device ID 확인
-let deviceId =
-    localStorage.getItem("deviceId");
-
-
-// Device ID가 없는 경우
-if (!deviceId) {
-    deviceId = crypto.randomUUID();
-
-    localStorage.setItem(
-        "deviceId",
-        deviceId
-    );
-
-}
-
-
-// 위치정보 확인
-function getLocation() {
-    return new Promise((resolve, reject) => {
-
-        navigator.geolocation.getCurrentPosition(
-            (position) => {
-                resolve(position);
-            },
-
-            (error) => {
-                reject(error);
-            },
-
-            {
-                enableHighAccuracy: true,
-                timeout: 5000,
-                maximumAge: 0
-            }
-        );
-    });
-}
-
-
-// 위치정보를 얻을 때까지 확인
-async function checkLocation() {
-    while (true) {
-        try {
-            const position =
-                await getLocation();
-
-            return position;
-
-        } catch (error) {
-
-        }
-    }
-}
-
-
 // 화면 전환
 async function movePage(url) {
-
-    // 자동 로그인 화면 최소 2초 유지
-    await new Promise(resolve =>
-        setTimeout(resolve, 2000)
-    );
+    await new Promise(resolve => {
+        setTimeout(resolve, PAGE_DELAY);
+    });
 
     location.href = url;
 }
 
-
 // 로그인 확인
 async function checkLogin() {
     try {
+        const snapshot =
+            await getTeacherDeviceInfo(deviceId);
 
-        // 위치정보 확인
-        const position = await checkLocation();
-
-        // 위치정보 및 QR 인식 시간 갱신
-        await updateAttendTimestamp(
-            deviceId,
-            position.coords.latitude,
-            position.coords.longitude
-        );
-
-        // Firebase에서 Device ID 확인
-        const snapshot = await getDeviceInfo(deviceId);
-
-        // Firebase Authentication 확인
         const user = getAuthUser();
-        let isLogin = false;
 
-        // Auth 사용자가 있는 경우
-        if (
-            user
-            && snapshot.exists()
-            && snapshot.val().uid === user.uid
-        ) {
-            isLogin = true;
-        }
+        const deviceData = snapshot.exists()
+            ? snapshot.val()
+            : null;
 
-        // 정상 로그인
+        const isLogin =
+            user &&
+            deviceData &&
+            deviceData.uid === user.uid;
+
         if (isLogin) {
-            await movePage( "../attend/attend.html");
-
+            await movePage("../loading/loading.html");
             return;
         }
 
-        // 로그인 필요
-        await movePage( "../login/login.html");
-
+        await movePage("../login/login.html");
     } catch (error) {
-
-        // 오류 발생 시 로그인
-        await movePage( "../login/login.html");
-
+        await movePage("../login/login.html");
     }
 }
 
+dotAnimation();
 checkLogin();

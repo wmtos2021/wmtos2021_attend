@@ -1,0 +1,148 @@
+/* adminNews.css */
+
+/* NEWS 팝업 */
+.informModal{
+    position:fixed;
+    inset:0;
+    z-index:1000;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+    background:rgba(0,0,0,.35);
+}
+.informModalBox{
+    width:100%;
+    max-width:330px;
+    max-height:70vh;
+    overflow:hidden;
+    padding:22px 20px;
+    background:#FFFFFF;
+    border-radius:12px;
+    box-shadow:0 8px 30px rgba(0,0,0,.15);
+}
+.informModalTitle{
+    position:relative;
+    margin:0;
+    font-size:18px;
+    font-weight:700;
+    color:#E67E22;
+}
+.informModalClose{
+    position:absolute;
+    top:50%;
+    right:0;
+    width:24px;
+    height:24px;
+    padding:0;
+    border:none;
+    background:transparent;
+    transform:translateY(-50%);
+    cursor:pointer;
+}
+.informModalClose::before,
+.informModalClose::after{
+    content:"";
+    position:absolute;
+    top:50%;
+    left:50%;
+    width:18px;
+    height:1.3px;
+    background:#777777;
+    border-radius:2px;
+}
+.informModalClose::before{
+    transform:translate(-50%,-50%) rotate(45deg);
+}
+.informModalClose::after{
+    transform:translate(-50%,-50%) rotate(-45deg);
+}
+.informModalClose:active{
+    transform:translateY(-50%) scale(0.9);
+}
+.informModalLine{
+    width:100%;
+    border-top:1px solid #E8E4DC;
+    margin-top:15px;
+}
+.informModalList{
+    max-height:320px;
+    overflow-y:auto;
+}
+
+/* NEWS 항목 */
+.informItem{
+    display:flex;
+    align-items:center;
+    padding:14px 0;
+    border-bottom:1px solid #E8E4DC;
+}
+.informItem:last-child{
+    border-bottom:none;
+}
+.informItemContent{
+    flex:1;
+    min-width:0;
+}
+.informItemName{
+    margin-bottom:5px;
+    font-size:14px;
+    letter-spacing:-0.3px;
+    font-weight:700;
+    color:#333333;
+    word-break:break-all;
+}
+.informItemProduct{
+    margin-bottom:10px;
+    font-size:14px;
+    font-weight:500;
+    color:#444444;
+    word-break:break-all;
+}
+.informItemDate{
+    font-size:12px;
+    color:#999999;
+}
+
+/* 지급 완료 버튼 */
+.informCompleteBtn{
+    flex:0 0 58px;
+    width:58px;
+    height:58px;
+    padding:0;
+    border:none;
+    border-radius:10px;
+    background:#E67E22;
+    color:#FFFFFF;
+    font-size:13px;
+    font-weight:700;
+    line-height:1.3;
+    cursor:pointer;
+}
+.informCompleteBtn:hover{
+    background:#D96F16;
+}
+.informCompleteBtn:disabled{
+    background:#D8D3C9;
+    cursor:default;
+}
+
+/* 알림 없음 */
+.informEmpty{
+    padding:30px 10px;
+    text-align:center;
+    font-size:14px;
+    color:#999999;
+}
+
+/* 스크롤 */
+.informModalList::-webkit-scrollbar{
+    width:4px;
+}
+.informModalList::-webkit-scrollbar-thumb{
+    background:#D8D3C9;
+    border-radius:4px;
+}
+.informModalList::-webkit-scrollbar-track{
+    background:transparent;
+}

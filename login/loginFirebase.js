@@ -3,14 +3,15 @@
 import {
     ref,
     get,
-    update,
-    remove
+    update
 } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-database.js";
 
 import {
     createUserWithEmailAndPassword,
     signInWithEmailAndPassword,
-    updateProfile
+    updateProfile,
+    deleteUser,
+    signOut
 } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-auth.js";
 
 import {
@@ -18,55 +19,77 @@ import {
     auth
 } from "../firebase.js";
 
-
 // Firebase Auth용 이메일 생성
 function getAuthEmail(phone) {
-    return `${phone}@wmtos2026.firebaseapp.com`;
+    return `t${phone}@wmtos2026.firebaseapp.com`;
 }
 
+// 선생님 정보 가져오기
+export async function getTeacher(phone) {
+    const snapshot = await get(
+        ref(db, `teacher/${phone}`)
+    );
 
-// 학생 정보 가져오기
-export async function getStudent(phone) {
-    const snapshot =
-        await get(
-            ref(
-                db,
-                `student/${phone}`
-            )
-        );
+    return snapshot.exists()
+        ? snapshot.val()
+        : null;
+}
 
-    if (!snapshot.exists()) {
-        return null;
+// 로그인 정보 저장
+async function saveLoginData(
+    phone,
+    teacher,
+    uid,
+    deviceId,
+    oldDeviceId = null
+) {
+    const updates = {
+        [`teacher/${phone}/uid`]: uid,
+        [`teacher/${phone}/deviceId`]: deviceId,
+        [`deviceId/teacher/${deviceId}/uid`]: uid,
+        [`deviceId/teacher/${deviceId}/mobile`]: phone,
+        [`deviceId/teacher/${deviceId}/name`]: teacher.name || "",
+        [`deviceId/teacher/${deviceId}/class`]: teacher.class || {},
+        [`authUser/teacher/${uid}/name`]: teacher.name || "",
+        [`authUser/teacher/${uid}/mobile`]: phone
+    };
+
+    if (oldDeviceId && oldDeviceId !== deviceId) {
+        updates[`deviceId/teacher/${oldDeviceId}`] = null;
     }
 
-    return snapshot.val();
+    await update(
+        ref(db),
+        updates
+    );
 }
 
-
 // 신규회원 계정 생성
-export async function createStudentAccount(
+export async function createTeacherAccount(
     phone,
     password
 ) {
-    try {
-        // 학생 정보 확인
-        const student =
-            await getStudent(phone);
+    let user = null;
 
-        if (!student) {
-            return false;
+    try {
+        const teacher = await getTeacher(phone);
+
+        if (!teacher) {
+            return {
+                success: false,
+                reason: "teacher"
+            };
         }
 
-        // 현재 Device ID 가져오기
-        // ※ 여기서는 절대 새로 생성하지 않음
-        const deviceId =
-            localStorage.getItem("deviceId");
+        const deviceId = localStorage.getItem("deviceId");
 
         if (!deviceId) {
-            return false;
+            return {
+                success: false,
+                reason: "device"
+            };
         }
 
-        // Firebase Auth 계정 생성
         const email = getAuthEmail(phone);
 
         const userCredential =
@@ -76,169 +99,146 @@ export async function createStudentAccount(
                 password
             );
 
-        const user = userCredential.user;
+        user = userCredential.user;
 
-        // Auth 프로필 이름 설정
-        await updateProfile(
-            user,
-            {
-                displayName:
-                    student.name || ""
-            }
+        await updateProfile(user, {
+            displayName: teacher.name || ""
+        });
+
+        await saveLoginData(
+            phone,
+            teacher,
+            user.uid,
+            deviceId
         );
 
-        // 학생 정보 저장
-        await update(
-            ref(
-                db,
-                `student/${phone}`
-            ),
-            {
-                uid: user.uid,
-                deviceId: deviceId
-            }
-        );
-
-        // Device ID에 회원정보 연결
-        await update(
-            ref(
-                db,
-                `deviceId/${deviceId}`
-            ),
-            {
-                uid: user.uid,
-                mobile: phone,
-                name: student.name || "",
-                class: student.class || ""
-            }
-        );
-
-        // UID별 회원 정보
-        await update(
-            ref(
-                db,
-                `authUser/${user.uid}`
-            ),
-            {
-                name: student.name || "",
-                mobile: phone
-            }
-        );
-
-        return true;
-
+        return {
+            success: true
+        };
     } catch (error) {
+        console.error(
+            "선생님 계정 생성 오류:",
+            error.code,
+            error.message
+        );
 
-        return false;
+        if (user) {
+            try {
+                await deleteUser(user);
+            } catch (deleteError) {
+                console.error(
+                    "Auth 계정 삭제 오류:",
+                    deleteError
+                );
+            }
+        }
+
+        return {
+            success: false,
+            reason: "error"
+        };
     }
 }
 
-
 // 기존회원 로그인
-export async function loginStudent(
+export async function loginTeacher(
     phone,
     password
 ) {
     try {
-        // 학생 정보 확인
-        const student =
-            await getStudent(phone);
+        const teacher = await getTeacher(phone);
 
-        if (!student) {
-            return false;
+        if (!teacher) {
+            return {
+                success: false,
+                reason: "teacher"
+            };
         }
 
-        // 기존 UID 확인
-        if (!student.uid) {
-            return false;
-        }
-
-        // 현재 Device ID 가져오기
-        // ※ 여기서도 절대 새로 생성하지 않음
-        const deviceId =
-            localStorage.getItem("deviceId");
+        const deviceId = localStorage.getItem("deviceId");
 
         if (!deviceId) {
-            return false;
+            return {
+                success: false,
+                reason: "device"
+            };
         }
 
-        // Firebase Auth 로그인
         const email = getAuthEmail(phone);
 
-        const userCredential =
-            await signInWithEmailAndPassword(
-                auth,
-                email,
-                password
+        let userCredential;
+
+        try {
+            userCredential =
+                await signInWithEmailAndPassword(
+                    auth,
+                    email,
+                    password
+                );
+        } catch (error) {
+            console.error(
+                "Firebase 선생님 로그인 오류:",
+                error.code,
+                error.message
             );
+
+            return {
+                success: false,
+                reason: "password"
+            };
+        }
 
         const user = userCredential.user;
 
-        // Auth UID 확인
+        // 기존 uid가 있는 선생님은 uid 일치 여부 확인
         if (
-            user.uid !== student.uid
+            teacher.uid &&
+            user.uid !== teacher.uid
         ) {
-            return false;
+            await signOut(auth).catch(() => {});
+
+            return {
+                success: false,
+                reason: "uid"
+            };
         }
 
-        // 기존 Device ID
-        const oldDeviceId =
-            student.deviceId;
+        const oldDeviceId = teacher.deviceId;
 
-        // 기존 Device ID와 현재 Device ID가
-        // 다른 경우 기존 Device ID 삭제
-        if (
-            oldDeviceId &&
-            oldDeviceId !== deviceId
-        ) {
-            await remove(
-                ref(
-                    db,
-                    `deviceId/${oldDeviceId}`
-                )
+        try {
+            await saveLoginData(
+                phone,
+                teacher,
+                user.uid,
+                deviceId,
+                oldDeviceId
             );
+        } catch (error) {
+            console.error(
+                "선생님 로그인 데이터 저장 오류:",
+                error
+            );
+
+            await signOut(auth).catch(() => {});
+
+            return {
+                success: false,
+                reason: "database"
+            };
         }
 
-        // 학생 정보에 현재 Device ID 저장
-        await update(
-            ref(
-                db,
-                `student/${phone}`
-            ),
-            {
-                deviceId: deviceId
-            }
-        );
-
-        // 현재 Device ID에 회원정보 연결
-        await update(
-            ref(
-                db,
-                `deviceId/${deviceId}`
-            ),
-            {
-                uid: user.uid,
-                mobile: phone,
-                name: student.name || "",
-                class: student.class || ""
-            }
-        );
-
-        // UID별 회원 정보
-        await update(
-            ref(
-                db,
-                `authUser/${user.uid}`
-            ),
-            {
-                name: student.name || "",
-                mobile: phone
-            }
-        );
-
-        return true;
-
+        return {
+            success: true
+        };
     } catch (error) {
-        return false;
+        console.error(
+            "선생님 로그인 처리 오류:",
+            error
+        );
+
+        return {
+            success: false,
+            reason: "error"
+        };
     }
 }

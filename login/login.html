@@ -4,23 +4,19 @@
 <html lang="ko">
 
 <head>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>출석체크</title>
-
+    <title>위드엠투에스학원</title>
     <link rel="stylesheet" href="login.css">
-
 </head>
 
 <body>
 
     <div class="container">
 
-        <h1>
-        <span class="titleW">위드</span><span class="titleM">엠</span><span class="titleTos">투에스</span><span class="titleAcademy">학원</span>
-        </h1>
+        <div class="academyBrand">
+            <img src="../imageLogin/학원명1_투명.webp" class="academyName">
+        </div>
 
         <input
             type="tel"
@@ -68,21 +64,24 @@
                 id="newPwCheck"
                 placeholder="새 비밀번호 확인">
 
-            <div id="pwError" class="pwError"></div>
+            <div id="joinPwMessage" class="pwError"></div>
 
             <div class="modalButton">
-                <button id="pwOk">
+
+                <button id="joinPwOk">
                     확인
                 </button>
 
-                <button id="pwCancel">
+                <button id="joinPwCancel">
                     취소
                 </button>
+
             </div>
 
         </div>
 
     </div>
+
 
     <!-- 비밀번호 확인 -->
     <div id="loginModal" class="modal hidden">
@@ -93,41 +92,35 @@
 
             <input
                 type="password"
-                id="passwordInput"
+                id="loginPwInput"
                 placeholder="비밀번호를 입력하세요.">
 
-            <div id="passwordError" class="pwError"></div>
+            <div id="loginPwMessage" class="pwError"></div>
 
             <div class="modalButton">
 
-                <button id="passwordOk">
+                <button id="loginPwOk">
                     확인
                 </button>
 
-                <button id="passwordCancel">
+                <button id="loginPwCancel">
                     취소
                 </button>
+
             </div>
-        </div>
-    </div>    
 
-
-    <div class="footerLine"></div>    
-    
-    <div class="footerLeft">
-        <div class="footerLine1">
-            <span class="footerW">위드</span><span class="footerM">엠</span><span class="footerTos">투에스</span><span class="footerAcademy">학원</span>
         </div>
 
-        <div class="footerLine2">
-            경남 김해시 활천로 168, 2층
-        </div>
-
-    </div>    
-
-    <div class="footerRight">
-        Ver 1.0.7
     </div>
+
+
+    <!-- 하단 왼쪽 정보 -->
+    <div class="footerLeft">
+        <div class="footerLine1"></div>
+        <div class="footerLine2"></div>
+    </div>
+    <!-- 하단 오른쪽 정보 -->
+    <div class="footerRight" id="version"></div>
 
 
     <script type="module" src="login.js"></script>

@@ -1,4 +1,4 @@
-/* check.css */
+/* loading.css */
 
 * {
     margin: 0;
@@ -16,65 +16,16 @@ body {
 body {
     position: fixed;
     inset: 0;
+    width: 100%;
     height: 100dvh;
     background: #F8F5EF;
     font-family: Arial, sans-serif;
     color: #333333;
+    overflow: hidden;
     overscroll-behavior: none;
 }
 
-/* 위치정보 알림 */
-.locationModal {
-    position: fixed;
-    inset: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
-    background: rgba(0, 0, 0, 0.35);
-    z-index: 1000;
-}
-
-.locationModal.hidden {
-    display: none;
-}
-
-.locationModalBox {
-    width: 100%;
-    max-width: 320px;
-    padding: 30px 25px;
-    background: #FFFFFF;
-    border: 1px solid #BFE5E2;
-    border-radius: 12px;
-    text-align: center;
-}
-
-.locationMessage {
-    margin-bottom: 20px;
-    font-size: 14px;
-    line-height: 1.6;
-    color: #444444;
-    white-space: pre-line;
-}
-
-#locationConfirmBtn {
-    width: 100%;
-    height: 45px;
-    border: none;
-    border-radius: 8px;
-    background: #0CA19B;
-    color: #FFFFFF;
-    font-size: 15px;
-    font-weight: 600;
-    cursor: pointer;
-}
-
-#locationConfirmBtn:active {
-    background: #087E78;
-}
-
-/* 자동 로그인 */
-#checkMessage {
+#loading {
     position: fixed;
     inset: 0;
     width: 100%;
@@ -87,45 +38,50 @@ body {
     font-weight: 600;
     letter-spacing: 1px;
     transform: translateY(-40px);
-    z-index: 10;
+    z-index: 9999;
 }
 
-.checkText {
+#loading.hidden {
+    display: none;
+}
+
+.loadingText {
     display: inline-block;
     white-space: nowrap;
+    letter-spacing: 1px;
 }
 
-#checkDots {
+.loadingDots {
     position: absolute;
-    left: calc(50% + 84px);
+    left: calc(50% + 49px);
     display: inline-flex;
     align-items: flex-end;
     width: auto;
     height: 24px;
 }
 
-#checkDots i {
+.loadingDots i {
     display: none;
     width: 7px;
     height: 7px;
     border-radius: 1px;
 }
 
-#checkDots i.show {
+.loadingDots i.show {
     display: block;
 }
 
-#checkDots i:nth-child(1) {
+.loadingDots i:nth-child(1) {
     background: #E67E22;
     margin-left: 0;
 }
 
-#checkDots i:nth-child(2) {
+.loadingDots i:nth-child(2) {
     background: #E6B800;
     margin-left: 8px;
 }
 
-#checkDots i:nth-child(3) {
+.loadingDots i:nth-child(3) {
     background: #0CA19B;
     margin-left: 8px;
 }
@@ -141,6 +97,7 @@ body {
 }
 
 .footerLine1 {
+    margin-bottom: 0;
     font-size: 18px;
     font-weight: 300;
     letter-spacing: 0.5px;
@@ -148,6 +105,7 @@ body {
 }
 
 .footerLine2 {
+    margin-bottom: 0;
     font-size: 12px;
     font-weight: 300;
     color: #FFFFFF;
