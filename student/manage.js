@@ -2,10 +2,12 @@
 
 import {
     getManageStudents,
-    getDiligence,
-    saveAttendance,
-    saveHomework
+    getDiligence
 } from "./manageFirebase.js";
+
+import {
+    initManageSave
+} from "./manageSave.js";
 
 // HTML 로딩 상태
 let loaded = false;
@@ -30,6 +32,7 @@ export async function loadManage() {
         loadManageCss();
 
         loaded = true;
+
         bindManage();
 
     } catch (error) {
@@ -48,7 +51,6 @@ function loadManageCss() {
     }
 
     const link = document.createElement("link");
-
     link.rel = "stylesheet";
     link.href = "../student/manage.css";
     link.dataset.manageCss = "true";
@@ -68,12 +70,12 @@ function bindManage() {
     loadClasses(manageClass);
     loadDates(manageDate);
 
-    manageClass.addEventListener("change", () => {
-        loadStudents();
+    manageClass.addEventListener("change", async () => {
+        await loadStudents();
     });
 
-    manageDate.addEventListener("change", () => {
-        loadStudents();
+    manageDate.addEventListener("change", async () => {
+        await loadStudents();
     });
 }
 
@@ -84,7 +86,6 @@ function loadClasses(select) {
     select.innerHTML = "";
 
     const defaultOption = document.createElement("option");
-
     defaultOption.value = "";
     defaultOption.textContent = "수업을 선택해주세요.";
     defaultOption.disabled = true;
@@ -94,7 +95,6 @@ function loadClasses(select) {
 
     classData.forEach(className => {
         const option = document.createElement("option");
-
         option.value = className;
         option.textContent = className;
 
@@ -116,7 +116,6 @@ function loadDates(select) {
         const dateKey = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
 
         const option = document.createElement("option");
-
         option.value = dateKey;
         option.textContent = dateKey;
 
@@ -164,213 +163,21 @@ async function loadStudents() {
     studentEntries.forEach(([mobile, name]) => {
         const row = template.content.firstElementChild.cloneNode(true);
 
-        const studentName = row.querySelector(".manageStudentName");
         const studentNameText = row.querySelector(".manageStudentNameText");
         const studentDiligence = row.querySelector(".manageStudentDiligence");
-        const attendanceStatus = row.querySelector(".manageAttendanceStatus");
-        const attendanceButtons = row.querySelector(".manageAttendanceButtons");
-        const homeworkStatus = row.querySelector(".manageHomeworkStatus");
-        const homeworkButtons = row.querySelector(".manageHomeworkButtons");
 
         studentNameText.textContent = name;
         studentDiligence.textContent = `(${diligenceMap[mobile]})`;
 
-        setAttendance(
-            management,
-            mobile,
-            attendanceStatus,
-            attendanceButtons,
-            studentDiligence,
-            manageClass.value,
-            manageDate.value,
-            name
-        );
-
-        setHomework(
-            management,
-            mobile,
-            homeworkStatus,
-            homeworkButtons,
-            studentDiligence,
-            manageClass.value,
-            manageDate.value,
-            name
-        );
+        row.dataset.mobile = mobile;
+        row.dataset.name = name;
 
         studentRows.appendChild(row);
     });
-}
 
-// 출석 상태 설정
-function setAttendance(management, mobile, statusElement, buttonsElement, diligenceElement, className, dateKey, name) {
-    const attend = management.attend || {};
-
-    if (attend.absent?.[mobile]) {
-        statusElement.textContent = "결석";
-        buttonsElement.hidden = true;
-        buttonsElement.style.display = "none";
-        return;
-    }
-
-    if (attend.late?.[mobile] || attend.late10?.[mobile]) {
-        statusElement.textContent = "지각";
-        buttonsElement.hidden = true;
-        buttonsElement.style.display = "none";
-        return;
-    }
-
-    if (attend.ontime?.[mobile]) {
-        statusElement.textContent = "출석";
-        buttonsElement.hidden = true;
-        buttonsElement.style.display = "none";
-        return;
-    }
-
-    statusElement.textContent = "";
-    buttonsElement.hidden = false;
-    buttonsElement.style.display = "flex";
-
-    const buttons = buttonsElement.querySelectorAll(".manageAttendanceBtn");
-
-    buttons.forEach(button => {
-        button.addEventListener("click", async () => {
-            buttons.forEach(item => {
-                item.disabled = true;
-            });
-
-            let status = "";
-
-            if (button.classList.contains("ontime")) {
-                status = "ontime";
-            }
-
-            if (button.classList.contains("late")) {
-                status = "late";
-            }
-
-            if (button.classList.contains("absent")) {
-                status = "absent";
-            }
-
-            try {
-                const result = await saveAttendance(
-                    className,
-                    dateKey,
-                    mobile,
-                    name,
-                    status
-                );
-
-                if (status === "ontime") {
-                    statusElement.textContent = "출석";
-                }
-
-                if (status === "late") {
-                    statusElement.textContent = "지각";
-                }
-
-                if (status === "absent") {
-                    statusElement.textContent = "결석";
-                }
-
-                diligenceElement.textContent = `(${result.diligence})`;
-
-                buttonsElement.hidden = true;
-                buttonsElement.style.display = "none";
-
-                if (status === "absent") {
-                    const row = buttonsElement.closest(".manageStudentRow");
-                    const homeworkStatus = row.querySelector(".manageHomeworkStatus");
-                    const homeworkButtons = row.querySelector(".manageHomeworkButtons");
-
-                    homeworkStatus.textContent = "결석";
-                    homeworkButtons.hidden = true;
-                    homeworkButtons.style.display = "none";
-                }
-
-            } catch (error) {
-                buttons.forEach(item => {
-                    item.disabled = false;
-                });
-            }
-        });
-    });
-}
-
-// 숙제 상태 설정
-function setHomework(management, mobile, statusElement, buttonsElement, diligenceElement, className, dateKey, name) {
-    const homework = management.homework || {};
-
-    if (homework.done?.[mobile]) {
-        statusElement.textContent = "완료";
-        buttonsElement.hidden = true;
-        buttonsElement.style.display = "none";
-        return;
-    }
-
-    if (homework.notdone?.[mobile]) {
-        statusElement.textContent = "미완료";
-        buttonsElement.hidden = true;
-        buttonsElement.style.display = "none";
-        return;
-    }
-
-    if (homework.absent?.[mobile]) {
-        statusElement.textContent = "결석";
-        buttonsElement.hidden = true;
-        buttonsElement.style.display = "none";
-        return;
-    }
-
-    statusElement.textContent = "";
-    buttonsElement.hidden = false;
-    buttonsElement.style.display = "flex";
-
-    const buttons = buttonsElement.querySelectorAll(".manageHomeworkBtn");
-
-    buttons.forEach(button => {
-        button.addEventListener("click", async () => {
-            buttons.forEach(item => {
-                item.disabled = true;
-            });
-
-            let status = "";
-
-            if (button.classList.contains("done")) {
-                status = "done";
-            }
-
-            if (button.classList.contains("notDone")) {
-                status = "notdone";
-            }
-
-            try {
-                const result = await saveHomework(
-                    className,
-                    dateKey,
-                    mobile,
-                    name,
-                    status
-                );
-
-                if (status === "done") {
-                    statusElement.textContent = "완료";
-                }
-
-                if (status === "notdone") {
-                    statusElement.textContent = "미완료";
-                }
-
-                diligenceElement.textContent = `(${result.diligence})`;
-
-                buttonsElement.hidden = true;
-                buttonsElement.style.display = "none";
-
-            } catch (error) {
-                buttons.forEach(item => {
-                    item.disabled = false;
-                });
-            }
-        });
-    });
+    initManageSave(
+        manageClass.value,
+        manageDate.value,
+        management
+    );
 }
