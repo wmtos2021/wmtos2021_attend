@@ -1,0 +1,94 @@
+<!-- manage.html -->
+
+<h3>
+    학생 출석/숙제
+</h3>
+
+<div class="manageSelect">
+    <select id="manageClass">
+        <option
+            value=""
+            disabled
+            selected>
+            수업을 선택해주세요.
+        </option>
+    </select>
+
+    <select id="manageDate">
+        <option
+            value=""
+            disabled
+            selected>
+            날짜를 선택해주세요.
+        </option>
+    </select>
+</div>
+
+<div class="manageStudentList">
+    <div class="manageStudentHeader">
+        <span>이름</span>
+        <span>출석</span>
+        <span>숙제</span>
+    </div>
+
+    <div
+        id="manageStudentRows"
+        class="manageStudentRows">
+    </div>
+</div>
+
+<template id="manageStudentTemplate">
+    <div class="manageStudentRow">
+        <span class="manageStudentName">
+            <span class="manageStudentNameText">
+            </span>
+
+            <span class="manageStudentDiligence">
+            </span>
+        </span>
+
+        <span class="manageAttendance">
+            <span class="manageAttendanceStatus">
+            </span>
+
+            <span class="manageAttendanceButtons">
+                <button
+                    class="manageAttendanceBtn ontime"
+                    type="button">
+                    출석
+                </button>
+
+                <button
+                    class="manageAttendanceBtn late"
+                    type="button">
+                    지각
+                </button>
+
+                <button
+                    class="manageAttendanceBtn absent"
+                    type="button">
+                    결석
+                </button>
+            </span>
+        </span>
+
+        <span class="manageHomework">
+            <span class="manageHomeworkStatus">
+            </span>
+
+            <span class="manageHomeworkButtons">
+                <button
+                    class="manageHomeworkBtn done"
+                    type="button">
+                    완료
+                </button>
+
+                <button
+                    class="manageHomeworkBtn notDone"
+                    type="button">
+                    미완료
+                </button>
+            </span>
+        </span>
+    </div>
+</template>

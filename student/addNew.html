@@ -1,0 +1,96 @@
+<!-- addNew.html -->
+
+<div class="addNew">
+    <h3>학생 등록</h3>
+
+    <div class="addNewForm">
+        <div class="addNewField">
+            <label for="studentName">이름</label>
+
+            <div class="addNewInputGroup">
+                <input id="studentName" type="text" autocomplete="off">
+
+                <button id="studentNameCheck" type="button">
+                    중복확인
+                </button>
+
+                <button id="studentNameEdit" type="button" disabled>
+                    수정
+                </button>
+            </div>
+
+            <p id="studentNameMessage"></p>
+        </div>
+
+        <div class="addNewField">
+            <label for="studentMobile">전화번호</label>
+
+            <div class="addNewInputGroup">
+                <input
+                    id="studentMobile"
+                    type="tel"
+                    inputmode="numeric"
+                    autocomplete="off"
+                    placeholder="010-0000-0000">
+
+                <button id="studentMobileCheck" type="button">
+                    중복확인
+                </button>
+
+                <button id="studentMobileEdit" type="button" disabled>
+                    수정
+                </button>
+            </div>
+
+            <p id="studentMobileMessage"></p>
+        </div>
+
+        <label for="studentBirthday">
+            <span>생년월일</span>
+            <input
+                id="studentBirthday"
+                type="text"
+                inputmode="numeric"
+                maxlength="10"
+                autocomplete="off"
+                placeholder="8자리 입력해주세요.">
+        </label>
+
+        <label for="studentEnrollment">
+            <span>등록일</span>
+            <input
+                id="studentEnrollment"
+                type="text"
+                inputmode="numeric"
+                maxlength="10"
+                autocomplete="off"
+                placeholder="8자리 입력해주세요.">
+        </label>
+
+        <label for="studentClass">
+            <span>수업</span>
+            <select id="studentClass"></select>
+        </label>
+
+        <button id="studentAddSubmit" type="button">
+            학생 등록
+        </button>
+
+        <p id="studentAddMessage"></p>
+    </div>
+</div>
+
+<!-- 중복확인 안내 팝업 -->
+<div id="studentCheckPopup" class="studentAddPopup">
+    <div class="studentAddPopupBox">
+        <p id="studentCheckPopupMessage"></p>
+    </div>
+</div>
+
+<!-- 학생 등록 완료 팝업 -->
+<div id="studentAddPopup" class="studentAddPopup">
+    <div class="studentAddPopupBox">
+        <p>학생 등록이 완료되었습니다.</p>
+        <button id="studentAddPopupClose" type="button">확인</button>
+    </div>
+</div>

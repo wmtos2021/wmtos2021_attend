@@ -1,4 +1,4 @@
-// adminNews.js
+// news.js
 
 import {
     onValue,

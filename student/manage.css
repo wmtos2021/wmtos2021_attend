@@ -1,0 +1,246 @@
+/* manage.css */
+
+/* 학생 출석/숙제 영역 */
+.manageSelect{
+    width:100%;
+    display:flex;
+    align-items:center;
+    gap:8px;
+    margin-bottom:20px;
+}
+.manageSelect select{
+    height:42px;
+    padding:0 34px 0 12px;
+    border:1px solid #D8D3C9;
+    border-radius:6px;
+    background:#FFFFFF;
+    font-family:inherit;
+    font-size:14px;
+    color:#333333;
+    outline:none;
+    cursor:pointer;
+    appearance:none;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24'%3E%3Cpath d='M6 9l6 6 6-6' fill='none' stroke='%23777777' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-repeat:no-repeat;
+    background-position:right 12px center;
+    background-size:12px;
+}
+.manageSelect select:focus{
+    border-color:#0CA19B;
+}
+#manageClass{
+    flex:1;
+    min-width:0;
+}
+#manageDate{
+    width:140px;
+    flex-shrink:0;
+}
+
+/* 학생 목록 */
+.manageStudentList{
+    width:100%;
+    margin-top:0;
+    border-top:1px solid #DDD9D0;
+    overflow:hidden;
+}
+.manageStudentHeader,
+.manageStudentRow{
+    width:100%;
+    display:grid;
+    grid-template-columns:minmax(90px,1fr) 150px 120px;
+    column-gap:8px;
+    align-items:center;
+}
+.manageStudentHeader{
+    min-height:38px;
+    border-bottom:1px solid #DDD9D0;
+    background:#F4F1EB;
+    font-size:13px;
+    font-weight:700;
+    color:#666666;
+}
+.manageStudentHeader span{
+    min-width:0;
+    text-align:center;
+}
+.manageStudentHeader span:first-child{
+    text-align:center;
+    padding-left:0;
+    position:relative;
+    left:-6px;
+}
+.manageStudentHeader span:nth-child(2){
+    position:relative;
+    left:-6px;
+}
+.manageStudentHeader span:nth-child(3){
+    text-align:center;
+}
+.manageStudentRow{
+    min-height:44px;
+    border-bottom:1px solid #E8E4DC;
+    font-size:14px;
+    color:#333333;
+}
+.manageStudentName{
+    min-width:0;
+    padding-left:8px;
+    font-weight:600;
+    text-align:left;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+.manageStudentNameText{
+    display:inline;
+}
+.manageStudentDiligence{
+    display:inline;
+    margin-left:3px;
+    font-size:12px;
+    font-weight:500;
+    color:#777777;
+    white-space:nowrap;
+}
+.manageAttendance,
+.manageHomework{
+    min-width:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    font-size:13px;
+    font-weight:600;
+}
+.manageAttendance{
+    position:relative;
+    left:-6px;
+}
+.manageAttendanceStatus,
+.manageHomeworkStatus{
+    display:block;
+    white-space:nowrap;
+}
+
+/* 출석 버튼 */
+.manageAttendanceButtons{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    white-space:nowrap;
+}
+.manageAttendanceBtn{
+    width:46px;
+    height:28px;
+    flex:0 0 46px;
+    padding:0;
+    border-radius:5px;
+    background:#FFFFFF;
+    font-family:inherit;
+    font-size:11px;
+    font-weight:600;
+    cursor:pointer;
+    border:1px solid #D8D3C9;
+    white-space:nowrap;
+    box-sizing:border-box;
+}
+.manageAttendanceBtn.ontime{
+    border-color:#07852F;
+    color:#07852F;
+}
+.manageAttendanceBtn.late{
+    border-color:#C57A00;
+    color:#C57A00;
+}
+.manageAttendanceBtn.absent{
+    border-color:#CE0707;
+    color:#CE0707;
+}
+
+/* 숙제 버튼 */
+.manageHomeworkButtons{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    white-space:nowrap;
+}
+.manageHomeworkBtn{
+    width:46px;
+    height:28px;
+    flex:0 0 46px;
+    padding:0;
+    border-radius:5px;
+    background:#FFFFFF;
+    font-family:inherit;
+    font-size:11px;
+    font-weight:600;
+    cursor:pointer;
+    border:1px solid #D8D3C9;
+    white-space:nowrap;
+    box-sizing:border-box;
+}
+.manageHomeworkBtn.done{
+    border-color:#07852F;
+    color:#07852F;
+}
+.manageHomeworkBtn.notDone{
+    border-color:#CE0707;
+    color:#CE0707;
+}
+
+/* 작은 휴대폰 */
+@media (max-width:380px){
+    .manageSelect{
+        gap:6px;
+    }
+    #manageDate{
+        width:132px;
+    }
+    .manageStudentHeader,
+    .manageStudentRow{
+        grid-template-columns:minmax(82px,1fr) 148px 116px;
+        column-gap:6px;
+    }
+    .manageAttendance,
+    .manageAttendanceButtons,
+    .manageStudentHeader span:nth-child(2){
+        left:-4px;
+    }
+    .manageAttendanceButtons,
+    .manageHomeworkButtons{
+        gap:6px;
+    }
+    .manageAttendanceBtn,
+    .manageHomeworkBtn{
+        width:44px;
+        flex-basis:44px;
+    }
+}
+
+/* 매우 작은 휴대폰 */
+@media (max-width:340px){
+    .manageSelect{
+        gap:5px;
+    }
+    #manageDate{
+        width:126px;
+    }
+    .manageStudentHeader,
+    .manageStudentRow{
+        grid-template-columns:minmax(76px,1fr) 140px 110px;
+        column-gap:5px;
+    }
+    .manageAttendanceButtons,
+    .manageHomeworkButtons{
+        gap:5px;
+    }
+    .manageAttendanceBtn,
+    .manageHomeworkBtn{
+        width:42px;
+        flex-basis:42px;
+        font-size:10px;
+    }
+}

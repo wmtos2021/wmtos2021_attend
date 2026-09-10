@@ -20,7 +20,6 @@ let processingKey = null;
 // Inbox 초기화
 export function initInbox() {
     if (!newsHistoryList) {
-        console.error("Inbox 초기화 실패: newsHistoryList를 찾을 수 없습니다.");
         return;
     }
 

@@ -220,8 +220,13 @@ hr{
     display:flex;
     align-items:center;
     justify-content:center;
-    color:#999999;
-    font-size:14px;
+}
+.emptyLogo{
+    width:220px;
+    height:auto;
+    display:block;
+    opacity:0.2;
+    transform:translateY(-40px);
 }
 .pageContent{
     width:100%;

@@ -9,13 +9,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>관리자</title>
     <link rel="stylesheet" href="./admin.css">
-    <link rel="stylesheet" href="./adminNews.css">
+    <link rel="stylesheet" href="./news.css">
     <link rel="stylesheet" href="./inbox.css">
 </head>
 
 <body>
 
-```
 <div class="container">
 
     <!-- 상단 -->
@@ -24,7 +23,7 @@
         <div class="leftHeader">
 
             <p class="hello">
-                오늘도 힘내요!
+                안녕하세요.
             </p>
 
             <h2 class="title">
@@ -83,6 +82,7 @@
 
             </button>
 
+            <!--
             <button
                 id="academyMenuBtn"
                 class="mainMenuBtn"
@@ -100,6 +100,7 @@
                 </span>
 
             </button>
+            -->
 
             <button
                 id="etcMenuBtn"
@@ -131,17 +132,31 @@
                 id="studentPanel"
                 class="panelContent hidden">
 
+                <!-- 출석부 -->
+                <button
+                    id="attendanceBtn"
+                    class="panelItem"
+                    type="button">
+
+                    <span class="panelItemTitle">
+                        학생 출석<span class="menuDivider">/</span>숙제
+                    </span>
+
+                </button>
+
+                <!-- 학생 조회/관리 -->
                 <button
                     id="studentListBtn"
                     class="panelItem"
                     type="button">
 
                     <span class="panelItemTitle">
-                        학생 조회<span class="menuDivider">/</span>관리
+                        학생 조회<span class="menuDivider">/</span>변경
                     </span>
 
                 </button>
 
+                <!-- 학생 등록 -->
                 <button
                     id="studentAddBtn"
                     class="panelItem"
@@ -155,7 +170,7 @@
 
             </div>
 
-            <!-- 학원관리 -->
+            <!-- 학원관리
             <div
                 id="academyPanel"
                 class="panelContent hidden">
@@ -183,12 +198,14 @@
                 </button>
 
             </div>
+            -->
 
             <!-- 기타관리 -->
             <div
                 id="etcPanel"
                 class="panelContent hidden">
 
+                <!--
                 <button
                     id="goldShopBtn"
                     class="panelItem"
@@ -199,6 +216,7 @@
                     </span>
 
                 </button>
+                -->
 
                 <button
                     id="newsHistoryBtn"
@@ -230,11 +248,30 @@
             id="defaultContent"
             class="defaultContent">
 
-            <p>
-                관리할 메뉴를 선택해주세요.
-            </p>
+            <img
+                class="emptyLogo"
+                src="../imageLogin/로고_투명.webp"
+                alt="">
 
         </div>
+
+        <!-- 학생 출석/숙제 -->
+        <section
+            id="attendanceContent"
+            class="pageContent hidden">
+        </section>
+
+        <!-- 학생 조회 -->
+        <section
+            id="studentListContent"
+            class="pageContent hidden">
+        </section>
+
+        <!-- 학생 등록 -->
+        <section
+            id="studentAddContent"
+            class="pageContent hidden">
+        </section>
 
         <!-- 시간표 -->
         <section
@@ -254,28 +291,6 @@
 
             <h3>
                 선생님 등록/관리
-            </h3>
-
-        </section>
-
-        <!-- 학생 등록 -->
-        <section
-            id="studentAddContent"
-            class="pageContent hidden">
-
-            <h3>
-                학생 등록
-            </h3>
-
-        </section>
-
-        <!-- 학생 조회 -->
-        <section
-            id="studentListContent"
-            class="pageContent hidden">
-
-            <h3>
-                학생 조회/관리
             </h3>
 
         </section>
@@ -360,7 +375,6 @@
 </div>
 
 <script type="module" src="./admin.js"> </script>
-
 
 </body>
 
