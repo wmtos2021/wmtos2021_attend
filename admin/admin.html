@@ -1,6 +1,7 @@
 <!-- admin.html -->
 
 <!DOCTYPE html>
+
 <html lang="ko">
 
 <head>
@@ -14,48 +15,52 @@
 
 <body>
 
-    <div class="container">
+```
+<div class="container">
 
-        <!-- 상단 -->
-        <header class="header">
+    <!-- 상단 -->
+    <header class="header">
 
-            <div class="leftHeader">
+        <div class="leftHeader">
 
-                <p class="hello">
-                    오늘도 힘내요!
-                </p>
+            <p class="hello">
+                오늘도 힘내요!
+            </p>
 
-                <h2 class="title">
-                    관리자님
-                </h2>
+            <h2 class="title">
+                관리자님
+            </h2>
 
-            </div>
+        </div>
 
-            <div class="rightHeader">
+        <div class="rightHeader">
 
-                <button
-                    id="informBtn"
-                    class="informBtn"
-                    type="button"
-                    aria-label="알림">
+            <button
+                id="informBtn"
+                class="informBtn"
+                type="button"
+                aria-label="알림">
 
-                    <img
-                        src="../imageAdmin/bell.webp"
-                        class="bellIcon"
-                        alt="">
+                <img
+                    src="../imageAdmin/bell.webp"
+                    class="bellIcon"
+                    alt="">
 
-                    <span
-                        id="informBadge"
-                        class="informBadge hidden">
-                    </span>
+                <span
+                    id="informBadge"
+                    class="informBadge hidden">
+                </span>
 
-                </button>
+            </button>
 
-            </div>
+        </div>
 
-        </header>
+    </header>
 
-        <hr class="line">
+    <hr class="line">
+
+    <!-- 상단 메뉴 + 드롭다운 -->
+    <div class="menuArea">
 
         <!-- 상단 메뉴 -->
         <nav class="mainMenu">
@@ -210,152 +215,152 @@
 
         </div>
 
-        <!-- 콘텐츠 위 구분선 -->
-        <hr class="contentLine">
-
-        <!-- 콘텐츠 -->
-        <main
-            id="contentArea"
-            class="contentArea">
-
-            <!-- 기본 화면 -->
-            <div
-                id="defaultContent"
-                class="defaultContent">
-
-                <p>
-                    관리할 메뉴를 선택해주세요.
-                </p>
-
-            </div>
-
-            <!-- 시간표 -->
-            <section
-                id="scheduleContent"
-                class="pageContent hidden">
-
-                <h3>
-                    시간표 작성/관리
-                </h3>
-
-            </section>
-
-            <!-- 선생님 -->
-            <section
-                id="teacherContent"
-                class="pageContent hidden">
-
-                <h3>
-                    선생님 등록/관리
-                </h3>
-
-            </section>
-
-            <!-- 학생 등록 -->
-            <section
-                id="studentAddContent"
-                class="pageContent hidden">
-
-                <h3>
-                    학생 등록
-                </h3>
-
-            </section>
-
-            <!-- 학생 조회 -->
-            <section
-                id="studentListContent"
-                class="pageContent hidden">
-
-                <h3>
-                    학생 조회/관리
-                </h3>
-
-            </section>
-
-            <!-- 골드상점 -->
-            <section
-                id="goldShopContent"
-                class="pageContent hidden">
-
-                <h3>
-                    골드상점 관리
-                </h3>
-
-            </section>
-
-            <!-- NEWS 조회 -->
-            <section
-                id="newsHistoryContent"
-                class="pageContent hidden">
-
-                <h3>
-                    NEWS 조회
-                </h3>
-
-                <div
-                    id="newsHistoryList"
-                    class="newsHistoryList">
-                </div>
-
-            </section>
-
-        </main>
-
-        <!-- 하단 구분선 -->
-        <hr class="footerLine">
-
     </div>
 
-    <!-- NEWS 팝업 -->
-    <div
-        id="informModal"
-        class="informModal hidden">
+    <!-- 콘텐츠 위 구분선 -->
+    <hr class="contentLine">
 
-        <div class="informModalBox">
+    <!-- 콘텐츠 -->
+    <main
+        id="contentArea"
+        class="contentArea">
 
-            <h3 class="informModalTitle">
+        <!-- 기본 화면 -->
+        <div
+            id="defaultContent"
+            class="defaultContent">
 
-                NEWS
+            <p>
+                관리할 메뉴를 선택해주세요.
+            </p>
 
-                <button
-                    id="informModalClose"
-                    class="informModalClose"
-                    type="button"
-                    aria-label="NEWS 닫기">
-                </button>
+        </div>
 
+        <!-- 시간표 -->
+        <section
+            id="scheduleContent"
+            class="pageContent hidden">
+
+            <h3>
+                시간표 작성/관리
             </h3>
 
-            <div class="informModalLine"></div>
+        </section>
+
+        <!-- 선생님 -->
+        <section
+            id="teacherContent"
+            class="pageContent hidden">
+
+            <h3>
+                선생님 등록/관리
+            </h3>
+
+        </section>
+
+        <!-- 학생 등록 -->
+        <section
+            id="studentAddContent"
+            class="pageContent hidden">
+
+            <h3>
+                학생 등록
+            </h3>
+
+        </section>
+
+        <!-- 학생 조회 -->
+        <section
+            id="studentListContent"
+            class="pageContent hidden">
+
+            <h3>
+                학생 조회/관리
+            </h3>
+
+        </section>
+
+        <!-- 골드상점 -->
+        <section
+            id="goldShopContent"
+            class="pageContent hidden">
+
+            <h3>
+                골드상점 관리
+            </h3>
+
+        </section>
+
+        <!-- NEWS 조회 -->
+        <section
+            id="newsHistoryContent"
+            class="pageContent hidden">
+
+            <h3>
+                NEWS 조회
+            </h3>
 
             <div
-                id="informModalList"
-                class="informModalList">
+                id="newsHistoryList"
+                class="newsHistoryList">
             </div>
 
+        </section>
+
+    </main>
+
+    <!-- 하단 구분선 -->
+    <hr class="footerLine">
+
+</div>
+
+<!-- NEWS 팝업 -->
+<div
+    id="informModal"
+    class="informModal hidden">
+
+    <div class="informModalBox">
+
+        <h3 class="informModalTitle">
+
+            NEWS
+
+            <button
+                id="informModalClose"
+                class="informModalClose"
+                type="button"
+                aria-label="NEWS 닫기">
+            </button>
+
+        </h3>
+
+        <div class="informModalLine"></div>
+
+        <div
+            id="informModalList"
+            class="informModalList">
         </div>
 
     </div>
 
-    <!-- 하단 왼쪽 정보 -->
-    <div class="footerLeft">
+</div>
 
-        <div class="footerLine1"></div>
-        <div class="footerLine2"></div>
+<!-- 하단 왼쪽 정보 -->
+<div class="footerLeft">
 
-    </div>
+    <div class="footerLine1"></div>
+    <div class="footerLine2"></div>
 
-    <!-- 하단 오른쪽 정보 -->
-    <div
-        class="footerRight"
-        id="version">
-    </div>
+</div>
 
-    <script
-        type="module"
-        src="./admin.js">
-    </script>
+<!-- 하단 오른쪽 정보 -->
+<div
+    class="footerRight"
+    id="version">
+</div>
+
+<script type="module" src="./admin.js"> </script>
+
 
 </body>
 
