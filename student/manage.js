@@ -112,7 +112,7 @@ function loadClasses(select) {
 
     const defaultOption = document.createElement("option");
     defaultOption.value = "";
-    defaultOption.textContent = "수업을 선택해주세요.";
+    defaultOption.textContent = "수업을 선택하세요.";
     defaultOption.disabled = true;
     defaultOption.selected = true;
 

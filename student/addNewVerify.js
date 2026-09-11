@@ -140,7 +140,7 @@ export function validateStudentInput({
     if (!studentClass) {
         return {
             valid: false,
-            message: "수업을 선택해주세요.",
+            message: "수업을 선택하세요.",
             target: "class"
         };
     }
