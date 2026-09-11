@@ -1,6 +1,16 @@
 /* addNew.css */
 
+/* 메인 콘텐츠 영역 */
+#studentAddContent{
+    flex:1;
+    min-height:0;
+    overflow-y:auto;
+    overflow-x:hidden;
+    box-sizing:border-box;
+}
+
 /* 학생 등록 영역 */
+
 .addNew{
     width:100%;
 }
@@ -21,6 +31,7 @@
 }
 
 /* 등록 폼 */
+
 .addNewForm{
     width:100%;
     display:flex;
@@ -79,6 +90,7 @@
 }
 
 /* 입력 영역 */
+
 .addNewField{
     width:100%;
 }
@@ -108,6 +120,7 @@
 }
 
 /* 중복확인·수정 버튼 */
+
 .addNewInputGroup button{
     width:78px;
     height:42px;
@@ -129,6 +142,7 @@
 }
 
 /* 수업 선택 영역 */
+
 .addNewClass{
     width:100%;
     display:flex;
@@ -176,6 +190,7 @@
 }
 
 /* 입력 항목 안내 메시지 */
+
 .addNewField p{
     min-height:16px;
     margin:5px 0 0;
@@ -192,6 +207,7 @@
 }
 
 /* 등록 결과 메시지 */
+
 #studentAddMessage{
     min-height:18px;
     margin:0;
@@ -201,6 +217,7 @@
 }
 
 /* 학생 등록 완료 팝업 */
+
 .studentAddPopup{
     position:fixed;
     top:0;
