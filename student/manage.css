@@ -1,6 +1,7 @@
 /* manage.css */
 
 /* 학생 출석/숙제 제목 */
+
 .manageTitle{
     width:100%;
     display:flex;
@@ -8,30 +9,40 @@
     justify-content:space-between;
     margin-bottom:20px;
 }
+
 .manageTitle h3{
     margin:0;
+    font-size:18px;
+    font-weight:700;
+    color:#0CA19B;
 }
 
 /* 입력하기 버튼 */
+
 .manageSaveBtn{
+    width:90px;
     height:34px;
-    padding:0 12px;
+    padding:0;
     border:1px solid #0CA19B;
-    border-radius:5px;
+    border-radius:6px;
     background:#FFFFFF;
     color:#0CA19B;
     font-family:inherit;
-    font-size:12px;
+    font-size:13px;
     font-weight:700;
+    letter-spacing:0.5px;
     cursor:pointer;
     white-space:nowrap;
+    transform:translateY(5px);
 }
+
 .manageSaveBtn:disabled{
     opacity:0.45;
     cursor:default;
 }
 
 /* 수업 / 날짜 선택 */
+
 .manageSelect{
     width:100%;
     display:flex;
@@ -39,6 +50,7 @@
     gap:8px;
     margin-bottom:20px;
 }
+
 .manageSelect select{
     height:42px;
     padding:0 34px 0 12px;
@@ -56,25 +68,35 @@
     background-position:right 12px center;
     background-size:12px;
 }
+
 .manageSelect select:focus{
     border-color:#0CA19B;
 }
+
+#manageSubject{
+    width:78px;
+    flex:0 0 78px;
+}
+
 #manageClass{
     flex:1;
     min-width:0;
 }
+
 #manageDate{
-    width:140px;
-    flex-shrink:0;
+    width:124px;
+    flex:0 0 124px;
 }
 
 /* 학생 목록 */
+
 .manageStudentList{
     width:100%;
     margin-top:0;
     border-top:1px solid #DDD9D0;
     overflow:hidden;
 }
+
 .manageStudentHeader,
 .manageStudentRow{
     width:100%;
@@ -83,6 +105,7 @@
     column-gap:8px;
     align-items:center;
 }
+
 .manageStudentHeader{
     min-height:38px;
     border-bottom:1px solid #DDD9D0;
@@ -91,26 +114,32 @@
     font-weight:700;
     color:#666666;
 }
+
 .manageStudentHeader span{
     min-width:0;
     text-align:center;
 }
+
 .manageStudentHeader span:first-child{
     text-align:center;
     padding-left:0;
 }
+
 .manageStudentHeader span:nth-child(2){
     text-align:center;
 }
+
 .manageStudentHeader span:nth-child(3){
     text-align:center;
 }
+
 .manageStudentRow{
     min-height:44px;
     border-bottom:1px solid #E8E4DC;
     font-size:14px;
     color:#333333;
 }
+
 .manageStudentName{
     min-width:0;
     padding-left:8px;
@@ -120,9 +149,11 @@
     overflow:hidden;
     text-overflow:ellipsis;
 }
+
 .manageStudentNameText{
     display:inline;
 }
+
 .manageStudentDiligence{
     display:inline;
     margin-left:3px;
@@ -131,6 +162,7 @@
     color:#777777;
     white-space:nowrap;
 }
+
 .manageAttendance,
 .manageHomework{
     min-width:0;
@@ -141,6 +173,7 @@
     font-size:13px;
     font-weight:600;
 }
+
 .manageAttendanceStatus,
 .manageHomeworkStatus{
     display:none;
@@ -148,6 +181,7 @@
 }
 
 /* 출석 버튼 */
+
 .manageAttendanceButtons{
     display:flex;
     align-items:center;
@@ -155,6 +189,7 @@
     gap:4px;
     white-space:nowrap;
 }
+
 .manageAttendanceBtn{
     width:44px;
     height:28px;
@@ -173,40 +208,49 @@
     opacity:0.45;
     transition:opacity 0.15s, background 0.15s, color 0.15s;
 }
+
 .manageAttendanceBtn.ontime{
     border-color:#07852F;
     color:#07852F;
 }
+
 .manageAttendanceBtn.late{
     border-color:#C57A00;
     color:#C57A00;
 }
+
 .manageAttendanceBtn.absent{
     border-color:#CE0707;
     color:#CE0707;
 }
+
 .manageAttendanceBtn.selected{
     opacity:1;
     color:#FFFFFF;
 }
+
 .manageAttendanceBtn.ontime.selected{
     background:#07852F;
     border-color:#07852F;
 }
+
 .manageAttendanceBtn.late.selected{
     background:#C57A00;
     border-color:#C57A00;
 }
+
 .manageAttendanceBtn.absent.selected{
     background:#CE0707;
     border-color:#CE0707;
 }
+
 .manageAttendanceBtn:disabled{
     opacity:0.25;
     cursor:default;
 }
 
 /* 숙제 버튼 */
+
 .manageHomeworkButtons{
     display:flex;
     align-items:center;
@@ -214,6 +258,7 @@
     gap:4px;
     white-space:nowrap;
 }
+
 .manageHomeworkBtn{
     width:44px;
     height:28px;
@@ -232,56 +277,77 @@
     opacity:0.45;
     transition:opacity 0.15s, background 0.15s, color 0.15s;
 }
+
 .manageHomeworkBtn.done{
     border-color:#07852F;
     color:#07852F;
 }
+
 .manageHomeworkBtn.notDone{
     border-color:#CE0707;
     color:#CE0707;
 }
+
 .manageHomeworkBtn.selected{
     opacity:1;
     color:#FFFFFF;
 }
+
 .manageHomeworkBtn.done.selected{
     background:#07852F;
     border-color:#07852F;
 }
+
 .manageHomeworkBtn.notDone.selected{
     background:#CE0707;
     border-color:#CE0707;
 }
+
 .manageHomeworkBtn:disabled{
     opacity:0.25;
     cursor:default;
 }
 
 /* 작은 휴대폰 */
+
 @media (max-width:380px){
+
     .manageTitle{
         margin-bottom:18px;
     }
+
     .manageSaveBtn{
+        width:90px;
         height:32px;
-        padding:0 10px;
-        font-size:11px;
+        padding:0;
+        font-size:12px;
     }
+
     .manageSelect{
         gap:6px;
     }
-    #manageDate{
-        width:132px;
+
+    #manageSubject{
+        width:70px;
+        flex:0 0 70px;
     }
+
+    #manageDate{
+        width:124px;
+        flex:0 0 124px;
+    }
+
     .manageStudentHeader,
     .manageStudentRow{
         grid-template-columns:minmax(82px,1fr) 148px 116px;
         column-gap:6px;
     }
+
     .manageAttendanceButtons,
     .manageHomeworkButtons{
         gap:3px;
     }
+
     .manageAttendanceBtn,
     .manageHomeworkBtn{
         width:42px;
@@ -290,30 +356,45 @@
 }
 
 /* 매우 작은 휴대폰 */
+
 @media (max-width:340px){
+
     .manageTitle{
         margin-bottom:16px;
     }
+
     .manageSaveBtn{
+        width:90px;
         height:30px;
-        padding:0 9px;
-        font-size:10px;
+        padding:0;
+        font-size:11px;
     }
+
     .manageSelect{
         gap:5px;
     }
-    #manageDate{
-        width:126px;
+
+    #manageSubject{
+        width:66px;
+        flex:0 0 66px;
     }
+
+    #manageDate{
+        width:118px;
+        flex:0 0 118px;
+    }
+
     .manageStudentHeader,
     .manageStudentRow{
         grid-template-columns:minmax(76px,1fr) 140px 110px;
         column-gap:5px;
     }
+
     .manageAttendanceButtons,
     .manageHomeworkButtons{
         gap:3px;
     }
+
     .manageAttendanceBtn,
     .manageHomeworkBtn{
         width:40px;

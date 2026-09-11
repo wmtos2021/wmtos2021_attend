@@ -5,9 +5,17 @@
     width:100%;
 }
 
+.addNewHeader{
+    width:100%;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-bottom:20px;
+}
+
 .addNew h3{
-    margin:0 0 20px;
-    font-size:16px;
+    margin:0;
+    font-size:18px;
     font-weight:700;
     color:#0CA19B;
 }
@@ -18,19 +26,6 @@
     display:flex;
     flex-direction:column;
     gap:14px;
-}
-
-.addNewForm label{
-    width:100%;
-    display:flex;
-    flex-direction:column;
-    gap:6px;
-}
-
-.addNewForm label span{
-    font-size:13px;
-    font-weight:700;
-    color:#555555;
 }
 
 .addNewForm input,
@@ -61,26 +56,29 @@
 }
 
 /* 학생 등록 버튼 */
-.addNewForm > button{
-    width:100%;
-    height:44px;
-    margin-top:4px;
-    border:0;
+
+.addNewHeader button{
+    width:90px;
+    height:34px;
+    padding:0;
+    border:1px solid #0CA19B;
     border-radius:6px;
-    background:#0CA19B;
-    color:#FFFFFF;
+    background:#FFFFFF;
+    color:#0CA19B;
     font-family:inherit;
-    font-size:14px;
+    font-size:13px;
     font-weight:700;
+    letter-spacing:0.5px;
     cursor:pointer;
+    transform:translateY(5px);
 }
 
-.addNewForm button:disabled{
+.addNewHeader button:disabled{
     opacity:.5;
     cursor:default;
 }
 
-/* 이름·전화번호 입력 영역 */
+/* 입력 영역 */
 .addNewField{
     width:100%;
 }
@@ -88,7 +86,7 @@
 .addNewField > label{
     display:block;
     margin-bottom:6px;
-    font-size:13px;
+    font-size:14px;
     font-weight:700;
     color:#555555;
 }
@@ -130,12 +128,63 @@
     cursor:default;
 }
 
+/* 수업 선택 영역 */
+.addNewClass{
+    width:100%;
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+}
+
+.addNewClass > span{
+    font-size:14px;
+    font-weight:700;
+    color:#555555;
+}
+
+.addNewClassSelect{
+    width:100%;
+    display:flex;
+    gap:8px;
+}
+
+.addNewClassSelect select{
+    height:42px;
+    padding:0 12px;
+    border:1px solid #D8D3C9;
+    border-radius:6px;
+    background:#FFFFFF;
+    font-family:inherit;
+    font-size:14px;
+    color:#333333;
+    outline:none;
+    cursor:pointer;
+}
+
+#studentSubject{
+    width:100px;
+    flex:0 0 100px;
+}
+
+#studentClass{
+    flex:1;
+    min-width:0;
+}
+
+.addNewClassSelect select:focus{
+    border-color:#0CA19B;
+}
+
 /* 입력 항목 안내 메시지 */
 .addNewField p{
     min-height:16px;
     margin:5px 0 0;
     font-size:12px;
     color:#D9534F;
+}
+
+.addNewField p:empty{
+    display:none;
 }
 
 .addNewField p.success{

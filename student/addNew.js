@@ -1,7 +1,11 @@
 // addNew.js
 
 import { getMathClasses, saveStudent } from "./addNewFirebase.js";
-import { formatMobile, formatDateInput, setToday } from "./addNewFormat.js";
+import {
+    formatMobile,
+    formatDateInput,
+    setToday
+} from "./addNewFormat.js";
 import {
     validateName,
     validateMobile,
@@ -26,6 +30,8 @@ export async function loadAddNew() {
     }
 
     try {
+        await loadAddNewCss();
+
         const response = await fetch("../student/addNew.html");
 
         if (!response.ok) {
@@ -33,8 +39,6 @@ export async function loadAddNew() {
         }
 
         content.innerHTML = await response.text();
-
-        loadAddNewCss();
 
         bindAddNew();
 
@@ -50,17 +54,42 @@ export async function loadAddNew() {
 
 // 학생 등록 CSS
 function loadAddNewCss() {
-    if (document.querySelector('link[data-add-new-css]')) {
-        return;
+    const existingLink = document.querySelector('link[data-add-new-css]');
+
+    if (existingLink) {
+        if (existingLink.sheet) {
+            return Promise.resolve();
+        }
+
+        return new Promise((resolve, reject) => {
+            existingLink.addEventListener("load", resolve, { once:true });
+            existingLink.addEventListener("error", reject, { once:true });
+        });
     }
 
-    const link = document.createElement("link");
+    return new Promise((resolve, reject) => {
+        const link = document.createElement("link");
 
-    link.rel = "stylesheet";
-    link.href = "../student/addNew.css";
-    link.dataset.addNewCss = "true";
+        link.rel = "stylesheet";
+        link.href = "../student/addNew.css";
+        link.dataset.addNewCss = "true";
 
-    document.head.appendChild(link);
+        link.addEventListener("load", resolve, { once:true });
+        link.addEventListener("error", reject, { once:true });
+
+        document.head.appendChild(link);
+    });
+}
+
+// 안내 팝업 표시
+function showMessagePopup(popup, messageElement, message) {
+    messageElement.textContent = message;
+    popup.classList.add("show");
+}
+
+// 안내 팝업 닫기
+function closeMessagePopup(popup) {
+    popup.classList.remove("show");
 }
 
 // 학생 등록 이벤트 연결
@@ -77,37 +106,25 @@ function bindAddNew() {
     const studentMobileMessage = document.getElementById("studentMobileMessage");
     const studentClass = document.getElementById("studentClass");
     const studentAddSubmit = document.getElementById("studentAddSubmit");
-    const studentAddMessage = document.getElementById("studentAddMessage");
+    const studentCheckPopup = document.getElementById("studentCheckPopup");
+    const studentCheckPopupMessage = document.getElementById("studentCheckPopupMessage");
+    const studentCheckPopupClose = document.getElementById("studentCheckPopupClose");
     const studentAddPopup = document.getElementById("studentAddPopup");
     const studentAddPopupClose = document.getElementById("studentAddPopupClose");
 
-    if (
-        !studentName ||
-        !studentMobile ||
-        !studentBirthday ||
-        !studentEnrollment ||
-        !studentNameCheck ||
-        !studentMobileCheck ||
-        !studentNameEdit ||
-        !studentMobileEdit ||
-        !studentNameMessage ||
-        !studentMobileMessage ||
-        !studentClass ||
-        !studentAddSubmit ||
-        !studentAddMessage ||
-        !studentAddPopup ||
-        !studentAddPopupClose
-    ) {
+    if (!studentName || !studentMobile || !studentBirthday || !studentEnrollment || !studentNameCheck || !studentMobileCheck || !studentNameEdit || !studentMobileEdit || !studentNameMessage || !studentMobileMessage || !studentClass || !studentAddSubmit || !studentCheckPopup || !studentCheckPopupMessage || !studentCheckPopupClose || !studentAddPopup || !studentAddPopupClose) {
         return;
     }
 
+    // 안내 팝업 닫기
+    studentCheckPopupClose.addEventListener("click", () => {
+        closeMessagePopup(studentCheckPopup);
+    });
+
     // 학생 등록 완료 팝업 닫기
-    studentAddPopupClose.addEventListener(
-        "click",
-        () => {
-            studentAddPopup.classList.remove("show");
-        }
-    );
+    studentAddPopupClose.addEventListener("click", () => {
+        studentAddPopup.classList.remove("show");
+    });
 
     nameChecked = false;
     mobileChecked = false;
@@ -119,17 +136,19 @@ function bindAddNew() {
 
     loadMathClasses(studentClass);
 
+    // 이름 입력
     studentName.addEventListener("input", () => {
         if (studentName.disabled) {
             return;
         }
 
         nameChecked = false;
+
         studentNameMessage.textContent = "";
         studentNameMessage.className = "";
-        studentAddMessage.textContent = "";
     });
 
+    // 전화번호 입력
     studentMobile.addEventListener("input", () => {
         if (studentMobile.disabled) {
             return;
@@ -138,43 +157,46 @@ function bindAddNew() {
         studentMobile.value = formatMobile(studentMobile.value);
 
         mobileChecked = false;
+
         studentMobileMessage.textContent = "";
         studentMobileMessage.className = "";
-        studentAddMessage.textContent = "";
     });
 
+    // 생년월일 입력
     studentBirthday.addEventListener("input", () => {
         studentBirthday.value = formatDateInput(studentBirthday.value);
-        studentAddMessage.textContent = "";
     });
 
+    // 등록일 입력
     studentEnrollment.addEventListener("input", () => {
         studentEnrollment.value = formatDateInput(studentEnrollment.value);
-        studentAddMessage.textContent = "";
     });
 
-    studentClass.addEventListener("change", () => {
-        studentAddMessage.textContent = "";
-    });
-
+    // 이름 중복확인
     studentNameCheck.addEventListener("click", async () => {
         await checkName(
             studentName,
             studentNameCheck,
             studentNameEdit,
-            studentNameMessage
+            studentNameMessage,
+            studentCheckPopup,
+            studentCheckPopupMessage
         );
     });
 
+    // 전화번호 중복확인
     studentMobileCheck.addEventListener("click", async () => {
         await checkMobile(
             studentMobile,
             studentMobileCheck,
             studentMobileEdit,
-            studentMobileMessage
+            studentMobileMessage,
+            studentCheckPopup,
+            studentCheckPopupMessage
         );
     });
 
+    // 이름 수정
     studentNameEdit.addEventListener("click", () => {
         studentName.disabled = false;
         studentNameCheck.disabled = false;
@@ -184,11 +206,11 @@ function bindAddNew() {
 
         studentNameMessage.textContent = "";
         studentNameMessage.className = "";
-        studentAddMessage.textContent = "";
 
         studentName.focus();
     });
 
+    // 전화번호 수정
     studentMobileEdit.addEventListener("click", () => {
         studentMobile.disabled = false;
         studentMobileCheck.disabled = false;
@@ -198,11 +220,11 @@ function bindAddNew() {
 
         studentMobileMessage.textContent = "";
         studentMobileMessage.className = "";
-        studentAddMessage.textContent = "";
 
         studentMobile.focus();
     });
 
+    // 학생 등록
     studentAddSubmit.addEventListener("click", async () => {
         await addStudent(
             studentName,
@@ -211,16 +233,18 @@ function bindAddNew() {
             studentEnrollment,
             studentClass,
             studentAddSubmit,
-            studentAddMessage,
+            studentNameCheck,
+            studentMobileCheck,
             studentNameMessage,
             studentMobileMessage,
             studentNameEdit,
             studentMobileEdit,
-            studentAddPopup
+            studentAddPopup,
+            studentCheckPopup,
+            studentCheckPopupMessage
         );
     });
 }
-
 
 // 수학 수업 불러오기
 async function loadMathClasses(select) {
@@ -256,7 +280,7 @@ async function loadMathClasses(select) {
 }
 
 // 이름 중복확인
-async function checkName(input, button, editButton, message) {
+async function checkName(input, button, editButton, message, popup, popupMessage) {
     if (input.disabled || button.disabled) {
         return;
     }
@@ -267,7 +291,7 @@ async function checkName(input, button, editButton, message) {
     message.className = "";
 
     if (!validateName(inputName)) {
-        message.textContent = "이름을 입력해주세요.";
+        showMessagePopup(popup, popupMessage, "이름을 입력해주세요.");
         return;
     }
 
@@ -275,19 +299,20 @@ async function checkName(input, button, editButton, message) {
 
     try {
         const result = await verifyStudentName(inputName);
-
         const baseName = inputName.replace(/\d/g, "");
 
         if (result.duplicate) {
-            message.textContent = `${baseName} ${result.count}명 있습니다. ${result.name}로 저장합니다.`;
-            message.className = "";
+            showMessagePopup(
+                popup,
+                popupMessage,
+                `${baseName} ${result.count}명 있습니다. ${result.name}로 저장합니다.`
+            );
         } else {
             message.textContent = "중복확인 완료";
             message.className = "success";
         }
 
         input.value = result.name;
-
         input.disabled = true;
 
         nameChecked = true;
@@ -295,14 +320,15 @@ async function checkName(input, button, editButton, message) {
         editButton.disabled = false;
     } catch (error) {
         nameChecked = false;
-        message.textContent = "중복확인에 실패했습니다.";
-        message.className = "";
+
+        showMessagePopup(popup, popupMessage, "중복확인에 실패했습니다.");
+
         button.disabled = false;
     }
 }
 
 // 전화번호 중복확인
-async function checkMobile(input, button, editButton, message) {
+async function checkMobile(input, button, editButton, message, popup, popupMessage) {
     if (input.disabled || button.disabled) {
         return;
     }
@@ -315,7 +341,7 @@ async function checkMobile(input, button, editButton, message) {
     message.className = "";
 
     if (!validateMobile(mobile)) {
-        message.textContent = "전화번호를 확인해주세요.";
+        showMessagePopup(popup, popupMessage, "전화번호를 확인해주세요.");
         return;
     }
 
@@ -326,39 +352,32 @@ async function checkMobile(input, button, editButton, message) {
 
         if (exists) {
             mobileChecked = false;
-            message.textContent = "이미 등록된 전화번호입니다.";
-            message.className = "";
+
+            showMessagePopup(popup, popupMessage, "이미 등록된 전화번호입니다.");
+
             button.disabled = false;
             return;
         }
 
         mobileChecked = true;
+
         input.disabled = true;
+
         message.textContent = "중복확인 완료";
         message.className = "success";
+
         editButton.disabled = false;
     } catch (error) {
         mobileChecked = false;
-        message.textContent = "중복확인에 실패했습니다.";
-        message.className = "";
+
+        showMessagePopup(popup, popupMessage, "중복확인에 실패했습니다.");
+
         button.disabled = false;
     }
 }
 
 // 학생 등록
-async function addStudent(
-    studentName,
-    studentMobile,
-    studentBirthday,
-    studentEnrollment,
-    studentClass,
-    studentAddSubmit,
-    studentAddMessage,
-    studentNameMessage,
-    studentMobileMessage,
-    studentNameEdit,
-    studentMobileEdit
-) {
+async function addStudent(studentName, studentMobile, studentBirthday, studentEnrollment, studentClass, studentAddSubmit, studentNameCheck, studentMobileCheck, studentNameMessage, studentMobileMessage, studentNameEdit, studentMobileEdit, studentAddPopup, studentCheckPopup, studentCheckPopupMessage) {
     const name = studentName.value.trim();
     const mobile = formatMobile(studentMobile.value);
     const birthday = formatDateInput(studentBirthday.value);
@@ -369,16 +388,14 @@ async function addStudent(
     studentBirthday.value = birthday;
     studentEnrollment.value = enrollment;
 
-    studentAddMessage.textContent = "";
-
     if (!nameChecked) {
-        studentAddMessage.textContent = "이름 중복확인을 해주세요.";
+        showMessagePopup(studentCheckPopup, studentCheckPopupMessage, "이름 중복확인을 해주세요.");
         studentName.focus();
         return;
     }
 
     if (!mobileChecked) {
-        studentAddMessage.textContent = "전화번호 중복확인을 해주세요.";
+        showMessagePopup(studentCheckPopup, studentCheckPopupMessage, "전화번호 중복확인을 해주세요.");
         studentMobile.focus();
         return;
     }
@@ -388,18 +405,18 @@ async function addStudent(
         mobile,
         birthday,
         enrollment,
-        studentClass: classValue
+        studentClass:classValue
     });
 
     if (!validation.valid) {
-        studentAddMessage.textContent = validation.message;
+        showMessagePopup(studentCheckPopup, studentCheckPopupMessage, validation.message);
 
         const targetMap = {
-            name: studentName,
-            mobile: studentMobile,
-            birthday: studentBirthday,
-            enrollment: studentEnrollment,
-            class: studentClass
+            name:studentName,
+            mobile:studentMobile,
+            birthday:studentBirthday,
+            enrollment:studentEnrollment,
+            class:studentClass
         };
 
         const target = targetMap[validation.target];
@@ -450,7 +467,7 @@ async function addStudent(
 
         studentName.focus();
     } catch (error) {
-        studentAddMessage.textContent = "학생 등록에 실패했습니다.";
+        showMessagePopup(studentCheckPopup, studentCheckPopupMessage, "학생 등록에 실패했습니다.");
     } finally {
         studentAddSubmit.disabled = false;
     }

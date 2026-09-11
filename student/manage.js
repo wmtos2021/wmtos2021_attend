@@ -21,15 +21,15 @@ export async function loadManage() {
     }
 
     try {
+        await loadManageCss();
+
         const response = await fetch("../student/manage.html");
 
         if (!response.ok) {
-            throw new Error("출석부 화면을 불러오지 못했습니다.");
+            throw new Error("화면을 불러오지 못했습니다.");
         }
 
         content.innerHTML = await response.text();
-
-        loadManageCss();
 
         loaded = true;
 
@@ -38,7 +38,7 @@ export async function loadManage() {
     } catch (error) {
         content.innerHTML = `
             <p>
-                출석부 화면을 불러오지 못했습니다.
+                화면을 불러오지 못했습니다.
             </p>
         `;
     }
@@ -46,16 +46,41 @@ export async function loadManage() {
 
 // 출석부 CSS 불러오기
 function loadManageCss() {
-    if (document.querySelector('link[data-manage-css]')) {
-        return;
+    const existingLink = document.querySelector('link[data-manage-css]');
+
+    if (existingLink) {
+        if (existingLink.sheet) {
+            return Promise.resolve();
+        }
+
+        return new Promise((resolve, reject) => {
+            existingLink.addEventListener("load", resolve, {
+                once:true
+            });
+
+            existingLink.addEventListener("error", reject, {
+                once:true
+            });
+        });
     }
 
-    const link = document.createElement("link");
-    link.rel = "stylesheet";
-    link.href = "../student/manage.css";
-    link.dataset.manageCss = "true";
+    return new Promise((resolve, reject) => {
+        const link = document.createElement("link");
 
-    document.head.appendChild(link);
+        link.rel = "stylesheet";
+        link.href = "../student/manage.css";
+        link.dataset.manageCss = "true";
+
+        link.addEventListener("load", resolve, {
+            once:true
+        });
+
+        link.addEventListener("error", reject, {
+            once:true
+        });
+
+        document.head.appendChild(link);
+    });
 }
 
 // 출석부 이벤트 연결

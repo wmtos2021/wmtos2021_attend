@@ -1,7 +1,13 @@
 <!-- addNew.html -->
 
 <div class="addNew">
-    <h3>학생 등록</h3>
+    <div class="addNewHeader">
+        <h3>학생 등록</h3>
+
+        <button id="studentAddSubmit" type="button">
+            등록완료
+        </button>
+    </div>
 
     <div class="addNewForm">
         <div class="addNewField">
@@ -45,8 +51,9 @@
             <p id="studentMobileMessage"></p>
         </div>
 
-        <label for="studentBirthday">
-            <span>생년월일</span>
+        <div class="addNewField">
+            <label for="studentBirthday">생년월일</label>
+
             <input
                 id="studentBirthday"
                 type="text"
@@ -54,10 +61,11 @@
                 maxlength="10"
                 autocomplete="off"
                 placeholder="8자리 입력해주세요.">
-        </label>
+        </div>
 
-        <label for="studentEnrollment">
-            <span>등록일</span>
+        <div class="addNewField">
+            <label for="studentEnrollment">등록일</label>
+
             <input
                 id="studentEnrollment"
                 type="text"
@@ -65,25 +73,33 @@
                 maxlength="10"
                 autocomplete="off"
                 placeholder="8자리 입력해주세요.">
-        </label>
+        </div>
 
-        <label for="studentClass">
-            <span>수업</span>
-            <select id="studentClass"></select>
-        </label>
+        <div class="addNewClass">
+            <span>수강 과목 및 수업</span>
 
-        <button id="studentAddSubmit" type="button">
-            학생 등록
-        </button>
+            <div class="addNewClassSelect">
+                <select id="studentSubject">
+                    <option value="math" selected>수학</option>
+                </select>
+
+                <select id="studentClass">
+                    <option value="" disabled selected>
+                        수업을 선택해주세요.
+                    </option>
+                </select>
+            </div>
+        </div>
 
         <p id="studentAddMessage"></p>
     </div>
 </div>
 
-<!-- 중복확인 안내 팝업 -->
+<!-- 안내 팝업 -->
 <div id="studentCheckPopup" class="studentAddPopup">
     <div class="studentAddPopupBox">
         <p id="studentCheckPopupMessage"></p>
+        <button id="studentCheckPopupClose" type="button">확인</button>
     </div>
 </div>
 
