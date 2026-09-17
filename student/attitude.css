@@ -1,183 +1,181 @@
 /* attitude.css */
 
-/* 수업태도 학생 목록 */
-.attitudeStudentList{
-    width:100%;
+/* 수업태도 학생 목록 전체 */
+
+.attitudeStudentList {
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    overflow: hidden;
+    box-sizing: border-box;
 }
 
-.attitudeStudentHeader{
-    width:100%;
-    min-height:38px;
-    display:grid;
-    grid-template-columns:minmax(90px,1fr) 290px;
-    align-items:center;
-    gap:8px;
-    padding:0 10px;
-    background:#F4F1EB;
-    border-radius:6px 6px 0 0;
-    font-size:13px;
-    font-weight:700;
-    letter-spacing:-0.3px;
+/* 학생 목록 헤더 */
+
+.attitudeStudentHeader {
+    width: 100%;
+    flex: 0 0 auto;
+    min-height: 38px;
+    display: grid;
+    grid-template-columns: minmax(90px, 1fr) 290px;
+    align-items: center;
+    gap: 8px;
+    padding: 0 10px;
+    background: #F4F1EB;
+    border-top: 1px solid #DDD9D0;
+    border-bottom: 1px solid #DDD9D0;
+    border-radius: 0;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: -0.3px;
+    box-sizing: border-box;
 }
 
-.attitudeStudentHeader span:last-child{
-    text-align:center;
+.attitudeStudentHeader span {
+    min-width: 0;
+    text-align: center;
 }
 
-.attitudeStudentRows{
-    width:100%;
+.attitudeStudentHeader span:first-child {
+    text-align: center;
 }
 
-.attitudeStudentRow{
-    width:100%;
-    min-height:44px;
-    display:grid;
-    grid-template-columns:minmax(90px,1fr) 290px;
-    align-items:center;
-    gap:8px;
-    padding:0 10px;
-    border-bottom:1px solid #EEEAE3;
+.attitudeStudentHeader span:last-child {
+    text-align: center;
 }
 
-.attitudeStudentName{
-    display:flex;
-    align-items:center;
-    min-width:0;
-    font-size:13px;
-    font-weight:600;
-    letter-spacing:-0.3px;
+/* 학생 목록 실제 스크롤 영역 */
+
+.attitudeStudentRows {
+    width: 100%;
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+    box-sizing: border-box;
+    overscroll-behavior: contain;
 }
 
-.attitudeStudentNameText{
-    white-space:nowrap;
-    overflow:hidden;
-    text-overflow:ellipsis;
+/* 학생 행 */
+
+.attitudeStudentRow {
+    width: 100%;
+    min-height: 44px;
+    display: grid;
+    grid-template-columns: minmax(90px, 1fr) 290px;
+    align-items: center;
+    gap: 8px;
+    padding: 0 10px;
+    border-bottom: 1px solid #EEEAE3;
+    font-size: 14px;
+    color: #333333;
+    box-sizing: border-box;
 }
 
-.attitudeStudentDiligence{
-    margin-left:4px;
-    color:#999999;
-    font-size:11px;
-    font-weight:500;
-    white-space:nowrap;
+/* 학생 이름 */
+
+.attitudeStudentName {
+    display: flex;
+    align-items: center;
+    min-width: 0;
+    padding-left: 0;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: -0.3px;
+    text-align: left;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
-.attitudeButtons{
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    gap:4px;
+.attitudeStudentNameText {
+    display: inline;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
-.attitudeBtn{
-    width:48px;
-    height:28px;
-    padding:0;
-    border:1px solid #D8D3C9;
-    border-radius:5px;
-    background:#FFFFFF;
-    color:#777777;
-    font-family:inherit;
-    font-size:12px;
-    font-weight:600;
-    letter-spacing:-0.2px;
-    opacity:.45;
-    cursor:pointer;
+.attitudeStudentDiligence {
+    display: inline;
+    margin-left: 4px;
+    color: #999999;
+    font-size: 11px;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+/* 수업태도 버튼 */
+
+.attitudeButtons {
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    white-space: nowrap;
+}
+
+.attitudeBtn {
+    width: 48px;
+    height: 28px;
+    flex: 0 0 48px;
+    padding: 0;
+    border: 1px solid #D8D3C9;
+    border-radius: 5px;
+    background: #FFFFFF;
+    color: #777777;
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: -0.2px;
+    opacity: 0.45;
+    cursor: pointer;
+    white-space: nowrap;
+    box-sizing: border-box;
     transition:
-        opacity .15s ease,
-        background .15s ease,
-        border-color .15s ease,
-        color .15s ease;
+        opacity 0.15s ease,
+        background 0.15s ease,
+        border-color 0.15s ease,
+        color 0.15s ease;
 }
 
-.attitudeBtn:hover{
-    opacity:.75;
+.attitudeBtn:hover {
+    opacity: 0.75;
 }
 
-.attitudeBtn.selected{
-    opacity:1;
-    border-color:#0CA19B;
-    background:#E8F8F7;
-    color:#0CA19B;
-    font-weight:700;
+.attitudeBtn.selected {
+    opacity: 1;
+    border-color: #0CA19B;
+    background: #E8F8F7;
+    color: #0CA19B;
+    font-weight: 700;
 }
 
 /* 부정 점수 */
+
 .attitudeBtn[data-value="-100"].selected,
-.attitudeBtn[data-value="-50"].selected{
-    border-color:#E06A5F;
-    background:#FFF0EE;
-    color:#D9534F;
+.attitudeBtn[data-value="-50"].selected {
+    border-color: #E06A5F;
+    background: #FFF0EE;
+    color: #D9534F;
 }
 
 /* 중립 */
-.attitudeBtn[data-value="0"].selected{
-    border-color:#B7B1A7;
-    background:#F4F1EB;
-    color:#555555;
+
+.attitudeBtn[data-value="0"].selected {
+    border-color: #B7B1A7;
+    background: #F4F1EB;
+    color: #555555;
 }
 
 /* 긍정 점수 */
+
 .attitudeBtn[data-value="50"].selected,
-.attitudeBtn[data-value="100"].selected{
-    border-color:#0CA19B;
-    background:#E8F8F7;
-    color:#0CA19B;
-}
-
-/* 모바일 */
-
-@media (max-width:380px){
-
-    .attitudeStudentHeader{
-        grid-template-columns:82px 1fr;
-        gap:6px;
-        padding:0 8px;
-    }
-
-    .attitudeStudentRow{
-        grid-template-columns:82px 1fr;
-        gap:6px;
-        padding:0 8px;
-    }
-
-    .attitudeBtn{
-        width:42px;
-    }
-
-    .attitudeButtons{
-        gap:3px;
-    }
-
-    .attitudeStudentName{
-        font-size:12px;
-    }
-
-    .attitudeStudentDiligence{
-        font-size:10px;
-    }
-}
-
-@media (max-width:340px){
-
-    .attitudeStudentHeader{
-        grid-template-columns:76px 1fr;
-        gap:5px;
-        padding:0 6px;
-    }
-
-    .attitudeStudentRow{
-        grid-template-columns:76px 1fr;
-        gap:5px;
-        padding:0 6px;
-    }
-
-    .attitudeBtn{
-        width:40px;
-        font-size:11px;
-    }
-
-    .attitudeButtons{
-        gap:2px;
-    }
+.attitudeBtn[data-value="100"].selected {
+    border-color: #0CA19B;
+    background: #E8F8F7;
+    color: #0CA19B;
 }

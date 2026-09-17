@@ -1,484 +1,409 @@
 /* manage.css */
 
-/* 학생 출석/숙제 제목 */
-.manageTitle{
-    width:100%;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    margin-bottom:20px;
+/* 외부 스크롤 제거 */
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
 }
 
-.manageTitle h3{
-    margin:0;
-    font-size:18px;
-    font-weight:700;
-    color:#0CA19B;
+/* 관리 화면 */
+
+.managePage {
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+/* 학생 출석/숙제 제목 */
+
+.manageTitle {
+    width: 100%;
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.manageTitle h3 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 700;
+    color: #0CA19B;
 }
 
 /* 입력하기 버튼 */
-.manageSaveBtn{
-    width:90px;
-    height:34px;
-    padding:0;
-    border:1px solid #0CA19B;
-    border-radius:6px;
-    background:#FFFFFF;
-    color:#0CA19B;
-    font-family:inherit;
-    font-size:13px;
-    font-weight:700;
-    letter-spacing:0.5px;
-    cursor:pointer;
-    white-space:nowrap;
-    transform:translateY(5px);
+
+.manageSaveBtn {
+    width: 90px;
+    height: 34px;
+    padding: 0;
+    border: 1px solid #0CA19B;
+    border-radius: 6px;
+    background: #FFFFFF;
+    color: #0CA19B;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    white-space: nowrap;
+    transform: translateY(5px);
 }
 
-.manageSaveBtn:disabled{
-    opacity:0.45;
-    cursor:default;
-}
-
-/* 수업 / 날짜 선택 */
-.manageSelect{
-    width:100%;
-    display:flex;
-    align-items:center;
-    gap:8px;
-    margin-bottom:20px;
-}
-
-.manageSelect select{
-    height:42px;
-    padding:0 34px 0 12px;
-    border:1px solid #D8D3C9;
-    border-radius:6px;
-    background:#FFFFFF;
-    font-family:inherit;
-    font-size:12.9px;
-    letter-spacing:-0.5px;
-    color:#333333;
-    outline:none;
-    cursor:pointer;
-    appearance:none;
-    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24'%3E%3Cpath d='M6 9l6 6 6-6' fill='none' stroke='%23777777' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
-    background-repeat:no-repeat;
-    background-position:right 12px center;
-    background-size:12px;
-}
-
-.manageSelect select:focus{
-    border-color:#0CA19B;
-}
-
-#manageSubject{
-    width:76px;
-    flex:0 0 70px;
-}
-
-#manageClass{
-    flex:1;
-    min-width:0;
-}
-
-#manageDate{
-    width:129px;
-    flex:0 0 124px;
+.manageSaveBtn:disabled {
+    opacity: 0.45;
+    cursor: default;
 }
 
 /* 수업 / 날짜 선택 */
-.manageSelect{
-    width:100%;
-    display:flex;
-    align-items:center;
-    gap:8px;
-    margin-bottom:20px;
+
+.manageSelect {
+    width: 100%;
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 20px;
 }
 
-.manageSelect select{
-    height:42px;
-    padding:0 34px 0 12px;
-    border:1px solid #D8D3C9;
-    border-radius:6px;
-    background:#FFFFFF;
-    font-family:inherit;
-    font-size:12.9px;
-    letter-spacing:-0.5px;
-    color:#333333;
-    outline:none;
-    cursor:pointer;
-    appearance:none;
-    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24'%3E%3Cpath d='M6 9l6 6 6-6' fill='none' stroke='%23777777' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
-    background-repeat:no-repeat;
-    background-position:right 12px center;
-    background-size:12px;
+.manageSelect select {
+    height: 42px;
+    padding: 0 34px 0 12px;
+    border: 1px solid #D8D3C9;
+    border-radius: 6px;
+    background: #FFFFFF;
+    font-family: inherit;
+    font-size: 12.9px;
+    letter-spacing: -0.5px;
+    color: #333333;
+    outline: none;
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24'%3E%3Cpath d='M6 9l6 6 6-6' fill='none' stroke='%23777777' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 12px;
 }
 
-.manageSelect select:focus{
-    border-color:#0CA19B;
+.manageSelect select:focus {
+    border-color: #0CA19B;
 }
 
-#manageSubject{
-    width:76px;
-    flex:0 0 70px;
+#manageSubject {
+    width: 76px;
+    flex: 0 0 70px;
 }
 
-#manageClass{
-    flex:1;
-    min-width:0;
+#manageClass {
+    flex: 1;
+    min-width: 0;
 }
 
-#manageDate{
-    width:129px;
-    flex:0 0 124px;
+#manageDate {
+    width: 129px;
+    flex: 0 0 124px;
 }
 
 /* 출석/숙제 / 수업태도 탭 */
-.manageTabs{
-    width:100%;
-    display:flex;
-    align-items:center;
-    margin-bottom:0;
-    border-bottom:1px solid #DDD9D0;
+
+.manageTabs {
+    width: 100%;
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    margin-bottom: 0;
+    border-bottom: 1px solid #DDD9D0;
 }
 
-.manageTab{
-    height:38px;
-    padding:0 14px;
-    border:0;
-    background:transparent;
-    font-family:inherit;
-    font-size:16px;
-    font-weight:600;
-    letter-spacing:1px;
-    color:#999999;
-    cursor:pointer;
-    position:relative;
+.manageTab {
+    height: 38px;
+    padding: 0 14px;
+    border: 0;
+    background: transparent;
+    font-family: inherit;
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    color: #999999;
+    cursor: pointer;
+    position: relative;
 }
 
-.manageTab.active{
-    color:#0CA19B;
-    font-weight:700;
+.manageTab.active {
+    color: #0CA19B;
+    font-weight: 700;
 }
 
-.manageTab.active::after{
-    content:"";
-    position:absolute;
-    left:0;
-    right:0;
-    bottom:-1px;
-    height:2px;
-    background:#0CA19B;
+.manageTab.active::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -1px;
+    height: 2px;
+    background: #0CA19B;
 }
 
-/* 학생 목록 */
-.manageStudentList{
-    width:100%;
-    margin-top:0;
-    border-top:1px solid #DDD9D0;
-    overflow:hidden;
+/* 학생 목록 전체 */
+
+.manageStudentList {
+    width: 100%;
+    flex: 1 1 auto;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    overflow: hidden;
+    box-sizing: border-box;
 }
 
-.manageStudentHeader,
-.manageStudentRow{
-    width:100%;
-    display:grid;
-    grid-template-columns:minmax(90px,1fr) 150px 120px;
-    column-gap:8px;
-    align-items:center;
+/* 학생 목록 헤더 */
+
+.manageStudentHeader {
+    width: 100%;
+    flex: 0 0 auto;
+    min-height: 38px;
+    display: grid;
+    grid-template-columns: minmax(90px, 1fr) 150px 120px;
+    column-gap: 8px;
+    align-items: center;
+    border-top: 1px solid #DDD9D0;
+    border-bottom: 1px solid #DDD9D0;
+    background: #F4F1EB;
+    font-size: 13px;
+    font-weight: 700;
+    color: #666666;
+    box-sizing: border-box;
 }
 
-.manageStudentHeader{
-    min-height:38px;
-    border-bottom:1px solid #DDD9D0;
-    background:#F4F1EB;
-    font-size:13px;
-    font-weight:700;
-    color:#666666;
+.manageStudentHeader span {
+    min-width: 0;
+    text-align: center;
 }
 
-.manageStudentHeader span{
-    min-width:0;
-    text-align:center;
+.manageStudentHeader span:first-child {
+    text-align: center;
+    padding-left: 0;
 }
 
-.manageStudentHeader span:first-child{
-    text-align:center;
-    padding-left:0;
+.manageStudentHeader span:nth-child(2) {
+    text-align: center;
 }
 
-.manageStudentHeader span:nth-child(2){
-    text-align:center;
+.manageStudentHeader span:nth-child(3) {
+    text-align: center;
 }
 
-.manageStudentHeader span:nth-child(3){
-    text-align:center;
+/* 학생 목록 실제 스크롤 영역 */
+
+.manageStudentRows {
+    width: 100%;
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+    box-sizing: border-box;
+    overscroll-behavior: contain;
 }
 
-.manageStudentRow{
-    min-height:44px;
-    border-bottom:1px solid #E8E4DC;
-    font-size:14px;
-    color:#333333;
+/* 학생 행 */
+
+.manageStudentRow {
+    width: 100%;
+    min-height: 44px;
+    display: grid;
+    grid-template-columns: minmax(90px, 1fr) 150px 120px;
+    column-gap: 8px;
+    align-items: center;
+    border-bottom: 1px solid #E8E4DC;
+    font-size: 14px;
+    color: #333333;
+    box-sizing: border-box;
 }
 
-.manageStudentName{
-    min-width:0;
-    padding-left:8px;
-    font-weight:600;
-    text-align:left;
-    white-space:nowrap;
-    overflow:hidden;
-    text-overflow:ellipsis;
+/* 학생 이름 */
+
+.manageStudentName {
+    min-width: 0;
+    padding-left: 8px;
+    font-weight: 600;
+    text-align: left;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
-.manageStudentNameText{
-    display:inline;
+.manageStudentNameText {
+    display: inline;
 }
 
-.manageStudentDiligence{
-    display:inline;
-    margin-left:3px;
-    font-size:12px;
-    font-weight:500;
-    color:#777777;
-    white-space:nowrap;
+.manageStudentDiligence {
+    display: inline;
+    margin-left: 3px;
+    font-size: 12px;
+    font-weight: 500;
+    color: #777777;
+    white-space: nowrap;
 }
+
+/* 출석 / 숙제 */
 
 .manageAttendance,
-.manageHomework{
-    min-width:0;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    text-align:center;
-    font-size:13px;
-    font-weight:600;
+.manageHomework {
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-size: 13px;
+    font-weight: 600;
 }
 
 .manageAttendanceStatus,
-.manageHomeworkStatus{
-    display:none;
-    white-space:nowrap;
+.manageHomeworkStatus {
+    display: none;
+    white-space: nowrap;
 }
 
 /* 출석 버튼 */
-.manageAttendanceButtons{
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    gap:4px;
-    white-space:nowrap;
+
+.manageAttendanceButtons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    white-space: nowrap;
 }
 
-.manageAttendanceBtn{
-    width:44px;
-    height:28px;
-    flex:0 0 44px;
-    padding:0;
-    border:1px solid #D8D3C9;
-    border-radius:5px;
-    background:#FFFFFF;
-    font-family:inherit;
-    font-size:11px;
-    font-weight:600;
-    color:#777777;
-    cursor:pointer;
-    white-space:nowrap;
-    box-sizing:border-box;
-    opacity:0.45;
-    transition:opacity 0.15s, background 0.15s, color 0.15s;
+.manageAttendanceBtn {
+    width: 44px;
+    height: 28px;
+    flex: 0 0 44px;
+    padding: 0;
+    border: 1px solid #D8D3C9;
+    border-radius: 5px;
+    background: #FFFFFF;
+    font-family: inherit;
+    font-size: 11px;
+    font-weight: 600;
+    color: #777777;
+    cursor: pointer;
+    white-space: nowrap;
+    box-sizing: border-box;
+    opacity: 0.45;
+    transition:
+        opacity 0.15s,
+        background 0.15s,
+        color 0.15s;
 }
 
-.manageAttendanceBtn.ontime{
-    border-color:#07852F;
-    color:#07852F;
+.manageAttendanceBtn.ontime {
+    border-color: #07852F;
+    color: #07852F;
 }
 
-.manageAttendanceBtn.late{
-    border-color:#C57A00;
-    color:#C57A00;
+.manageAttendanceBtn.late {
+    border-color: #C57A00;
+    color: #C57A00;
 }
 
-.manageAttendanceBtn.absent{
-    border-color:#CE0707;
-    color:#CE0707;
+.manageAttendanceBtn.absent {
+    border-color: #CE0707;
+    color: #CE0707;
 }
 
-.manageAttendanceBtn.selected{
-    opacity:1;
-    color:#FFFFFF;
+.manageAttendanceBtn.selected {
+    opacity: 1;
+    color: #FFFFFF;
 }
 
-.manageAttendanceBtn.ontime.selected{
-    background:#07852F;
-    border-color:#07852F;
+.manageAttendanceBtn.ontime.selected {
+    background: #07852F;
+    border-color: #07852F;
 }
 
-.manageAttendanceBtn.late.selected{
-    background:#C57A00;
-    border-color:#C57A00;
+.manageAttendanceBtn.late.selected {
+    background: #C57A00;
+    border-color: #C57A00;
 }
 
-.manageAttendanceBtn.absent.selected{
-    background:#CE0707;
-    border-color:#CE0707;
+.manageAttendanceBtn.absent.selected {
+    background: #CE0707;
+    border-color: #CE0707;
 }
 
-.manageAttendanceBtn:disabled{
-    opacity:0.25;
-    cursor:default;
+.manageAttendanceBtn:disabled {
+    opacity: 0.25;
+    cursor: default;
 }
 
 /* 숙제 버튼 */
-.manageHomeworkButtons{
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    gap:4px;
-    white-space:nowrap;
+
+.manageHomeworkButtons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    white-space: nowrap;
 }
 
-.manageHomeworkBtn{
-    width:44px;
-    height:28px;
-    flex:0 0 44px;
-    padding:0;
-    border:1px solid #D8D3C9;
-    border-radius:5px;
-    background:#FFFFFF;
-    font-family:inherit;
-    font-size:11px;
-    font-weight:600;
-    color:#777777;
-    cursor:pointer;
-    white-space:nowrap;
-    box-sizing:border-box;
-    opacity:0.45;
-    transition:opacity 0.15s, background 0.15s, color 0.15s;
+.manageHomeworkBtn {
+    width: 44px;
+    height: 28px;
+    flex: 0 0 44px;
+    padding: 0;
+    border: 1px solid #D8D3C9;
+    border-radius: 5px;
+    background: #FFFFFF;
+    font-family: inherit;
+    font-size: 11px;
+    font-weight: 600;
+    color: #777777;
+    cursor: pointer;
+    white-space: nowrap;
+    box-sizing: border-box;
+    opacity: 0.45;
+    transition:
+        opacity 0.15s,
+        background 0.15s,
+        color 0.15s;
 }
 
-.manageHomeworkBtn.done{
-    border-color:#07852F;
-    color:#07852F;
+.manageHomeworkBtn.done {
+    border-color: #07852F;
+    color: #07852F;
 }
 
-.manageHomeworkBtn.notDone{
-    border-color:#CE0707;
-    color:#CE0707;
+.manageHomeworkBtn.notDone {
+    border-color: #CE0707;
+    color: #CE0707;
 }
 
-.manageHomeworkBtn.selected{
-    opacity:1;
-    color:#FFFFFF;
+.manageHomeworkBtn.selected {
+    opacity: 1;
+    color: #FFFFFF;
 }
 
-.manageHomeworkBtn.done.selected{
-    background:#07852F;
-    border-color:#07852F;
+.manageHomeworkBtn.done.selected {
+    background: #07852F;
+    border-color: #07852F;
 }
 
-.manageHomeworkBtn.notDone.selected{
-    background:#CE0707;
-    border-color:#CE0707;
+.manageHomeworkBtn.notDone.selected {
+    background: #CE0707;
+    border-color: #CE0707;
 }
 
-.manageHomeworkBtn:disabled{
-    opacity:0.25;
-    cursor:default;
-}
-
-/* 작은 휴대폰 */
-
-@media (max-width:380px){
-
-    .manageTitle{
-        margin-bottom:18px;
-    }
-
-    .manageSaveBtn{
-        width:90px;
-        height:32px;
-        padding:0;
-        font-size:12px;
-    }
-
-    .manageSelect{
-        gap:6px;
-    }
-
-    #manageSubject{
-        width:70px;
-        flex:0 0 70px;
-    }
-
-    #manageDate{
-        width:124px;
-        flex:0 0 124px;
-    }
-
-    .manageStudentHeader,
-    .manageStudentRow{
-        grid-template-columns:minmax(82px,1fr) 148px 116px;
-        column-gap:6px;
-    }
-
-    .manageAttendanceButtons,
-    .manageHomeworkButtons{
-        gap:3px;
-    }
-
-    .manageAttendanceBtn,
-    .manageHomeworkBtn{
-        width:42px;
-        flex-basis:42px;
-    }
-}
-
-/* 매우 작은 휴대폰 */
-
-@media (max-width:340px){
-
-    .manageTitle{
-        margin-bottom:16px;
-    }
-
-    .manageSaveBtn{
-        width:90px;
-        height:30px;
-        padding:0;
-        font-size:11px;
-    }
-
-    .manageSelect{
-        gap:5px;
-    }
-
-    #manageSubject{
-        width:66px;
-        flex:0 0 66px;
-    }
-
-    #manageDate{
-        width:118px;
-        flex:0 0 118px;
-    }
-
-    .manageStudentHeader,
-    .manageStudentRow{
-        grid-template-columns:minmax(76px,1fr) 140px 110px;
-        column-gap:5px;
-    }
-
-    .manageAttendanceButtons,
-    .manageHomeworkButtons{
-        gap:3px;
-    }
-
-    .manageAttendanceBtn,
-    .manageHomeworkBtn{
-        width:40px;
-        flex-basis:40px;
-        font-size:10px;
-    }
+.manageHomeworkBtn:disabled {
+    opacity: 0.25;
+    cursor: default;
 }

@@ -1,5 +1,3 @@
-// firebase.js
-
 import {
     initializeApp
 } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-app.js";
@@ -9,7 +7,9 @@ import {
 } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-database.js";
 
 import {
-    getAuth
+    getAuth,
+    setPersistence,
+    browserLocalPersistence
 } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-auth.js";
 
 
@@ -27,5 +27,12 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 
 export { app };
+
 export const db = getDatabase(app);
+
 export const auth = getAuth(app);
+
+setPersistence(auth, browserLocalPersistence)
+    .catch(error => {
+        console.error("Firebase Auth persistence 설정 실패:", error);
+    });
