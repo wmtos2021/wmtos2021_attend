@@ -108,6 +108,7 @@
     grid-template-columns: repeat(5, minmax(0, 1fr));
     align-items: center;
     gap: 4px;
+    padding-right: 6px;
     box-sizing: border-box;
 }
 
