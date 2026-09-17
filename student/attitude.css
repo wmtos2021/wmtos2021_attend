@@ -102,7 +102,7 @@
 
 /* 수업태도 버튼 영역 */
 .attitudeButtons {
-    width: calc(100% - 10px);
+    width: calc(100% - 18px);
     min-width: 0;
     display: grid;
     grid-template-columns: repeat(5, minmax(0, 1fr));
@@ -147,15 +147,6 @@
     background: #E8F8F7;
     color: #0CA19B;
     font-weight: 700;
-}
-
-/* 0 양옆 간격 */
-.attitudeBtn[data-value="-50"] {
-    margin-right: -3px;
-}
-
-.attitudeBtn[data-value="50"] {
-    margin-left: -3px;
 }
 
 /* 부정 점수 */
