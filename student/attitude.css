@@ -20,10 +20,10 @@
     flex: 0 0 auto;
     min-height: 38px;
     display: grid;
-    grid-template-columns: minmax(90px, 1fr) 290px;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 290px);
     align-items: center;
     gap: 8px;
-    padding: 0 10px;
+    padding: 0;
     background: #F4F1EB;
     border-top: 1px solid #DDD9D0;
     border-bottom: 1px solid #DDD9D0;
@@ -65,11 +65,11 @@
     width: 100%;
     min-height: 44px;
     display: grid;
-    grid-template-columns: minmax(90px, 1fr) 290px;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 290px);
     align-items: center;
     gap: 8px;
-    padding: 0 10px;
-    border-bottom: 1px solid #EEEAE3;
+    padding: 0;
+    border-bottom: 1px solid #E8E4DC;
     font-size: 14px;
     color: #333333;
     box-sizing: border-box;
@@ -78,13 +78,13 @@
 /* 학생 이름 */
 
 .attitudeStudentName {
+    min-width: 0;
+    padding-left: 8px;
     display: flex;
     align-items: center;
-    min-width: 0;
-    padding-left: 0;
-    font-size: 13px;
+    font-size: 14px;
     font-weight: 600;
-    letter-spacing: -0.3px;
+    letter-spacing: 0;
     text-align: left;
     white-space: nowrap;
     overflow: hidden;
@@ -100,10 +100,10 @@
 
 .attitudeStudentDiligence {
     display: inline;
-    margin-left: 4px;
-    color: #999999;
-    font-size: 11px;
+    margin-left: 3px;
+    font-size: 12px;
     font-weight: 500;
+    color: #777777;
     white-space: nowrap;
 }
 
@@ -111,7 +111,8 @@
 
 .attitudeButtons {
     min-width: 0;
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
     align-items: center;
     justify-content: center;
     gap: 4px;
@@ -119,27 +120,28 @@
 }
 
 .attitudeBtn {
-    width: 48px;
+    width: 100%;
+    min-width: 0;
     height: 28px;
-    flex: 0 0 48px;
+    flex: 0 0 auto;
     padding: 0;
     border: 1px solid #D8D3C9;
     border-radius: 5px;
     background: #FFFFFF;
     color: #777777;
     font-family: inherit;
-    font-size: 12px;
+    font-size: 11px;
     font-weight: 600;
-    letter-spacing: -0.2px;
+    letter-spacing: 0;
     opacity: 0.45;
     cursor: pointer;
     white-space: nowrap;
     box-sizing: border-box;
     transition:
-        opacity 0.15s ease,
-        background 0.15s ease,
-        border-color 0.15s ease,
-        color 0.15s ease;
+        opacity 0.15s,
+        background 0.15s,
+        border-color 0.15s,
+        color 0.15s;
 }
 
 .attitudeBtn:hover {
@@ -163,12 +165,14 @@
     color: #D9534F;
 }
 
-/* 중립 */
+/* 중립 점수 */
 
-.attitudeBtn[data-value="0"].selected {
-    border-color: #B7B1A7;
-    background: #F4F1EB;
-    color: #555555;
+.attitudeZero {
+    width: 100%;
+    text-align: center;
+    color: #777777;
+    font-size: 12px;
+    font-weight: 600;
 }
 
 /* 긍정 점수 */
