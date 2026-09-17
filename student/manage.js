@@ -9,8 +9,15 @@ import {
     initManageSave
 } from "./manageSave.js";
 
+import {
+    loadAttitude
+} from "./attitude.js";
+
 // HTML 로딩 상태
 let loaded = false;
+
+// 현재 탭
+let currentTab = "manage";
 
 // 출석부 화면 불러오기
 export async function loadManage() {
@@ -32,6 +39,7 @@ export async function loadManage() {
         content.innerHTML = await response.text();
 
         loaded = true;
+        currentTab = "manage";
 
         bindManage();
 
@@ -41,6 +49,8 @@ export async function loadManage() {
                 화면을 불러오지 못했습니다.
             </p>
         `;
+
+        console.error("출석부 화면 오류:", error);
     }
 }
 
@@ -55,11 +65,11 @@ function loadManageCss() {
 
         return new Promise((resolve, reject) => {
             existingLink.addEventListener("load", resolve, {
-                once:true
+                once: true
             });
 
             existingLink.addEventListener("error", reject, {
-                once:true
+                once: true
             });
         });
     }
@@ -72,11 +82,11 @@ function loadManageCss() {
         link.dataset.manageCss = "true";
 
         link.addEventListener("load", resolve, {
-            once:true
+            once: true
         });
 
         link.addEventListener("error", reject, {
-            once:true
+            once: true
         });
 
         document.head.appendChild(link);
@@ -87,20 +97,71 @@ function loadManageCss() {
 function bindManage() {
     const manageClass = document.getElementById("manageClass");
     const manageDate = document.getElementById("manageDate");
+    const manageTab = document.getElementById("manageTab");
+    const attitudeTab = document.getElementById("attitudeTab");
 
-    if (!manageClass || !manageDate) {
+    if (!manageClass || !manageDate || !manageTab || !attitudeTab) {
         return;
     }
 
     loadClasses(manageClass);
     loadDates(manageDate);
 
+    manageTab.classList.add("active");
+    attitudeTab.classList.remove("active");
+
     manageClass.addEventListener("change", async () => {
-        await loadStudents();
+        if (!manageClass.value || !manageDate.value) {
+            return;
+        }
+
+        if (currentTab === "manage") {
+            await loadStudents();
+        } else {
+            await loadAttitude(manageClass.value, manageDate.value);
+        }
     });
 
     manageDate.addEventListener("change", async () => {
+        if (!manageClass.value || !manageDate.value) {
+            return;
+        }
+
+        if (currentTab === "manage") {
+            await loadStudents();
+        } else {
+            await loadAttitude(manageClass.value, manageDate.value);
+        }
+    });
+
+    manageTab.addEventListener("click", async () => {
+        if (currentTab === "manage") {
+            return;
+        }
+
+        currentTab = "manage";
+
+        manageTab.classList.add("active");
+        attitudeTab.classList.remove("active");
+
         await loadStudents();
+    });
+
+    attitudeTab.addEventListener("click", async () => {
+        if (currentTab === "attitude") {
+            return;
+        }
+
+        if (!manageClass.value || !manageDate.value) {
+            return;
+        }
+
+        currentTab = "attitude";
+
+        attitudeTab.classList.add("active");
+        manageTab.classList.remove("active");
+
+        await loadAttitude(manageClass.value, manageDate.value);
     });
 }
 
@@ -120,6 +181,7 @@ function loadClasses(select) {
 
     classData.forEach(className => {
         const option = document.createElement("option");
+
         option.value = className;
         option.textContent = className;
 
@@ -127,28 +189,50 @@ function loadClasses(select) {
     });
 }
 
-// 최근 5일 날짜 목록
+// 최근 평일 5일 날짜 목록
 function loadDates(select) {
     const today = new Date();
 
     select.innerHTML = "";
 
-    for (let i = 0; i < 5; i++) {
+    let count = 0;
+    let i = 0;
+
+    const weekDays = [
+        "일",
+        "월",
+        "화",
+        "수",
+        "목",
+        "금",
+        "토"
+    ];
+
+    while (count < 5) {
         const date = new Date(today);
 
         date.setDate(date.getDate() - i);
 
-        const dateKey = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
+        const day = date.getDay();
 
-        const option = document.createElement("option");
-        option.value = dateKey;
-        option.textContent = dateKey;
+        if (day !== 0 && day !== 6) {
+            const dateKey = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
 
-        if (i === 0) {
-            option.selected = true;
+            const option = document.createElement("option");
+
+            option.value = dateKey;
+            option.textContent = `${weekDays[day]} ${dateKey}`;
+
+            if (count === 0) {
+                option.selected = true;
+            }
+
+            select.appendChild(option);
+
+            count++;
         }
 
-        select.appendChild(option);
+        i++;
     }
 }
 
@@ -163,16 +247,18 @@ async function loadStudents() {
         return;
     }
 
-    const { students, management } = getManageStudents(
-        manageClass.value,
-        manageDate.value
-    );
+    const manageHeader = document.querySelector(".manageStudentHeader");
+
+    if (manageHeader) {
+        manageHeader.hidden = false;
+        manageHeader.style.display = "";
+    }
+
+    const { students, management } = getManageStudents(manageClass.value, manageDate.value);
 
     studentRows.innerHTML = "";
 
-    const studentEntries = Object.entries(students).sort(
-        ([, nameA], [, nameB]) => nameA.localeCompare(nameB, "ko")
-    );
+    const studentEntries = Object.entries(students).sort(([, nameA], [, nameB]) => nameA.localeCompare(nameB, "ko"));
 
     const diligenceData = await Promise.all(
         studentEntries.map(async ([mobile]) => {
@@ -200,9 +286,5 @@ async function loadStudents() {
         studentRows.appendChild(row);
     });
 
-    initManageSave(
-        manageClass.value,
-        manageDate.value,
-        management
-    );
+    initManageSave(manageClass.value, manageDate.value, management);
 }

@@ -1,0 +1,70 @@
+<!-- attitude.html -->
+
+<div class="attitudeStudentList">
+
+    <div class="attitudeStudentHeader">
+        <span>이름(성실도)</span>
+        <span>수업태도</span>
+    </div>
+
+    <div
+        id="attitudeStudentRows"
+        class="attitudeStudentRows">
+    </div>
+
+</div>
+
+<template id="attitudeStudentTemplate">
+
+    <div class="attitudeStudentRow">
+
+        <span class="attitudeStudentName">
+            <span class="attitudeStudentNameText">
+            </span>
+
+            <span class="attitudeStudentDiligence">
+            </span>
+        </span>
+
+        <span class="attitudeButtons">
+
+            <button
+                class="attitudeBtn"
+                data-value="-100"
+                type="button">
+                -100
+            </button>
+
+            <button
+                class="attitudeBtn"
+                data-value="-50"
+                type="button">
+                -50
+            </button>
+
+            <button
+                class="attitudeBtn"
+                data-value="0"
+                type="button">
+                0
+            </button>
+
+            <button
+                class="attitudeBtn"
+                data-value="50"
+                type="button">
+                +50
+            </button>
+
+            <button
+                class="attitudeBtn"
+                data-value="100"
+                type="button">
+                +100
+            </button>
+
+        </span>
+
+    </div>
+
+</template>

@@ -32,9 +32,7 @@ export async function getDiligence(mobile, dateKey) {
         ref(db, `diligence/${mobile}/${monthKey}`)
     );
 
-    return snapshot.exists()
-        ? Number(snapshot.val())
-        : 100;
+    return snapshot.exists() ? Number(snapshot.val()) : 100;
 }
 
 // 일괄 저장
@@ -119,47 +117,23 @@ export async function saveManageBatch(className, dateKey, students) {
 
     const attend = classManagement[className][dateKey].attend;
     const homework = classManagement[className][dateKey].homework;
-
     const studentEntries = Object.entries(students);
 
     const studentData = await Promise.all(
         studentEntries.map(async ([mobile, student]) => {
-            const historyRef = ref(
-                db,
-                `history/${mobile}/attendance/${dateKey}/math`
-            );
+            const historyRef = ref(db, `history/${mobile}/attendance/${dateKey}/math`);
+            const diligenceRef = ref(db, `diligence/${mobile}/${monthKey}`);
+            const totalPRef = ref(db, `student/${mobile}/totalP`);
 
-            const diligenceRef = ref(
-                db,
-                `diligence/${mobile}/${monthKey}`
-            );
-
-            const totalPRef = ref(
-                db,
-                `student/${mobile}/totalP`
-            );
-
-            const [
-                historySnapshot,
-                diligenceSnapshot,
-                totalPSnapshot
-            ] = await Promise.all([
+            const [historySnapshot, diligenceSnapshot, totalPSnapshot] = await Promise.all([
                 get(historyRef),
                 get(diligenceRef),
                 get(totalPRef)
             ]);
 
-            const history = historySnapshot.exists()
-                ? historySnapshot.val()
-                : {};
-
-            const currentDiligence = diligenceSnapshot.exists()
-                ? Number(diligenceSnapshot.val())
-                : 100;
-
-            const currentTotalP = totalPSnapshot.exists()
-                ? Number(totalPSnapshot.val())
-                : 0;
+            const history = historySnapshot.exists() ? historySnapshot.val() : {};
+            const currentDiligence = diligenceSnapshot.exists() ? Number(diligenceSnapshot.val()) : 100;
+            const currentTotalP = totalPSnapshot.exists() ? Number(totalPSnapshot.val()) : 0;
 
             return {
                 mobile,
@@ -204,86 +178,31 @@ export async function saveManageBatch(className, dateKey, students) {
             nextHomework = "absent";
         }
 
-        const currentAttendanceP = nextAttendance
-            ? attendanceData[nextAttendance].P
-            : 0;
+        const currentAttendance = nextAttendance ? attendanceData[nextAttendance] : {};
+        const currentHomework = nextHomework ? homeworkData[nextHomework] : {};
+        const currentAttendanceP = currentAttendance.P || 0;
+        const currentAttendanceSc = currentAttendance.Sc || 0;
+        const currentHomeworkP = currentHomework.P || 0;
+        const currentHomeworkSc = currentHomework.Sc || 0;
 
-        const currentAttendanceSc = nextAttendance
-            ? attendanceData[nextAttendance].Sc
-            : 0;
-
-        const currentHomeworkP = nextHomework
-            ? homeworkData[nextHomework].P
-            : 0;
-
-        const currentHomeworkSc = nextHomework
-            ? homeworkData[nextHomework].Sc
-            : 0;
-
-        const previousTotalSc =
-            oldAttendanceSc + oldHomeworkSc;
-
-        const nextTotalSc =
-            currentAttendanceSc + currentHomeworkSc;
-
-        const diligenceChange =
-            nextTotalSc - previousTotalSc;
-
-        const nextDiligence =
-            Math.max(
-                0,
-                currentDiligence - diligenceChange
-            );
-
-        const previousTotalP =
-            oldAttendanceP + oldHomeworkP;
-
-        const nextTotalP =
-            currentAttendanceP + currentHomeworkP;
-
-        const totalPChange =
-            nextTotalP - previousTotalP;
-
-        const nextTotalPValue =
-            Math.max(
-                0,
-                currentTotalP + totalPChange
-            );
+        const previousTotalSc = oldAttendanceSc + oldHomeworkSc;
+        const nextTotalSc = currentAttendanceSc + currentHomeworkSc;
+        const diligenceChange = nextTotalSc - previousTotalSc;
+        const nextDiligence = Math.max(0, currentDiligence - diligenceChange);
+        const previousTotalP = oldAttendanceP + oldHomeworkP;
+        const nextTotalP = currentAttendanceP + currentHomeworkP;
+        const totalPChange = nextTotalP - previousTotalP;
+        const nextTotalPValue = currentTotalP + totalPChange;
 
         if (nextAttendance) {
-            updateData[
-                `class/math/${className}/management/${dateKey}/attend/ontime/${mobile}`
-            ] = nextAttendance === "ontime"
-                ? name
-                : null;
+            updateData[`class/math/${className}/management/${dateKey}/attend/ontime/${mobile}`] = nextAttendance === "ontime" ? name : null;
+            updateData[`class/math/${className}/management/${dateKey}/attend/late/${mobile}`] = nextAttendance === "late" ? name : null;
+            updateData[`class/math/${className}/management/${dateKey}/attend/absent/${mobile}`] = nextAttendance === "absent" ? name : null;
+            updateData[`class/math/${className}/management/${dateKey}/attend/late10/${mobile}`] = null;
 
-            updateData[
-                `class/math/${className}/management/${dateKey}/attend/late/${mobile}`
-            ] = nextAttendance === "late"
-                ? name
-                : null;
-
-            updateData[
-                `class/math/${className}/management/${dateKey}/attend/absent/${mobile}`
-            ] = nextAttendance === "absent"
-                ? name
-                : null;
-
-            updateData[
-                `class/math/${className}/management/${dateKey}/attend/late10/${mobile}`
-            ] = null;
-
-            updateData[
-                `history/${mobile}/attendance/${dateKey}/math/attend`
-            ] = nextAttendance;
-
-            updateData[
-                `history/${mobile}/attendance/${dateKey}/math/attendP`
-            ] = currentAttendanceP;
-
-            updateData[
-                `history/${mobile}/attendance/${dateKey}/math/attendSc`
-            ] = currentAttendanceSc;
+            updateData[`history/${mobile}/attendance/${dateKey}/math/attend`] = nextAttendance;
+            updateData[`history/${mobile}/attendance/${dateKey}/math/attendP`] = currentAttendanceP;
+            updateData[`history/${mobile}/attendance/${dateKey}/math/attendSc`] = currentAttendanceSc;
 
             delete attend.ontime[mobile];
             delete attend.late[mobile];
@@ -303,118 +222,54 @@ export async function saveManageBatch(className, dateKey, students) {
         }
 
         if (nextAttendance === "absent") {
-            updateData[
-                `class/math/${className}/management/${dateKey}/homework/done/${mobile}`
-            ] = null;
+            updateData[`class/math/${className}/management/${dateKey}/homework/done/${mobile}`] = null;
+            updateData[`class/math/${className}/management/${dateKey}/homework/notdone/${mobile}`] = null;
+            updateData[`class/math/${className}/management/${dateKey}/homework/absent/${mobile}`] = name;
 
-            updateData[
-                `class/math/${className}/management/${dateKey}/homework/notdone/${mobile}`
-            ] = null;
-
-            updateData[
-                `class/math/${className}/management/${dateKey}/homework/absent/${mobile}`
-            ] = name;
-
-            updateData[
-                `history/${mobile}/attendance/${dateKey}/math/homework`
-            ] = "absent";
-
-            updateData[
-                `history/${mobile}/attendance/${dateKey}/math/homeworkP`
-            ] = 0;
-
-            updateData[
-                `history/${mobile}/attendance/${dateKey}/math/homeworkSc`
-            ] = 0;
+            updateData[`history/${mobile}/attendance/${dateKey}/math/homework`] = "absent";
+            updateData[`history/${mobile}/attendance/${dateKey}/math/homeworkP`] = 0;
+            updateData[`history/${mobile}/attendance/${dateKey}/math/homeworkSc`] = 0;
 
             delete homework.done[mobile];
             delete homework.notdone[mobile];
 
             homework.absent[mobile] = name;
-
         } else {
-            updateData[
-                `class/math/${className}/management/${dateKey}/homework/absent/${mobile}`
-            ] = null;
-
+            updateData[`class/math/${className}/management/${dateKey}/homework/absent/${mobile}`] = null;
             delete homework.absent[mobile];
 
             if (nextHomework === "done") {
-                updateData[
-                    `class/math/${className}/management/${dateKey}/homework/done/${mobile}`
-                ] = name;
+                updateData[`class/math/${className}/management/${dateKey}/homework/done/${mobile}`] = name;
+                updateData[`class/math/${className}/management/${dateKey}/homework/notdone/${mobile}`] = null;
 
-                updateData[
-                    `class/math/${className}/management/${dateKey}/homework/notdone/${mobile}`
-                ] = null;
-
-                updateData[
-                    `history/${mobile}/attendance/${dateKey}/math/homework`
-                ] = "done";
-
-                updateData[
-                    `history/${mobile}/attendance/${dateKey}/math/homeworkP`
-                ] = currentHomeworkP;
-
-                updateData[
-                    `history/${mobile}/attendance/${dateKey}/math/homeworkSc`
-                ] = currentHomeworkSc;
+                updateData[`history/${mobile}/attendance/${dateKey}/math/homework`] = "done";
+                updateData[`history/${mobile}/attendance/${dateKey}/math/homeworkP`] = currentHomeworkP;
+                updateData[`history/${mobile}/attendance/${dateKey}/math/homeworkSc`] = currentHomeworkSc;
 
                 delete homework.done[mobile];
                 delete homework.notdone[mobile];
 
                 homework.done[mobile] = name;
-
             } else if (nextHomework === "notdone") {
-                updateData[
-                    `class/math/${className}/management/${dateKey}/homework/done/${mobile}`
-                ] = null;
+                updateData[`class/math/${className}/management/${dateKey}/homework/done/${mobile}`] = null;
+                updateData[`class/math/${className}/management/${dateKey}/homework/notdone/${mobile}`] = name;
 
-                updateData[
-                    `class/math/${className}/management/${dateKey}/homework/notdone/${mobile}`
-                ] = name;
-
-                updateData[
-                    `history/${mobile}/attendance/${dateKey}/math/homework`
-                ] = "notdone";
-
-                updateData[
-                    `history/${mobile}/attendance/${dateKey}/math/homeworkP`
-                ] = currentHomeworkP;
-
-                updateData[
-                    `history/${mobile}/attendance/${dateKey}/math/homeworkSc`
-                ] = currentHomeworkSc;
+                updateData[`history/${mobile}/attendance/${dateKey}/math/homework`] = "notdone";
+                updateData[`history/${mobile}/attendance/${dateKey}/math/homeworkP`] = currentHomeworkP;
+                updateData[`history/${mobile}/attendance/${dateKey}/math/homeworkSc`] = currentHomeworkSc;
 
                 delete homework.done[mobile];
                 delete homework.notdone[mobile];
 
                 homework.notdone[mobile] = name;
-
             } else if (!nextHomework) {
-                updateData[
-                    `class/math/${className}/management/${dateKey}/homework/done/${mobile}`
-                ] = null;
+                updateData[`class/math/${className}/management/${dateKey}/homework/done/${mobile}`] = null;
+                updateData[`class/math/${className}/management/${dateKey}/homework/notdone/${mobile}`] = null;
+                updateData[`class/math/${className}/management/${dateKey}/homework/absent/${mobile}`] = null;
 
-                updateData[
-                    `class/math/${className}/management/${dateKey}/homework/notdone/${mobile}`
-                ] = null;
-
-                updateData[
-                    `class/math/${className}/management/${dateKey}/homework/absent/${mobile}`
-                ] = null;
-
-                updateData[
-                    `history/${mobile}/attendance/${dateKey}/math/homework`
-                ] = null;
-
-                updateData[
-                    `history/${mobile}/attendance/${dateKey}/math/homeworkP`
-                ] = null;
-
-                updateData[
-                    `history/${mobile}/attendance/${dateKey}/math/homeworkSc`
-                ] = null;
+                updateData[`history/${mobile}/attendance/${dateKey}/math/homework`] = null;
+                updateData[`history/${mobile}/attendance/${dateKey}/math/homeworkP`] = null;
+                updateData[`history/${mobile}/attendance/${dateKey}/math/homeworkSc`] = null;
 
                 delete homework.done[mobile];
                 delete homework.notdone[mobile];
@@ -422,13 +277,8 @@ export async function saveManageBatch(className, dateKey, students) {
             }
         }
 
-        updateData[
-            `diligence/${mobile}/${monthKey}`
-        ] = nextDiligence;
-
-        updateData[
-            `student/${mobile}/totalP`
-        ] = nextTotalPValue;
+        updateData[`diligence/${mobile}/${monthKey}`] = nextDiligence;
+        updateData[`student/${mobile}/totalP`] = nextTotalPValue;
 
         diligence[mobile] = nextDiligence;
     }

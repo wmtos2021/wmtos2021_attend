@@ -20,12 +20,12 @@ function preloadImages() {
     });
 }
 
-// 최근 5일 날짜
+// 최근 7일 날짜
 function getRecentDateKeys() {
     const dates = [];
     const today = new Date();
 
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < 7; i++) {
         const date = new Date(today);
 
         date.setDate(

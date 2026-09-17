@@ -1,7 +1,7 @@
 // utils.js
 
 // 버전
-export const VERSION = "1.2.1";
+export const VERSION = "1.3.0";
 
 // 학원 정보
 export const ACADEMY_NAME = "위드엠투에스학원";
