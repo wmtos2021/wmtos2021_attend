@@ -149,6 +149,15 @@
     font-weight: 700;
 }
 
+/* 0 양옆 간격 */
+.attitudeBtn[data-value="-50"] {
+    margin-right: -3px;
+}
+
+.attitudeBtn[data-value="50"] {
+    margin-left: -3px;
+}
+
 /* 부정 점수 */
 .attitudeBtn[data-value="-100"].selected,
 .attitudeBtn[data-value="-50"].selected {
