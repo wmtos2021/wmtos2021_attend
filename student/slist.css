@@ -1,0 +1,443 @@
+/* slist.css */
+
+/* 메인 콘텐츠 영역 */
+#studentListContent {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    box-sizing: border-box;
+}
+
+/* 학생 목록 전체 */
+.slistContainer {
+    width: 100%;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+}
+
+/* 상단 */
+.slistHeader {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0 0 20px 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.slistTitle {
+    margin: 0;
+    padding: 0;
+    font-size: 18px;
+    line-height: 1.2;
+    font-weight: 700;
+    color: #0CA19B;
+}
+
+.slistCount {
+    margin: 0;
+    padding: 0;
+    font-size: 13px;
+    line-height: 1.2;
+    color: #777777;
+}
+
+/* 학생 목록 */
+.slistStudentList {
+    width: 100%;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+}
+
+/* 학생 목록 헤더 */
+.slistStudentHeader {
+    width: 100%;
+    flex: 0 0 auto;
+    min-height: 38px;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr) minmax(0, 0.75fr) minmax(0, 0.65fr) minmax(0, 0.7fr) minmax(0, 0.65fr);
+    align-items: center;
+    column-gap: 4px;
+    padding: 0;
+    background: #F4F1EB;
+    border-top: 1px solid #DDD9D0;
+    border-bottom: 1px solid #DDD9D0;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    box-sizing: border-box;
+}
+
+/* 헤더 정렬 */
+.slistStudentHeader > div {
+    min-width: 0;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* 학생 목록 스크롤 */
+.slistStudentRows {
+    width: 100%;
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+    box-sizing: border-box;
+    overscroll-behavior: contain;
+}
+
+/* 학생 행 */
+.slistStudentRow {
+    width: 100%;
+    min-height: 44px;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr) minmax(0, 0.75fr) minmax(0, 0.65fr) minmax(0, 0.7fr) minmax(0, 0.65fr);
+    align-items: center;
+    column-gap: 4px;
+    padding: 0;
+    border-bottom: 1px solid #E8E4DC;
+    font-size: 13px;
+    color: #333333;
+    box-sizing: border-box;
+}
+
+/* 공통 셀 */
+.slistStudentRow > div {
+    min-width: 0;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* 학생 이름 */
+.slistStudentName {
+    padding-left: 4px;
+    text-align: left !important;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: -0.5px;
+}
+
+/* 이름 */
+.slistStudentNameText {
+    display: inline;
+    white-space: nowrap;
+}
+
+/* 성실도 */
+.slistStudentDiligence {
+    display: inline;
+    margin-left: 2px;
+    font-size: 11px;
+    font-weight: 500;
+    color: #777777;
+    white-space: nowrap;
+}
+
+/* 연락처 */
+.slistStudentMobile {
+    font-size: 12px;
+    color: #555555;
+    letter-spacing: -0.4px;
+}
+
+/* 숫자 */
+.slistStudentPoint,
+.slistStudentGold,
+.slistStudentLogin {
+    font-size: 12px;
+    color: #555555;
+}
+
+/* 수정 버튼 영역 */
+.slistStudentEdit {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 0;
+}
+
+/* 수정 버튼 */
+.slistEditBtn {
+    width: 44px;
+    height: 28px;
+    padding: 0;
+    border: 1px solid #D8D3C9;
+    border-radius: 6px;
+    background: #FFFFFF;
+    color: #555555;
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    white-space: nowrap;
+    box-sizing: border-box;
+    transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+
+/* 수정 버튼 마우스 */
+.slistEditBtn:hover {
+    border-color: #0CA19B;
+    background: #E8F8F7;
+    color: #0CA19B;
+}
+
+/* 수정 팝업 */
+.slistEditModal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, .35);
+    z-index: 1000;
+}
+
+/* 팝업 표시 */
+.slistEditModal.show {
+    display: flex;
+}
+
+/* 팝업 박스 */
+.slistEditModalBox {
+    width: min(420px, calc(100% - 32px));
+    max-height: calc(100% - 32px);
+    padding: 24px 20px 20px;
+    border-radius: 8px;
+    background: #FFFFFF;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, .15);
+    overflow-y: auto;
+    box-sizing: border-box;
+}
+
+/* 팝업 헤더 */
+.slistEditHeader {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+}
+
+/* 팝업 제목 */
+.slistEditTitle {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 700;
+    color: #0CA19B;
+}
+
+/* 닫기 버튼 */
+.slistEditClose {
+    width: 28px;
+    height: 28px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    position: relative;
+    cursor: pointer;
+}
+
+/* 닫기 X */
+.slistEditClose::before,
+.slistEditClose::after {
+    content: "";
+    position: absolute;
+    top: 13px;
+    left: 5px;
+    width: 18px;
+    height: 2px;
+    background: #777777;
+}
+
+.slistEditClose::before {
+    transform: rotate(45deg);
+}
+
+.slistEditClose::after {
+    transform: rotate(-45deg);
+}
+
+/* 구분선 */
+.slistEditLine {
+    width: 100%;
+    height: 1px;
+    margin-bottom: 18px;
+    background: #E8E4DC;
+}
+
+/* 수정 폼 */
+.slistEditForm {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+/* 입력 필드 */
+.slistEditField {
+    width: 100%;
+}
+
+/* 라벨 */
+.slistEditField > label {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 14px;
+    font-weight: 700;
+    color: #555555;
+}
+
+/* 입력 */
+.slistEditField input {
+    width: 100%;
+    height: 42px;
+    padding: 0 12px;
+    border: 1px solid #D8D3C9;
+    border-radius: 6px;
+    background: #FFFFFF;
+    font-family: inherit;
+    font-size: 14px;
+    color: #333333;
+    outline: none;
+    box-sizing: border-box;
+}
+
+/* 입력 포커스 */
+.slistEditField input:focus {
+    border-color: #0CA19B;
+}
+
+/* 입력 안내 */
+.slistEditField input::placeholder {
+    color: #AAAAAA;
+}
+
+/* 수정 불가 항목 */
+.slistEditField input[readonly] {
+    background: #EEEEEE;
+    color: #777777;
+    cursor: default;
+}
+
+/* 수강 과목 및 수업 */
+.slistEditClass {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+/* 수강 과목 및 수업 제목 */
+.slistEditClass > span {
+    font-size: 14px;
+    font-weight: 700;
+    color: #555555;
+}
+
+/* 수강 과목 및 수업 선택 */
+.slistEditClassSelect {
+    width: 100%;
+    display: flex;
+    gap: 8px;
+}
+
+/* 수강 과목 및 수업 select */
+.slistEditClassSelect select {
+    height: 42px;
+    padding: 0 12px;
+    border: 1px solid #D8D3C9;
+    border-radius: 6px;
+    background: #FFFFFF;
+    font-family: inherit;
+    font-size: 14px;
+    color: #333333;
+    outline: none;
+    cursor: pointer;
+    box-sizing: border-box;
+}
+
+/* 과목 */
+#slistEditSubject {
+    width: 100px;
+    flex: 0 0 100px;
+}
+
+/* 수업 */
+#slistEditClass {
+    flex: 1;
+    min-width: 0;
+}
+
+/* select 포커스 */
+.slistEditClassSelect select:focus {
+    border-color: #0CA19B;
+}
+
+/* 수정 메시지 */
+.slistEditMessage {
+    min-height: 18px;
+    margin: 0;
+    text-align: center;
+    font-size: 13px;
+    color: #D9534F;
+}
+
+/* 성공 메시지 */
+.slistEditMessage.success {
+    color: #0CA19B;
+}
+
+/* 수정 버튼 영역 */
+.slistEditButtons {
+    width: 100%;
+    display: flex;
+    gap: 8px;
+    margin-top: 4px;
+}
+
+/* 취소 버튼 */
+.slistEditCancel,
+.slistEditSave {
+    flex: 1;
+    height: 40px;
+    padding: 0;
+    border-radius: 6px;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+/* 취소 버튼 */
+.slistEditCancel {
+    border: 1px solid #D8D3C9;
+    background: #FFFFFF;
+    color: #777777;
+}
+
+/* 저장 버튼 */
+.slistEditSave {
+    border: 0;
+    background: #0CA19B;
+    color: #FFFFFF;
+}
+
+/* 비활성화 */
+.slistEditSave:disabled,
+.slistEditCancel:disabled {
+    opacity: .5;
+    cursor: default;
+}

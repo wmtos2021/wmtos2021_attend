@@ -1,0 +1,261 @@
+<div class="slistContainer">
+
+    <!-- 상단 -->
+    <header class="slistHeader">
+
+        <h3 class="slistTitle">
+            학생 조회/변경
+        </h3>
+
+        <p class="slistCount">
+            전체 학생 <span id="slistCount">0</span>명
+        </p>
+
+    </header>
+
+    <!-- 학생 목록 -->
+    <div class="slistStudentList">
+
+        <!-- 학생 목록 헤더 -->
+        <div class="slistStudentHeader">
+
+            <div class="slistHeaderName">
+                이름(성실도)
+            </div>
+
+            <div class="slistHeaderMobile">
+                연락처
+            </div>
+
+            <div class="slistHeaderPoint">
+                포인트
+            </div>
+
+            <div class="slistHeaderGold">
+                골드
+            </div>
+
+            <div class="slistHeaderLogin">
+                접속횟수
+            </div>
+
+            <div class="slistHeaderEdit">
+                변경
+            </div>
+
+        </div>
+
+        <!-- 학생 목록 -->
+        <div
+            id="slistStudentRows"
+            class="slistStudentRows">
+        </div>
+
+        <!-- 학생 목록 템플릿 -->
+        <template id="slistStudentTemplate">
+
+            <div class="slistStudentRow">
+
+                <div class="slistStudentName">
+
+                    <span class="slistStudentNameText"></span>
+
+                    <span class="slistStudentDiligence"></span>
+
+                </div>
+
+                <div class="slistStudentMobile"></div>
+
+                <div class="slistStudentPoint"></div>
+
+                <div class="slistStudentGold"></div>
+
+                <div class="slistStudentLogin"></div>
+
+                <div class="slistStudentEdit">
+
+                    <button
+                        class="slistEditBtn"
+                        type="button">
+
+                        수정
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </template>
+
+    </div>
+
+</div>
+
+<!-- 학생 정보 수정 팝업 -->
+<div
+    id="slistEditModal"
+    class="slistEditModal hidden">
+
+    <div class="slistEditModalBox">
+
+        <header class="slistEditHeader">
+
+            <h3 class="slistEditTitle">
+                학생 정보 수정
+            </h3>
+
+            <button
+                id="slistEditClose"
+                class="slistEditClose"
+                type="button"
+                aria-label="수정 팝업 닫기">
+            </button>
+
+        </header>
+
+        <div class="slistEditLine"></div>
+
+        <form
+            id="slistEditForm"
+            class="slistEditForm">
+
+            <div class="slistEditField">
+
+                <label for="slistEditName">
+                    이름
+                </label>
+
+                <input
+                    id="slistEditName"
+                    type="text"
+                    autocomplete="off"
+                    required>
+
+            </div>
+
+            <div class="slistEditField">
+
+                <label for="slistEditMobile">
+                    연락처
+                </label>
+
+                <input
+                    id="slistEditMobile"
+                    type="tel"
+                    autocomplete="off"
+                    required>
+
+            </div>
+
+            <div class="slistEditField">
+
+                <label for="slistEditBirthday">
+                    생년월일
+                </label>
+
+                <input
+                    id="slistEditBirthday"
+                    type="text"
+                    inputmode="numeric"
+                    maxlength="13"
+                    placeholder="8자리 입력해주세요."
+                    autocomplete="off"
+                    readonly>
+
+            </div>
+
+            <div class="slistEditField">
+
+                <label for="slistEditEnrollment">
+                    등록일
+                </label>
+
+                <input
+                    id="slistEditEnrollment"
+                    type="text"
+                    inputmode="numeric"
+                    maxlength="13"
+                    placeholder="8자리 입력해주세요."
+                    autocomplete="off"
+                    readonly>
+
+            </div>
+
+            <div class="slistEditField">
+
+                <label for="slistEditWithdrawal">
+                    퇴원일
+                </label>
+
+                <input
+                    id="slistEditWithdrawal"
+                    type="text"
+                    inputmode="numeric"
+                    maxlength="13"
+                    placeholder="8자리 입력해주세요."
+                    autocomplete="off">
+
+            </div>
+
+            <div class="slistEditClass">
+
+                <span>
+                    수강 과목 및 수업
+                </span>
+
+                <div class="slistEditClassSelect">
+
+                    <select id="slistEditSubject">
+
+                        <option
+                            value="math"
+                            selected>
+                            수학
+                        </option>
+
+                    </select>
+
+                    <select id="slistEditClass">
+
+                        <option
+                            value=""
+                            disabled
+                            selected>
+                            수업을 선택하세요.
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+            <p
+                id="slistEditMessage"
+                class="slistEditMessage">
+            </p>
+
+            <div class="slistEditButtons">
+
+                <button
+                    id="slistEditCancel"
+                    class="slistEditCancel"
+                    type="button">
+                    취소
+                </button>
+
+                <button
+                    id="slistEditSave"
+                    class="slistEditSave"
+                    type="submit">
+                    저장
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>

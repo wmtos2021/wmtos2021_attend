@@ -4,6 +4,7 @@ import { initNews } from "./news.js";
 import { initInbox } from "./inbox.js";
 import { loadAddNew } from "../student/addNew.js";
 import { loadManage } from "../student/manage.js";
+import { loadSlist } from "../student/slist.js";
 import {
     VERSION,
     ACADEMY_NAME,
@@ -212,8 +213,10 @@ attendanceBtn.addEventListener(
 // 학생 조회
 studentListBtn.addEventListener(
     "click",
-    () => {
+    async () => {
         showContent(studentListContent);
+
+        await loadSlist();
     }
 );
 
