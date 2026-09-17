@@ -102,13 +102,12 @@
 
 /* 수업태도 버튼 영역 */
 .attitudeButtons {
-    width: 100%;
+    width: calc(100% - 10px);
     min-width: 0;
     display: grid;
     grid-template-columns: repeat(5, minmax(0, 1fr));
     align-items: center;
     gap: 4px;
-    padding-right: 6px;
     box-sizing: border-box;
 }
 
